@@ -1,0 +1,8 @@
+.idea
+.vs
+_Resharper.Caches
+bin
+obj
+
+*/wwwroot/css/bundle*
+*/wwwroot/js/bundle*
