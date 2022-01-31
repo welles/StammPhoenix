@@ -7,6 +7,8 @@ namespace StammPhoenix.Persistence
     {
         public DbSet<LoginUser> LoginUsers { get; set; }
 
+        public DbSet<PlannedEvent> PlannedEvents { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connection = new DatabaseConnection();
