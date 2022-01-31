@@ -4,6 +4,8 @@ _Resharper.Caches
 bin
 obj
 
+Dockerfile.env
+
 *.csproj.user
 
 */wwwroot/css/bundle*
