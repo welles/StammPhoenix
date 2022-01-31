@@ -3,20 +3,40 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddWebOptimizer(pipeline =>
+if (!builder.Environment.IsDevelopment())
 {
-    pipeline.AddCssBundle("/css/bundle.css",
-        "/css/bootstrap.css",
-        "/css/bootstrap-grid.css",
-        "/css/bootstrap-reboot.css",
-        "/css/site.css");
+    builder.Services.AddWebOptimizer(pipeline =>
+    {
+        pipeline.AddCssBundle("/css/bundle.min.css",
+            "/css/bootstrap.min.css",
+            "/css/bootstrap-grid.min.css",
+            "/css/bootstrap-reboot.min.css",
+            "/css/site.css");
 
-    pipeline.AddJavaScriptBundle("/js/bundle.js",
-        "/js/jquery-3.6.0.js",
-        "/js/popper.js",
-        "/js/bootstrap.js",
-        "/js/site.js");
-});
+        pipeline.AddJavaScriptBundle("/js/bundle.min.js",
+            "/js/jquery-3.6.0.min.js",
+            "/js/popper.min.js",
+            "/js/bootstrap.min.js",
+            "/js/site.js");
+    });
+}
+else
+{
+    builder.Services.AddWebOptimizer(pipeline =>
+    {
+        pipeline.AddCssBundle("/css/bundle.css",
+            "/css/bootstrap.css",
+            "/css/bootstrap-grid.css",
+            "/css/bootstrap-reboot.css",
+            "/css/site.css");
+
+        pipeline.AddJavaScriptBundle("/js/bundle.js",
+            "/js/jquery-3.6.0.js",
+            "/js/popper.js",
+            "/js/bootstrap.js",
+            "/js/site.js");
+    });
+}
 
 var app = builder.Build();
 
