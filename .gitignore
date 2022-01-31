@@ -4,5 +4,7 @@ _Resharper.Caches
 bin
 obj
 
+*.csproj.user
+
 */wwwroot/css/bundle*
 */wwwroot/js/bundle*
