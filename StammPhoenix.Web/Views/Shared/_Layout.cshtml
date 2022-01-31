@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>DPSG Stamm Phoenix</title>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/bundle.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/bundle.min.css" />
+    </environment>
+</head>
+<body>
+
+<header class="p-2">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container rounded shadow-sm">
+        <a class="navbar-brand" href="/">
+            <img src="image/phoenix-32.png" alt="Phoenix">
+        </a>
+
+        <a class="navbar-brand ml-auto d-lg-none" href="/">
+            <img src="image/lilie-32.png" alt="Lilie">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Navigation umschalten">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+            </ul>
+        </div>
+
+        <a class="navbar-brand ml-auto mr-0 d-none d-lg-block" href="/">
+            <img src="image/lilie-32.png" alt="Lilie">
+        </a>
+    </nav>
+</header>
+
+<main role="main" class="p-2">
+    <div class="container card shadow-sm h-100 p-2">
+        @RenderBody()
+    </div>
+</main>
+
+<footer class="p-2">
+    <nav class="navbar navbar-light bg-light container rounded shadow-sm">
+        <span class="navbar-text text-center w-100">© @DateTime.Now.Year Deutsche Pfadfinderschaft Sankt Georg 13/19/12 Stamm Phoenix Feldkirchen-Westerham</span>
+    </nav>
+</footer>
+
+<environment include="Development">
+    <script src="~/js/bundle.js"></script>
+</environment>
+<environment exclude="Development">
+    <script src="~/js/bundle.min.js"></script>
+</environment>
+</body>
+</html>
