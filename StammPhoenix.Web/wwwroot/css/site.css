@@ -1,6 +1,34 @@
 /*
 * Site Specific CSS
 */
+:root {
+    --color-woelflinge: #ff6400;
+    --color-jungpfadfinder: #2f53a7;
+    --color-pfadfinder: #00823c;
+    --color-rover: #cc1f2f;
+    --color-leiter: #b1b9ad;
+}
+
+.bg-woelflinge {
+    background-color: var(--color-woelflinge);
+}
+
+.bg-jungpfadfinder {
+    background-color: var(--color-jungpfadfinder);
+}
+
+.bg-pfadfinder {
+    background-color: var(--color-pfadfinder);
+}
+
+.bg-rover {
+    background-color: var(--color-rover);
+}
+
+.bg-leiter {
+    background-color: var(--color-leiter);
+}
+
 html, body {
     margin: 0;
     height: 100%;
