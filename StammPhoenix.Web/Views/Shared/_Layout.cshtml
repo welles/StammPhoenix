@@ -35,6 +35,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Index", "Gruppenstunden")">Gruppenstunden</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Stufen</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="@Url.Action("Woelflinge", "Stufe")">Wölflinge</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("Jungpfadfinder", "Stufe")">Jungpfadfinder</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("Pfadfinder", "Stufe")">Pfadfinder</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("Rover", "Stufe")">Rover</a></li>
+                  </ul>
+                </li>
             </ul>
         </div>
 
