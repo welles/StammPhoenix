@@ -11,7 +11,6 @@ if (!builder.Environment.IsDevelopment())
             "css/bootstrap.min.css",
             "css/bootstrap-grid.min.css",
             "css/bootstrap-reboot.min.css",
-            "~/icons/bootstrap-icons.css",
             "css/site.css");
 
         pipeline.AddJavaScriptBundle("/js/bundle.min.js",
@@ -29,7 +28,6 @@ else
             "css/bootstrap.css",
             "css/bootstrap-grid.css",
             "css/bootstrap-reboot.css",
-            "~/icons/bootstrap-icons.css",
             "css/site.css");
 
         pipeline.AddJavaScriptBundle("/js/bundle.js",
