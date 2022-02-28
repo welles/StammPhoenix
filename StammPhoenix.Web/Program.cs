@@ -1,3 +1,7 @@
+using NUglify.Css;
+using NUglify.JavaScript;
+using StammPhoenix.Web.Core;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
@@ -5,36 +9,62 @@ builder.Services.AddControllersWithViews();
 
 if (!builder.Environment.IsDevelopment())
 {
+    // PRODUCTION
+
     builder.Services.AddWebOptimizer(pipeline =>
     {
-        pipeline.AddCssBundle("/css/bundle.min.css",
-            "css/bootstrap.min.css",
-            "css/bootstrap-grid.min.css",
-            "css/bootstrap-reboot.min.css",
-            "css/site.css");
+        var css = pipeline.AddBundle("/css/bundle.css",
+                "text/css; charset=UTF-8",
+                "css/bootstrap.min.css",
+                "css/bootstrap-grid.min.css",
+                "css/bootstrap-reboot.min.css",
+                "css/site.css")
+            .EnforceFileExtensions(".css")
+            .AdjustRelativePaths()
+            .Concatenate()
+            .FingerprintUrls()
+            .AddResponseHeader("X-Content-Type-Options", "nosniff");
+        css.Processors.Add(new CssMinifier(new CssSettings {CommentMode = CssComment.None}));
 
-        pipeline.AddJavaScriptBundle("/js/bundle.min.js",
-            "js/jquery-3.6.0.min.js",
-            "js/popper.min.js",
-            "js/bootstrap.min.js",
-            "js/site.js");
+        var javascript = pipeline.AddBundle("/js/bundle.js",
+                "text/javascript; charset=UTF-8",
+                "js/jquery-3.6.0.min.js",
+                "js/popper.min.js",
+                "js/bootstrap.min.js",
+                "js/site.js")
+            .EnforceFileExtensions(".js")
+            .Concatenate()
+            .AddResponseHeader("X-Content-Type-Options", "nosniff");
+        javascript.Processors.Add(new JavaScriptMinifier(new CodeSettings {PreserveImportantComments = false}));
     });
 }
 else
 {
+    // DEVELOPMENT
+
     builder.Services.AddWebOptimizer(pipeline =>
     {
-        pipeline.AddCssBundle("/css/bundle.css",
-            "css/bootstrap.css",
-            "css/bootstrap-grid.css",
-            "css/bootstrap-reboot.css",
-            "css/site.css");
+        pipeline.AddBundle("/css/bundle.css",
+                "text/css; charset=UTF-8",
+                "css/bootstrap.css",
+                "css/bootstrap-grid.css",
+                "css/bootstrap-reboot.css",
+                "css/site.css")
+            .EnforceFileExtensions(".css")
+            .AdjustRelativePaths()
+            .Concatenate()
+            .FingerprintUrls()
+            .AddResponseHeader("X-Content-Type-Options", "nosniff");
 
-        pipeline.AddJavaScriptBundle("/js/bundle.js",
-            "js/jquery-3.6.0.js",
-            "js/popper.js",
-            "js/bootstrap.js",
-            "js/site.js");
+        pipeline.AddBundle("/js/bundle.js",
+                "text/javascript; charset=UTF-8",
+                "js/jquery-3.6.0.js",
+                "js/popper.js",
+                "js/bootstrap.js",
+                "js/site.js")
+            .EnforceFileExtensions(".js")
+            .Concatenate()
+            .AddResponseHeader("X-Content-Type-Options", "nosniff");
     });
 }
 
