@@ -4,11 +4,11 @@
     {
         public DatabaseConnection()
         {
-            Host = Environment.GetEnvironmentVariable("DATABASE_HOST");
-            Port = int.Parse(Environment.GetEnvironmentVariable("DATABASE_PORT"));
-            Database = Environment.GetEnvironmentVariable("DATABASE_NAME");
-            Username = Environment.GetEnvironmentVariable("DATABASE_USERNAME");
-            Password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD");
+            this.Host = Environment.GetEnvironmentVariable("DATABASE_HOST");
+            this.Port = int.Parse(Environment.GetEnvironmentVariable("DATABASE_PORT"));
+            this.Database = Environment.GetEnvironmentVariable("DATABASE_NAME");
+            this.Username = Environment.GetEnvironmentVariable("DATABASE_USERNAME");
+            this.Password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD");
         }
 
         public string Host { get; }
@@ -23,7 +23,7 @@
 
         public override string? ToString()
         {
-            return $"Host={Host}:{Port};Database={Database};Username={Username};Password={Password}";
+            return $"Host={this.Host}:{this.Port};Database={this.Database};Username={this.Username};Password={this.Password}";
         }
     }
 }

@@ -6,19 +6,19 @@ namespace StammPhoenix.Web.Controllers
     {
         public IActionResult Woelflinge()
         {
-            return View("~/Views/Stufe/Woelflinge.cshtml");
+            return this.View("~/Views/Stufe/Woelflinge.cshtml");
         }
         public IActionResult Jungpfadfinder()
         {
-            return View();
+            return this.View();
         }
         public IActionResult Pfadfinder()
         {
-            return View();
+            return this.View();
         }
         public IActionResult Rover()
         {
-            return View();
+            return this.View();
         }
     }
 }
