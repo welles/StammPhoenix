@@ -4,12 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>DPSG Stamm Phoenix</title>
-    <environment include="Development">
-        <link rel="stylesheet" href="~/css/bundle.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="~/css/bundle.min.css" />
-    </environment>
+    <link rel="stylesheet" href="@Url.Content("~/css/bundle.css")" />
 </head>
 <body>
 
@@ -80,11 +75,6 @@
     </nav>
 </footer>
 
-<environment include="Development">
-    <script src="~/js/bundle.js"></script>
-</environment>
-<environment exclude="Development">
-    <script src="~/js/bundle.min.js"></script>
-</environment>
+<script src="@Url.Content("~/js/bundle.js")"></script>
 </body>
 </html>
