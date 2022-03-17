@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using NUglify.Css;
 using NUglify.JavaScript;
 using StammPhoenix.Authentication.Managers;
 using StammPhoenix.Authentication.Models;
 using StammPhoenix.Authentication.Store;
+using StammPhoenix.Authentication.Utility;
 using StammPhoenix.Persistence;
 using StammPhoenix.Web.Core;
 
@@ -21,6 +23,8 @@ builder.Services.AddTransient<IUserStore<ApplicationUser>, ApplicationUserStore>
 builder.Services.AddTransient<IUserClaimStore<ApplicationUser>, ApplicationUserStore>();
 builder.Services.AddTransient<IUserRoleStore<ApplicationUser>, ApplicationUserStore>();
 builder.Services.AddTransient<IRoleStore<ApplicationRole>, ApplicationRoleStore>();
+
+builder.Services.Replace(ServiceDescriptor.Transient<IPasswordHasher<ApplicationUser>, BCryptPasswordHasher<ApplicationUser>>());
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
