@@ -1,11 +1,14 @@
 using NUglify.Css;
 using NUglify.JavaScript;
+using StammPhoenix.Persistence;
 using StammPhoenix.Web.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IDatabaseContext, DatabaseContext>();
 
 builder.Services.AddWebOptimizer(pipeline =>
 {
