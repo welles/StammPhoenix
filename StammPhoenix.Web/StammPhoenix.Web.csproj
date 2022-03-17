@@ -15,4 +15,8 @@
     <PackageReference Include="NUglify" Version="1.17.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StammPhoenix.Persistence\StammPhoenix.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
