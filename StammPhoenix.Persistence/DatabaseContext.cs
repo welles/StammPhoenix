@@ -3,7 +3,7 @@ using StammPhoenix.Persistence.Models;
 
 namespace StammPhoenix.Persistence
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : DbContext, IDatabaseContext
     {
         public DbSet<LoginUser> LoginUsers { get; set; }
 
