@@ -1,5 +1,9 @@
+using Microsoft.AspNetCore.Identity;
 using NUglify.Css;
 using NUglify.JavaScript;
+using StammPhoenix.Authentication.Managers;
+using StammPhoenix.Authentication.Models;
+using StammPhoenix.Authentication.Store;
 using StammPhoenix.Persistence;
 using StammPhoenix.Web.Core;
 
@@ -9,6 +13,25 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IDatabaseContext, DatabaseContext>();
+
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddUserManager<ApplicationUserManager>()
+    .AddSignInManager<ApplicationSignInManager>();
+builder.Services.AddTransient<IUserStore<ApplicationUser>, ApplicationUserStore>();
+builder.Services.AddTransient<IUserClaimStore<ApplicationUser>, ApplicationUserStore>();
+builder.Services.AddTransient<IUserRoleStore<ApplicationUser>, ApplicationUserStore>();
+builder.Services.AddTransient<IRoleStore<ApplicationRole>, ApplicationRoleStore>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    // Cookie settings
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+    options.LoginPath = "/Leiter/Login";
+    options.AccessDeniedPath = "/Leiter/Nope";
+    options.SlidingExpiration = true;
+});
 
 builder.Services.AddWebOptimizer(pipeline =>
 {

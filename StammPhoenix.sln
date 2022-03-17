@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StammPhoenix.Web", "StammPh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StammPhoenix.Persistence", "StammPhoenix.Persistence\StammPhoenix.Persistence.csproj", "{DA16E0AD-2E01-4D7D-BFF0-BA454A0524B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StammPhoenix.Authentication", "StammPhoenix.Authentication\StammPhoenix.Authentication.csproj", "{57676165-AA35-4176-81CD-0A46331886F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DA16E0AD-2E01-4D7D-BFF0-BA454A0524B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA16E0AD-2E01-4D7D-BFF0-BA454A0524B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA16E0AD-2E01-4D7D-BFF0-BA454A0524B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57676165-AA35-4176-81CD-0A46331886F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57676165-AA35-4176-81CD-0A46331886F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57676165-AA35-4176-81CD-0A46331886F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57676165-AA35-4176-81CD-0A46331886F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

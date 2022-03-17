@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StammPhoenix.Authentication\StammPhoenix.Authentication.csproj" />
     <ProjectReference Include="..\StammPhoenix.Persistence\StammPhoenix.Persistence.csproj" />
   </ItemGroup>
 
