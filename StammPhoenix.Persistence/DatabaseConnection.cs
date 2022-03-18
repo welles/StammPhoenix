@@ -10,9 +10,9 @@
 
         public DatabaseConnection()
         {
-            if (File.Exists("Dockerfile.env"))
+            if (File.Exists(@"..\StammPhoenix.Web\Dockerfile.env"))
             {
-                var values = File.ReadAllLines("Dockerfile.env")
+                var values = File.ReadAllLines(@"..\StammPhoenix.Web\Dockerfile.env")
                     .Select(x => x.Split("="))
                     .ToDictionary(x => x[0], x => x[1]);
 
