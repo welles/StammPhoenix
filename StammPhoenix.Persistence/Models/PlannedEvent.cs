@@ -1,4 +1,5 @@
-﻿namespace StammPhoenix.Persistence.Models
+﻿#pragma warning disable CS8618 // Disable nullable warning
+namespace StammPhoenix.Persistence.Models
 {
     public class PlannedEvent
     {

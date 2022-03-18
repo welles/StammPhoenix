@@ -1,4 +1,5 @@
-﻿namespace StammPhoenix.Authentication.Models;
+﻿#pragma warning disable CS8618 // Disable nullable warning
+namespace StammPhoenix.Authentication.Models;
 
 public class ApplicationRole
 {

@@ -1,4 +1,5 @@
-﻿using System.Security.Principal;
+﻿#pragma warning disable CS8618 // Disable nullable warning
+using System.Security.Principal;
 
 namespace StammPhoenix.Authentication.Models;
 

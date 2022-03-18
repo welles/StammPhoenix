@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿#pragma warning disable CS8618 // Disable nullable warning
+using Microsoft.EntityFrameworkCore;
 using StammPhoenix.Persistence.Models;
 
 namespace StammPhoenix.Persistence
