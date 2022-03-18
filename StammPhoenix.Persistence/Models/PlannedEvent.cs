@@ -3,7 +3,7 @@ namespace StammPhoenix.Persistence.Models
 {
     public class PlannedEvent
     {
-        public string PlannedEventId { get; set; }
+        public string Id { get; set; }
 
         public Rank ParticipatingRanks { get; set; }
 
