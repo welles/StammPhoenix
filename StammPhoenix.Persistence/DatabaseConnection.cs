@@ -25,11 +25,11 @@
                 return;
             }
 
-            this.Host = Environment.GetEnvironmentVariable(HostParameter);
-            this.Port = Environment.GetEnvironmentVariable(PortParameter);
-            this.Database = Environment.GetEnvironmentVariable(DatabaseParameter);
-            this.Username = Environment.GetEnvironmentVariable(UsernameParameter);
-            this.Password = Environment.GetEnvironmentVariable(PasswordParameter);
+            this.Host = this.GetEnvironmentVariable(HostParameter);
+            this.Port = this.GetEnvironmentVariable(PortParameter);
+            this.Database = this.GetEnvironmentVariable(DatabaseParameter);
+            this.Username = this.GetEnvironmentVariable(UsernameParameter);
+            this.Password = this.GetEnvironmentVariable(PasswordParameter);
         }
 
         public string Host { get; }
@@ -42,9 +42,21 @@
 
         public string Password { get; }
 
-        public override string? ToString()
+        public override string ToString()
         {
             return $"Host={this.Host}:{this.Port};Database={this.Database};Username={this.Username};Password={this.Password}";
+        }
+
+        private string GetEnvironmentVariable(string name)
+        {
+            var value = Environment.GetEnvironmentVariable(name);
+
+            if (value == null)
+            {
+                throw new InvalidOperationException($"Environment variable {name} is not set");
+            }
+
+            return value;
         }
     }
 }
