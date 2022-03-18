@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NUglify.Css;
@@ -25,6 +26,8 @@ builder.Services.AddTransient<IUserRoleStore<ApplicationUser>, ApplicationUserSt
 builder.Services.AddTransient<IRoleStore<ApplicationRole>, ApplicationRoleStore>();
 
 builder.Services.Replace(ServiceDescriptor.Transient<IPasswordHasher<ApplicationUser>, BCryptPasswordHasher<ApplicationUser>>());
+
+builder.Services.AddTransient(WebMapper.Create);
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
