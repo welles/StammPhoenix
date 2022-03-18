@@ -6,9 +6,11 @@ namespace StammPhoenix.Persistence
 {
     public class DatabaseContext : DbContext, IDatabaseContext
     {
-        public DbSet<LoginUser> LoginUsers { get; set; }
+        private DbSet<LoginUser> LoginUsers { get; set; }
 
-        public DbSet<PlannedEvent> PlannedEvents { get; set; }
+        private DbSet<PlannedEvent> PlannedEvents { get; set; }
+
+        private DbSet<PageContact> PageContacts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
