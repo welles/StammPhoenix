@@ -17,5 +17,10 @@ namespace StammPhoenix.Persistence
 
             base.OnConfiguring(optionsBuilder);
         }
+
+        public async Task<PlannedEvent[]> GetPlannedEvents()
+        {
+            return await this.PlannedEvents.ToArrayAsync();
+        }
     }
 }
