@@ -1,1 +1,21 @@
-﻿<h5>Login</h5>
+﻿@using StammPhoenix.Web.Models.Login
+
+<div class="card align-self-center">
+    <div class="card-header">
+        <h5 class="card-title">Leiterbereich</h5>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "d-flex flex-column"}))
+        {
+            <div class="input-group mb-3">
+                <span class="input-group-text">Nutzername</span>
+                <input type="text" class="form-control" name="@nameof(LoginModel.Username)" >
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Passwort</span>
+                <input type="password" class="form-control" name="@nameof(LoginModel.Password)" >
+            </div>
+            <button type="submit" class="btn btn-dark align-self-center">Einloggen</button>
+        }
+    </div>
+</div>
