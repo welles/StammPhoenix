@@ -56,6 +56,20 @@
                     <a class="nav-link" href="@Url.Action("Index", "Impressum")">Impressum</a>
                 </li>
             </ul>
+            <ul class="navbar-nav ms-auto me-0 ">
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Home", new { area = "Leiter" })">Leiterbereich</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Login")">Einloggen</a>
+                    </li>
+                }
+            </ul>
         </div>
 
         <a class="navbar-brand ms-auto me-0 d-none d-lg-block" href="/">

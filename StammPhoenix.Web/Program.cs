@@ -35,8 +35,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.HttpOnly = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
-    options.LoginPath = "/Leiter/Login";
-    options.AccessDeniedPath = "/Leiter/Nope";
+    options.LoginPath = "/login";
+    options.AccessDeniedPath = "/login/accessdenied";
     options.SlidingExpiration = true;
 });
 
@@ -89,5 +89,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name : "areas",
+    pattern : "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+);
 
 app.Run();
