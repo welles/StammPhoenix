@@ -7,6 +7,7 @@ obj
 Dockerfile.env
 
 *.csproj.user
+*.DotSettings.user
 
 */wwwroot/css/bundle*
 */wwwroot/js/bundle*
