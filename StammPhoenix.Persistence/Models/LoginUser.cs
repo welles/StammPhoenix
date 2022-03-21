@@ -5,6 +5,8 @@ namespace StammPhoenix.Persistence.Models
     {
         public string Id { get; set; }
 
+        public string NormalizedId { get; set; }
+
         public string Name { get; set; }
 
         public string PasswordHash { get; set; }
