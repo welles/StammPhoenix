@@ -1,4 +1,4 @@
-﻿namespace StammPhoenix.Persistence.Models
+﻿namespace StammPhoenix.Persistence.Constants
 {
     [Flags]
     public enum Rank
