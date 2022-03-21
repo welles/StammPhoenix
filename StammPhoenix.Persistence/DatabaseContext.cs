@@ -1,6 +1,7 @@
 ﻿#pragma warning disable CS8618 // Disable nullable warning
 using System.ComponentModel;
 using Microsoft.EntityFrameworkCore;
+using StammPhoenix.Persistence.Constants;
 using StammPhoenix.Persistence.Models;
 
 namespace StammPhoenix.Persistence
@@ -14,6 +15,12 @@ namespace StammPhoenix.Persistence
         private DbSet<PageContact> PageContacts { get; set; }
 
         private DbSet<Setting> Settings { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Setting>()
+                .HasData(new Setting {Id = SettingNames.InitialSetupComplete, Value = "false"});
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
