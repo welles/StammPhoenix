@@ -12,6 +12,8 @@ namespace StammPhoenix.Persistence
 
         private DbSet<PageContact> PageContacts { get; set; }
 
+        private DbSet<Setting> Settings { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connection = new DatabaseConnection();
