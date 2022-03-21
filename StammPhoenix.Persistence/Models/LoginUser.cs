@@ -11,8 +11,6 @@ namespace StammPhoenix.Persistence.Models
 
         public string PasswordHash { get; set; }
 
-        public string Email { get; set; }
-
         public bool IsLocked { get; set; }
 
         public bool NeedPasswordChange { get; set; }
