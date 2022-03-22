@@ -90,6 +90,6 @@ public class LoginController : Controller
             new ClaimsPrincipal(claimsIdentity),
             authProperties);
 
-        return this.RedirectToAction("Index", "Home");
+        return this.RedirectToAction("Index", "Home", new { Area= "Leiter" });
     }
 }
