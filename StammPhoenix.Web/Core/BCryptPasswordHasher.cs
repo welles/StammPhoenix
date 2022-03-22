@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿namespace StammPhoenix.Web.Core;
 
-namespace StammPhoenix.Authentication.Utility;
-
-public class BCryptPasswordHasher<TUser> : IPasswordHasher<TUser> where TUser : class
+public class BCryptPasswordHasher : IPasswordHasher
 {
     private const int WorkLoad = 12;
 
-    public string HashPassword(TUser user, string password)
+    public string HashPassword(string password)
     {
         return BCrypt.Net.BCrypt.HashPassword(password, WorkLoad);
     }
 
-    public PasswordVerificationResult VerifyHashedPassword(
-        TUser user, string hashedPassword, string providedPassword)
+    public PasswordVerificationResult VerifyHashedPassword(string hashedPassword, string providedPassword)
     {
         var isValid = BCrypt.Net.BCrypt.Verify(providedPassword, hashedPassword);
 
