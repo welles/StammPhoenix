@@ -44,7 +44,8 @@ public class InitialSetupController : Controller
             Name = form.DisplayName,
             PasswordHash = hashedPassword,
             IsLocked = false,
-            NeedPasswordChange = false
+            NeedPasswordChange = false,
+            Role = Role.Administrator
         };
 
         await this.DatabaseContext.CreateUser(user);
