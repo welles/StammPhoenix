@@ -20,6 +20,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/login";
         options.AccessDeniedPath = "/login/accessdenied";
         options.SlidingExpiration = true;
+        options.ReturnUrlParameter = "redirect";
     });
 
 builder.Services.AddTransient(WebMapper.Create);

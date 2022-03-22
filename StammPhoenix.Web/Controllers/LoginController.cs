@@ -90,6 +90,11 @@ public class LoginController : Controller
             new ClaimsPrincipal(claimsIdentity),
             authProperties);
 
+        if (!string.IsNullOrWhiteSpace(form.Redirect) && this.Url.IsLocalUrl(form.Redirect))
+        {
+            return this.Redirect(form.Redirect);
+        }
+
         return this.RedirectToAction("Index", "Home", new { Area= "Leiter" });
     }
 }
