@@ -18,6 +18,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 
         options.LoginPath = "/login";
+        options.LogoutPath = "/logout";
         options.AccessDeniedPath = "/login/accessdenied";
         options.SlidingExpiration = true;
         options.ReturnUrlParameter = "redirect";
