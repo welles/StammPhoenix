@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using StammPhoenix.Web.Extensions
+
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="utf-8"/>
@@ -57,11 +59,11 @@
                     <a class="nav-link" href="@Url.Action("Index", "Impressum")">Impressum</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ms-auto me-0 ">
+            <ul class="navbar-nav ms-auto me-2 ">
                 @if (User.Identity?.IsAuthenticated == true)
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index", "Home", new { area = "Leiter" })">Leiterbereich</a>
+                        <span class="navbar-text">Hallo, @(User.Identity.GetGivenName())!</span>
                     </li>
                 }
                 else
