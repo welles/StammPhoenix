@@ -36,6 +36,41 @@ namespace StammPhoenix.Persistence
             return await this.PlannedEvents.ToArrayAsync();
         }
 
+        public async Task<LoginUser?> FindUserById(string id)
+        {
+            return await this.LoginUsers.FindAsync(id);
+        }
+
+        public async Task CreateUser(LoginUser user)
+        {
+            await this.LoginUsers.AddAsync(user);
+
+            await this.SaveChangesAsync();
+        }
+
+        public async Task UpdateSetting(string name, object value)
+        {
+            var valueString = value.ToString();
+
+            if (valueString == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            var setting = await this.Settings.FindAsync(name);
+
+            if (setting == null)
+            {
+                throw new InvalidOperationException($"Setting with name \"{name}\" does not exist!");
+            }
+
+            setting.Value = valueString;
+
+            this.Settings.Update(setting);
+
+            await this.SaveChangesAsync();
+        }
+
         public async Task<T?> GetSetting<T>(string name)
         {
             var setting = await this.Settings.FindAsync(name);
