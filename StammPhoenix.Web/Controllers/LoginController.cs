@@ -27,6 +27,12 @@ public class LoginController : Controller
         return this.View();
     }
 
+    [HttpGet]
+    public IActionResult AccessDenied()
+    {
+        return this.View();
+    }
+
     [HttpPost]
     public async Task<IActionResult> Index(LoginModel form)
     {
