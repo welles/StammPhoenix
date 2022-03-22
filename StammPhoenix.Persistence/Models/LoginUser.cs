@@ -1,4 +1,6 @@
-﻿#pragma warning disable CS8618 // Disable nullable warning
+﻿using StammPhoenix.Persistence.Constants;
+
+#pragma warning disable CS8618 // Disable nullable warning
 namespace StammPhoenix.Persistence.Models
 {
     public class LoginUser
@@ -12,5 +14,7 @@ namespace StammPhoenix.Persistence.Models
         public bool IsLocked { get; set; }
 
         public bool NeedPasswordChange { get; set; }
+
+        public Role Role { get; set; }
     }
 }
