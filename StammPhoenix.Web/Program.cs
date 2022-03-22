@@ -1,12 +1,6 @@
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using NUglify.Css;
 using NUglify.JavaScript;
-using StammPhoenix.Authentication.Managers;
-using StammPhoenix.Authentication.Models;
-using StammPhoenix.Authentication.Store;
-using StammPhoenix.Authentication.Utility;
 using StammPhoenix.Persistence;
 using StammPhoenix.Web.Core;
 
@@ -15,30 +9,24 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IDatabaseContext, DatabaseContext>();
+builder.Services.AddTransient<IDatabaseContext, DatabaseContext>();
 
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
-    .AddUserManager<ApplicationUserManager>()
-    .AddSignInManager<ApplicationSignInManager>();
-builder.Services.AddTransient<IUserStore<ApplicationUser>, ApplicationUserStore>();
-builder.Services.AddTransient<IUserClaimStore<ApplicationUser>, ApplicationUserStore>();
-builder.Services.AddTransient<IUserRoleStore<ApplicationUser>, ApplicationUserStore>();
-builder.Services.AddTransient<IRoleStore<ApplicationRole>, ApplicationRoleStore>();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.HttpOnly = true;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 
-builder.Services.Replace(ServiceDescriptor.Transient<IPasswordHasher<ApplicationUser>, BCryptPasswordHasher<ApplicationUser>>());
+        options.LoginPath = "/login";
+        options.AccessDeniedPath = "/login/accessdenied";
+        options.SlidingExpiration = true;
+    });
 
 builder.Services.AddTransient(WebMapper.Create);
 
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    // Cookie settings
-    options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+builder.Services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
 
-    options.LoginPath = "/login";
-    options.AccessDeniedPath = "/login/accessdenied";
-    options.SlidingExpiration = true;
-});
+builder.Services.AddTransient<InitialSetupMiddleware>();
 
 builder.Services.AddWebOptimizer(pipeline =>
 {
@@ -84,7 +72,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<InitialSetupMiddleware>();
 
 app.MapControllerRoute(
     name: "default",
