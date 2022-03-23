@@ -29,6 +29,7 @@ builder.Services.AddTransient(WebMapper.Create);
 builder.Services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
 
 builder.Services.AddTransient<InitialSetupMiddleware>();
+builder.Services.AddTransient<NeedsPasswordChangeMiddleware>();
 
 builder.Services.AddWebOptimizer(pipeline =>
 {
@@ -78,6 +79,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseMiddleware<InitialSetupMiddleware>();
+app.UseMiddleware<NeedsPasswordChangeMiddleware>();
 
 app.MapControllerRoute(
     name : "areas",
