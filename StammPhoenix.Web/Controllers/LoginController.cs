@@ -1,10 +1,12 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StammPhoenix.Persistence;
 using StammPhoenix.Persistence.Models;
 using StammPhoenix.Web.Core;
+using StammPhoenix.Web.Extensions;
 using StammPhoenix.Web.Models.Login;
 
 namespace StammPhoenix.Web.Controllers;
@@ -131,5 +133,77 @@ public class LoginController : Controller
         }
 
         return this.RedirectToAction("Index", "Home", new { Area= "Leiter" });
+    }
+
+    [HttpGet]
+    [Authorize]
+    public IActionResult ChangePassword()
+    {
+        return this.View();
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> ChangePassword(ChangePasswordModel form)
+    {
+        if (string.IsNullOrWhiteSpace(form.OldPassword))
+        {
+            this.HttpContext.SetTempCookie("ChangePasswordErrorMessage", "Das alte Passwort muss angegeben werden.");
+
+            return this.RedirectToAction("ChangePassword", "Login", new {redirect = form.Redirect});
+        }
+
+        if (string.IsNullOrWhiteSpace(form.NewPassword))
+        {
+            this.HttpContext.SetTempCookie("ChangePasswordErrorMessage", "Das neue Passwort muss angegeben werden.");
+
+            return this.RedirectToAction("ChangePassword", "Login", new {redirect = form.Redirect});
+        }
+
+        if (string.IsNullOrWhiteSpace(form.NewPasswordRepeat) || !form.NewPasswordRepeat.Equals(form.NewPassword))
+        {
+            this.HttpContext.SetTempCookie("ChangePasswordErrorMessage", "Das Werte für das neue Passwort müssen übereinstimmen.");
+
+            return this.RedirectToAction("ChangePassword", "Login", new {redirect = form.Redirect});
+        }
+
+        if (form.NewPassword.Equals(form.OldPassword))
+        {
+            this.HttpContext.SetTempCookie("ChangePasswordErrorMessage", "Das neue Passwort muss sich vom alten unterscheiden.");
+
+            return this.RedirectToAction("ChangePassword", "Login", new {redirect = form.Redirect});
+        }
+
+        var userId = this.HttpContext.GetUserId();
+
+        var user = await this.DatabaseContext.FindUserById(userId);
+
+        if (user == null)
+        {
+            this.HttpContext.SetTempCookie("ChangePasswordErrorMessage", "Es existiert kein Benutzer mit diesem Benutzernamen.");
+
+            return this.RedirectToAction("ChangePassword", "Login", new {redirect = form.Redirect});
+        }
+
+        var passwordCorrect = this.PasswordHasher.VerifyHashedPassword(user.PasswordHash, form.OldPassword);
+
+        if (passwordCorrect == PasswordVerificationResult.Failed)
+        {
+            this.HttpContext.SetTempCookie("ChangePasswordErrorMessage", "Das alte Passwort ist nicht korrekt.");
+
+            return this.RedirectToAction("ChangePassword", "Login", new {redirect = form.Redirect});
+        }
+
+        var newPasswordHash = this.PasswordHasher.HashPassword(form.NewPassword!);
+
+        await this.DatabaseContext.ChangeUserPassword(userId, newPasswordHash);
+
+        await this.DatabaseContext.ChangeUserNeedsPasswordChange(userId, false);
+
+        await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+        this.HttpContext.SetTempCookie("LoginInfoMessage", "Das Passwort wurde erfolgreich geändert. Bitte mit dem neuen Passwort neu anmelden.");
+
+        return this.RedirectToAction("Index", "Login", new {redirect = form.Redirect});
     }
 }
