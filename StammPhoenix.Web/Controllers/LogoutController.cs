@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StammPhoenix.Web.Extensions;
 
 namespace StammPhoenix.Web.Controllers;
 
@@ -13,6 +14,6 @@ public class LogoutController : Controller
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-        return this.RedirectToAction("Index", "Home");
+        return this.RedirectTo("Index", "Home");
     }
 }

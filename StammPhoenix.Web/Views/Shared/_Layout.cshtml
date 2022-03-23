@@ -29,47 +29,52 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Home")">Home</a>
+                    <a class="nav-link" href="@Url.To("Index", "Home")">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Gruppenstunden")">Gruppenstunden</a>
+                    <a class="nav-link" href="@Url.To("Index", "Gruppenstunden")">Gruppenstunden</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Stufen</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="@Url.Action("Woelflinge", "Stufe")">Wölflinge</a></li>
-                        <li><a class="dropdown-item" href="@Url.Action("Jungpfadfinder", "Stufe")">Jungpfadfinder</a></li>
-                        <li><a class="dropdown-item" href="@Url.Action("Pfadfinder", "Stufe")">Pfadfinder</a></li>
-                        <li><a class="dropdown-item" href="@Url.Action("Rover", "Stufe")">Rover</a></li>
+                        <li><a class="dropdown-item" href="@Url.To("Woelflinge", "Stufe")">Wölflinge</a></li>
+                        <li><a class="dropdown-item" href="@Url.To("Jungpfadfinder", "Stufe")">Jungpfadfinder</a></li>
+                        <li><a class="dropdown-item" href="@Url.To("Pfadfinder", "Stufe")">Pfadfinder</a></li>
+                        <li><a class="dropdown-item" href="@Url.To("Rover", "Stufe")">Rover</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Verband")">Verband</a>
+                    <a class="nav-link" href="@Url.To("Index", "Verband")">Verband</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Downloads")">Downloads</a>
+                    <a class="nav-link" href="@Url.To("Index", "Downloads")">Downloads</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Kontakt")">Kontakt</a>
+                    <a class="nav-link" href="@Url.To("Index", "Kontakt")">Kontakt</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Datenschutz")">Datenschutz</a>
+                    <a class="nav-link" href="@Url.To("Index", "Datenschutz")">Datenschutz</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Impressum")">Impressum</a>
+                    <a class="nav-link" href="@Url.To("Index", "Impressum")">Impressum</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto me-2 ">
-                @if (User.Identity?.IsAuthenticated == true)
+                @if (this.Context.IsAuthenticated())
                 {
-                    <li class="nav-item">
-                        <span class="navbar-text">Hallo, @(User.Identity.GetGivenName())!</span>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="leiterDropdown" role="button" data-bs-toggle="dropdown">Hallo, @(this.Context.GetUserGivenName())!</a>
+                        <ul class="dropdown-menu" aria-labelledby="leiterDropdown">
+                            <li><a class="dropdown-item" href="@Url.To("Index", "Home", "Leiter")">Zum Leiterbereich</a></li>
+                            <li><a class="dropdown-item disabled" href="#">Konto bearbeiten</a></li>
+                            <li><a class="dropdown-item" href="@Url.To("Index", "Logout")">Ausloggen</a></li>
+                        </ul>
                     </li>
                 }
                 else
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index", "Login")">Einloggen</a>
+                        <a class="nav-link" href="@Url.To("Index", "Login")">Einloggen</a>
                     </li>
                 }
             </ul>

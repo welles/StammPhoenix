@@ -3,6 +3,7 @@ using StammPhoenix.Persistence;
 using StammPhoenix.Persistence.Constants;
 using StammPhoenix.Persistence.Models;
 using StammPhoenix.Web.Core;
+using StammPhoenix.Web.Extensions;
 using StammPhoenix.Web.Models.InitialSetup;
 
 namespace StammPhoenix.Web.Controllers;
@@ -52,6 +53,6 @@ public class InitialSetupController : Controller
 
         await this.DatabaseContext.UpdateSetting(SettingNames.InitialSetupComplete, true);
 
-        return this.RedirectToAction("Index", "Login");
+        return this.RedirectTo("Index", "Login");
     }
 }
