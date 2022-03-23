@@ -66,6 +66,22 @@ public class LoginController : Controller
             return this.RedirectToAction("Index", "Login", new {redirect = form.Redirect});
         }
 
+        var passwordCorrect = this.PasswordHasher.VerifyHashedPassword(user.PasswordHash, form.Password);
+
+        if (passwordCorrect == PasswordVerificationResult.Failed)
+        {
+            this.HttpContext.SetTempCookie("LoginErrorMessage", "Das Passwort ist nicht korrekt.");
+
+            return this.RedirectToAction("Index", "Login", new {redirect = form.Redirect});
+        }
+
+        if (passwordCorrect == PasswordVerificationResult.SuccessRehashNeeded)
+        {
+            var newHash = this.PasswordHasher.HashPassword(form.Password);
+
+            await this.DatabaseContext.ChangeUserPassword(user.Id, newHash);
+        }
+
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Id),
