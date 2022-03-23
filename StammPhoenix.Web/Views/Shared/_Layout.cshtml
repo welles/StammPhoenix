@@ -1,4 +1,15 @@
 ﻿@using StammPhoenix.Web.Extensions
+@using Microsoft.AspNetCore.Html
+
+@functions
+{
+    IHtmlContent NavLink(string? url, string? text)
+    {
+        var active = this.Context.Request.Path == new PathString(url) ? "active" : string.Empty;
+
+        return Html.Raw($" <a class=\"nav-link {active}\" href=\"{url}\">{text}</a>");
+    }
+}
 
 <!DOCTYPE html>
 <html lang="de">
@@ -29,10 +40,10 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.To("Index", "Home")">Home</a>
+                    @NavLink(Url.To("Index", "Home"), "Home")
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.To("Index", "Gruppenstunden")">Gruppenstunden</a>
+                    @NavLink(Url.To("Index", "Gruppenstunden"), "Gruppenstunden")
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Stufen</a>
@@ -44,19 +55,19 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.To("Index", "Verband")">Verband</a>
+                    @NavLink(Url.To("Index", "Verband"), "Verband")
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.To("Index", "Downloads")">Downloads</a>
+                    @NavLink(Url.To("Index", "Downloads"), "Downloads")
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.To("Index", "Kontakt")">Kontakt</a>
+                    @NavLink(Url.To("Index", "Kontakt"), "Kontakt")
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.To("Index", "Datenschutz")">Datenschutz</a>
+                    @NavLink(Url.To("Index", "Datenschutz"), "Datenschutz")
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.To("Index", "Impressum")">Impressum</a>
+                    @NavLink(Url.To("Index", "Impressum"), "Impressum")
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto me-2 ">
@@ -74,7 +85,7 @@
                 else
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.To("Index", "Login")">Einloggen</a>
+                        @NavLink(Url.To("Index", "Login"), "Einloggen")
                     </li>
                 }
             </ul>
