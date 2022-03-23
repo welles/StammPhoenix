@@ -1,6 +1,5 @@
 ﻿using StammPhoenix.Persistence.Constants;
 
-#pragma warning disable CS8618 // Disable nullable warning
 namespace StammPhoenix.Persistence.Models
 {
     public class LoginUser

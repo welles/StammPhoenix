@@ -1,5 +1,4 @@
-﻿#pragma warning disable CS8618 // Disable nullable warning
-namespace StammPhoenix.Persistence.Models;
+﻿namespace StammPhoenix.Persistence.Models;
 
 public class PageContact
 {
