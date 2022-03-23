@@ -1,19 +1,48 @@
 ﻿using System.Security.Claims;
-using System.Security.Principal;
+using StammPhoenix.Persistence.Models;
 
 namespace StammPhoenix.Web.Extensions;
 
 public static class IdentityExtensions
 {
-    public static string GetGivenName(this IIdentity? identity)
+    public static bool IsAuthenticated(this HttpContext context)
     {
-        var claimsIdentity = identity as ClaimsIdentity;
+        return context.User.Identity is ClaimsIdentity {IsAuthenticated: true};
+    }
 
-        if (claimsIdentity == null)
+    public static ClaimsIdentity GetUser(this HttpContext context)
+    {
+        if (context.User.Identity is not ClaimsIdentity identity)
         {
-            throw new ArgumentNullException(nameof(identity));
+            throw new InvalidOperationException("Current Identity is not set!");
         }
 
-        return claimsIdentity.Claims.Single(x => x.Type == ClaimTypes.GivenName).Value;
+        return identity;
+    }
+
+    public static string GetUserId(this HttpContext context)
+    {
+        if (context.User.Identity is not ClaimsIdentity identity)
+        {
+            throw new InvalidOperationException("Current Identity is not set!");
+        }
+
+        return identity.Name ?? throw new InvalidOperationException("Current Identity ID is not set!");;
+    }
+
+    public static string GetUserGivenName(this HttpContext context)
+    {
+        var identity = context.GetUser();
+
+        return identity.Claims.Single(x => x.Type == ClaimTypes.GivenName).Value;
+    }
+
+    public static bool NeedsPasswordChange(this ClaimsIdentity identity)
+    {
+        var claim = identity.Claims.SingleOrDefault(x => x.Type.Equals(nameof(LoginUser.NeedPasswordChange)));
+
+        var needsPasswordChange = claim != null && bool.Parse(claim.Value);
+
+        return needsPasswordChange;
     }
 }
