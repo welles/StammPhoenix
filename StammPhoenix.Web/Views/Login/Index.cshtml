@@ -1,4 +1,5 @@
 ﻿@using StammPhoenix.Web.Models.Login
+@using StammPhoenix.Web.Core
 
 <div class="card align-self-center">
     <div class="card-header">
@@ -17,6 +18,10 @@
                 <input type="password" class="form-control" placeholder="Passwort" name="@nameof(LoginModel.Password)" >
             </div>
             <button type="submit" class="btn btn-dark align-self-center">Einloggen</button>
+            @if (this.Context.TryGetTempCookie("LoginErrorMessage", out var errorMessage))
+            {
+                <div class="alert alert-danger mt-3 mb-0" role="alert">@errorMessage</div>
+            }
         }
     </div>
 </div>

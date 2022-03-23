@@ -36,21 +36,34 @@ public class LoginController : Controller
     [HttpPost]
     public async Task<IActionResult> Index(LoginModel form)
     {
-        if (string.IsNullOrWhiteSpace(form.Username) || string.IsNullOrWhiteSpace(form.Password))
+        if (string.IsNullOrWhiteSpace(form.Username))
         {
-            throw new NotImplementedException();
+            this.HttpContext.SetTempCookie("LoginErrorMessage", "Benutzername darf nicht leer sein.");
+
+            return this.RedirectToAction("Index", "Login", new {redirect = form.Redirect});
+        }
+
+        if (string.IsNullOrWhiteSpace(form.Password))
+        {
+            this.HttpContext.SetTempCookie("LoginErrorMessage", "Passwort darf nicht leer sein.");
+
+            return this.RedirectToAction("Index", "Login", new {redirect = form.Redirect});
         }
 
         var user = await this.DatabaseContext.FindUserById(form.Username);
 
         if (user == null)
         {
-            throw new NotImplementedException();
+            this.HttpContext.SetTempCookie("LoginErrorMessage", "Es existiert kein Benutzer mit diesem Benutzernamen.");
+
+            return this.RedirectToAction("Index", "Login", new {redirect = form.Redirect});
         }
 
         if (user.IsLocked)
         {
-            throw new NotImplementedException();
+            this.HttpContext.SetTempCookie("LoginErrorMessage", "Dieser Benutzer ist gesperrt. Bitte kontaktieren Sie den Administrator.");
+
+            return this.RedirectToAction("Index", "Login", new {redirect = form.Redirect});
         }
 
         var claims = new List<Claim>
