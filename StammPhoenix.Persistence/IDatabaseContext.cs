@@ -12,5 +12,9 @@ public interface IDatabaseContext
 
     Task<LoginUser?> FindUserById(string id);
 
+    Task ChangeUserPassword(string id, string passwordHash);
+
+    Task ChangeUserNeedsPasswordChange(string id, bool needsPasswordChange);
+
     Task CreateUser(LoginUser user);
 }

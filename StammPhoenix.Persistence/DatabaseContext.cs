@@ -41,6 +41,43 @@ namespace StammPhoenix.Persistence
             return await this.LoginUsers.FindAsync(id);
         }
 
+        public async Task ChangeUserPassword(string id, string passwordHash)
+        {
+            if (string.IsNullOrWhiteSpace(passwordHash))
+            {
+                throw new ArgumentException(nameof(passwordHash));
+            }
+
+            var user = await this.LoginUsers.FindAsync(id);
+
+            if (user == null)
+            {
+                throw new InvalidOperationException($"User with ID \"{id}\" does not exist!");
+            }
+
+            user.PasswordHash = passwordHash;
+
+            this.LoginUsers.Update(user);
+
+            await this.SaveChangesAsync();
+        }
+
+        public async Task ChangeUserNeedsPasswordChange(string id, bool needsPasswordChange)
+        {
+            var user = await this.LoginUsers.FindAsync(id);
+
+            if (user == null)
+            {
+                throw new InvalidOperationException($"User with ID \"{id}\" does not exist!");
+            }
+
+            user.NeedPasswordChange = needsPasswordChange;
+
+            this.LoginUsers.Update(user);
+
+            await this.SaveChangesAsync();
+        }
+
         public async Task CreateUser(LoginUser user)
         {
             await this.LoginUsers.AddAsync(user);
