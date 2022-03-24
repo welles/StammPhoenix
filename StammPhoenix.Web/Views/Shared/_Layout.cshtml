@@ -1,5 +1,6 @@
 ﻿@using StammPhoenix.Web.Extensions
 @using Microsoft.AspNetCore.Html
+@using System.Reflection
 
 @functions
 {
@@ -110,6 +111,8 @@
         <span class="navbar-text text-center w-100">© @DateTime.Now.Year Deutsche Pfadfinderschaft Sankt Georg 13/19/12 Stamm Phoenix Feldkirchen-Westerham</span>
     </nav>
 </footer>
+
+<div class="bottom-version font-monospace">v@(Assembly.GetExecutingAssembly()?.GetName()?.Version?.ToString() ?? "?.?.?.?")</div>
 
 <script src="@Url.Content("~/js/bundle.js")"></script>
 @await RenderSectionAsync("PageScript", false)
