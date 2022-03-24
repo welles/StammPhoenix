@@ -1,4 +1,4 @@
-name: Publish Docker Image
+name: Publish to GitHub Packages
 
 on:
   push:
@@ -10,6 +10,7 @@ env:
 
 jobs:
   build-and-push-image:
+    name: Push Docker image to GitHub Packages
     runs-on: ubuntu-latest
     permissions:
       contents: read
