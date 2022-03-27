@@ -41,7 +41,8 @@ public class InitialSetupController : Controller
 
         var user = new LoginUser
         {
-            Id = form.Username,
+            Id = Guid.NewGuid().ToString().ToUpper(),
+            Email = form.Username,
             Name = form.DisplayName,
             PasswordHash = hashedPassword,
             IsLocked = false,

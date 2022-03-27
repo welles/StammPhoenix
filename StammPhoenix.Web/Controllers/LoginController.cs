@@ -38,9 +38,9 @@ public class LoginController : Controller
     [HttpPost]
     public async Task<IActionResult> Index(LoginModel form)
     {
-        if (string.IsNullOrWhiteSpace(form.Username))
+        if (string.IsNullOrWhiteSpace(form.Email))
         {
-            this.HttpContext.SetTempCookie("LoginErrorMessage", "Benutzername darf nicht leer sein.");
+            this.HttpContext.SetTempCookie("LoginErrorMessage", "E-Mail-Adresse darf nicht leer sein.");
 
             return this.RedirectTo("Index", "Login", redirect: form.Redirect);
         }
@@ -52,7 +52,7 @@ public class LoginController : Controller
             return this.RedirectTo("Index", "Login", redirect: form.Redirect);
         }
 
-        var user = await this.DatabaseContext.FindUserById(form.Username);
+        var user = await this.DatabaseContext.FindUserByEmail(form.Email);
 
         if (user == null)
         {
@@ -87,6 +87,7 @@ public class LoginController : Controller
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Id),
+            new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.GivenName, user.Name),
             new Claim(ClaimTypes.Role, user.Role.ToString())
         };
