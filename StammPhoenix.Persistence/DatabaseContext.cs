@@ -61,6 +61,11 @@ namespace StammPhoenix.Persistence
             return await this.LoginUsers.FindAsync(id);
         }
 
+        public async Task<LoginUser?> FindUserByEmail(string email)
+        {
+            return await this.LoginUsers.SingleOrDefaultAsync(x => x.Email.ToUpper().Equals(email.ToUpper()));
+        }
+
         public async Task ChangeUserPassword(string id, string passwordHash)
         {
             if (string.IsNullOrWhiteSpace(passwordHash))
