@@ -1,14 +1,17 @@
 ﻿#pragma warning disable CS8618 // Disable nullable warning
 using System.ComponentModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using StammPhoenix.Persistence.Constants;
 using StammPhoenix.Persistence.Models;
 
 namespace StammPhoenix.Persistence
 {
-    public class DatabaseContext : DbContext, IDatabaseContext
+    public class DatabaseContext : DbContext, IDatabaseContext, IDesignTimeDbContextFactory<DatabaseContext>
     {
         private IDatabaseConnection DatabaseConnection { get; }
+
+        private string? ConnectionStringOverride { get; }
 
         private DbSet<LoginUser> LoginUsers { get; set; }
 
@@ -23,6 +26,18 @@ namespace StammPhoenix.Persistence
             this.DatabaseConnection = databaseConnection;
         }
 
+        public DatabaseContext(string connectionString)
+        {
+            this.ConnectionStringOverride = connectionString;
+        }
+
+        public DatabaseContext() { }
+
+        public DatabaseContext CreateDbContext(string[] args)
+        {
+            return new DatabaseContext(string.Join(" ", args));
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Setting>()
@@ -31,7 +46,7 @@ namespace StammPhoenix.Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(this.DatabaseConnection.GetConnectionString());
+            optionsBuilder.UseNpgsql(this.ConnectionStringOverride ?? this.DatabaseConnection.GetConnectionString());
 
             base.OnConfiguring(optionsBuilder);
         }
