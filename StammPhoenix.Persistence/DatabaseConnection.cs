@@ -1,48 +1,27 @@
 ﻿namespace StammPhoenix.Persistence
 {
-    public class DatabaseConnection
+    public class DatabaseConnection : IDatabaseConnection
     {
-        public const string HostParameter = "DATABASE_HOST";
-        public const string PortParameter = "DATABASE_PORT";
-        public const string DatabaseParameter = "DATABASE_NAME";
-        public const string UsernameParameter = "DATABASE_USERNAME";
-        public const string PasswordParameter = "DATABASE_PASSWORD";
-
         public DatabaseConnection()
         {
-            if (File.Exists(@"..\Dockerfile.env"))
-            {
-                var values = File.ReadAllLines(@"..\Dockerfile.env")
-                    .Select(x => x.Split("="))
-                    .ToDictionary(x => x[0], x => x[1]);
-
-                this.Host = values[HostParameter];
-                this.Port = values[PortParameter];
-                this.Database = values[DatabaseParameter];
-                this.Username = values[UsernameParameter];
-                this.Password = values[PasswordParameter];
-
-                return;
-            }
-
-            this.Host = this.GetEnvironmentVariable(HostParameter);
-            this.Port = this.GetEnvironmentVariable(PortParameter);
-            this.Database = this.GetEnvironmentVariable(DatabaseParameter);
-            this.Username = this.GetEnvironmentVariable(UsernameParameter);
-            this.Password = this.GetEnvironmentVariable(PasswordParameter);
+            this.Host = this.GetEnvironmentVariable("DATABASE_HOST");
+            this.Port = this.GetEnvironmentVariable("DATABASE_PORT");
+            this.Database = this.GetEnvironmentVariable("DATABASE_NAME");
+            this.Username = this.GetEnvironmentVariable("DATABASE_USERNAME");
+            this.Password = this.GetEnvironmentVariable("DATABASE_PASSWORD");
         }
 
-        public string Host { get; }
+        private string Host { get; }
 
-        public string Port { get; }
+        private string Port { get; }
 
-        public string Database { get; }
+        private string Database { get; }
 
-        public string Username { get; }
+        private string Username { get; }
 
-        public string Password { get; }
+        private string Password { get; }
 
-        public override string ToString()
+        public string GetConnectionString()
         {
             return $"Host={this.Host}:{this.Port};Database={this.Database};Username={this.Username};Password={this.Password}";
         }

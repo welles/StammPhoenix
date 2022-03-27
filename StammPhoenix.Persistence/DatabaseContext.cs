@@ -8,6 +8,8 @@ namespace StammPhoenix.Persistence
 {
     public class DatabaseContext : DbContext, IDatabaseContext
     {
+        private IDatabaseConnection DatabaseConnection { get; }
+
         private DbSet<LoginUser> LoginUsers { get; set; }
 
         private DbSet<PlannedEvent> PlannedEvents { get; set; }
@@ -15,6 +17,11 @@ namespace StammPhoenix.Persistence
         private DbSet<PageContact> PageContacts { get; set; }
 
         private DbSet<Setting> Settings { get; set; }
+
+        public DatabaseContext(IDatabaseConnection databaseConnection)
+        {
+            this.DatabaseConnection = databaseConnection;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,9 +31,7 @@ namespace StammPhoenix.Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connection = new DatabaseConnection();
-
-            optionsBuilder.UseNpgsql(connection.ToString());
+            optionsBuilder.UseNpgsql(this.DatabaseConnection.GetConnectionString());
 
             base.OnConfiguring(optionsBuilder);
         }

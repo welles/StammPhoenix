@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddTransient<IDatabaseConnection, DatabaseConnection>();
 builder.Services.AddTransient<IDatabaseContext, DatabaseContext>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
