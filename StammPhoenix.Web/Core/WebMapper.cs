@@ -4,15 +4,12 @@ using StammPhoenix.Web.Models.Kontakt;
 
 namespace StammPhoenix.Web.Core;
 
-public static class WebMapper
+public class WebMapper : Mapper
 {
-    public static IMapper Create(IServiceProvider serviceProvider)
+    private static readonly IConfigurationProvider Configuration = new MapperConfiguration(cfg =>
     {
-        var configuration = new MapperConfiguration(cfg =>
-        {
-            cfg.CreateMap<PageContact, KontaktModel>();
-        });
+        cfg.CreateMap<PageContact, KontaktModel>();
+    });
 
-        return configuration.CreateMapper();
-    }
+    public WebMapper() : base(WebMapper.Configuration) { }
 }
