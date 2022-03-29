@@ -1,5 +1,4 @@
-﻿using FakeItEasy;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using StammPhoenix.Web.Core;
 
 namespace StammPhoenix.Test.Core;
@@ -10,7 +9,7 @@ public static class WebMapperTests
     [Test]
     public static void ValidateConfiguration()
     {
-        var mapper = WebMapper.Create(A.Fake<IServiceProvider>());
+        var mapper = new WebMapper();
 
         mapper.ConfigurationProvider.AssertConfigurationIsValid();
     }

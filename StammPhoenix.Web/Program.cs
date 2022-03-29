@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using NUglify.Css;
 using NUglify.JavaScript;
@@ -25,7 +26,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ReturnUrlParameter = "redirect";
     });
 
-builder.Services.AddTransient(WebMapper.Create);
+builder.Services.AddTransient<IMapper, WebMapper>();
 
 builder.Services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
 
