@@ -33,7 +33,9 @@ public static class AssemblyExtensions
                 value = value.Substring(index + BuildVersionMetadataPrefix.Length);
                 if (DateTime.TryParseExact(value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result))
                 {
-                    return DateTime.SpecifyKind(result, DateTimeKind.Utc);
+                    var utc = DateTime.SpecifyKind(result, DateTimeKind.Utc);
+
+                    return TimeZoneInfo.ConvertTime(utc, TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time"));
                 }
             }
         }
