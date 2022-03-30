@@ -31,7 +31,7 @@ public static class AssemblyExtensions
             if (index > 0)
             {
                 value = value.Substring(index + BuildVersionMetadataPrefix.Length);
-                if (DateTime.TryParseExact(value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var result))
+                if (DateTime.TryParseExact(value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result))
                 {
                     return result;
                 }
