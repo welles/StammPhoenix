@@ -100,8 +100,8 @@
     @await RenderSectionAsync("AreaNavigation", false)
 </header>
 
-<main role="main" class="p-2">
-    <div class="container card d-flex shadow-sm h-100 p-2">
+<main role="main" class="ps-2 pe-2">
+    <div class="container card shadow-sm p-0 @ViewBag.ContainerClass">
         @RenderBody()
     </div>
 </main>

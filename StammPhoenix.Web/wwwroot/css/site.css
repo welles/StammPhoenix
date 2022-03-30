@@ -33,3 +33,7 @@ html, body {
     margin: 0;
     height: 100%;
 }
+
+.fit-content {
+    width: fit-content;
+}
