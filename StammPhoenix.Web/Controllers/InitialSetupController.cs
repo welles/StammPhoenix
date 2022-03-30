@@ -27,6 +27,7 @@ public class InitialSetupController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index(InitialSetupModel form)
     {
         if (string.IsNullOrWhiteSpace(form.Username)

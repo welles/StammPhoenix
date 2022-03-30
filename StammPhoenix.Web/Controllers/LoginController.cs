@@ -36,6 +36,7 @@ public class LoginController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index(LoginModel form)
     {
         if (string.IsNullOrWhiteSpace(form.Email))
@@ -145,6 +146,7 @@ public class LoginController : Controller
 
     [HttpPost]
     [Authorize]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> ChangePassword(ChangePasswordModel form)
     {
         if (string.IsNullOrWhiteSpace(form.OldPassword))
