@@ -151,5 +151,10 @@ namespace StammPhoenix.Persistence
 
             return (T) value;
         }
+
+        public async Task Migrate()
+        {
+            await this.Database.MigrateAsync();
+        }
     }
 }

@@ -13,8 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddTransient<IMapper, WebMapper>();
+builder.Services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
+
 builder.Services.AddTransient<IDatabaseConnection, DatabaseConnection>();
 builder.Services.AddTransient<IDatabaseContext, DatabaseContext>();
+builder.Services.AddSingleton<IDatabaseValidator, DatabaseValidator>();
 
 builder.Services.AddDataProtection()
     .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
@@ -38,11 +42,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ReturnUrlParameter = "redirect";
     });
 
-builder.Services.AddTransient<IMapper, WebMapper>();
-
-builder.Services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
-
-builder.Services.AddTransient<InitialSetupMiddleware>();
 builder.Services.AddTransient<NeedsPasswordChangeMiddleware>();
 
 builder.Services.AddWebOptimizer(pipeline =>
@@ -92,7 +91,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseMiddleware<InitialSetupMiddleware>();
 app.UseMiddleware<NeedsPasswordChangeMiddleware>();
 
 app.MapControllerRoute(
@@ -101,5 +99,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+await app.Services.GetRequiredService<IDatabaseValidator>().Validate();
 
 app.Run();
