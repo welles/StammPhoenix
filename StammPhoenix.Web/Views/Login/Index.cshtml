@@ -22,6 +22,11 @@
             <span class="input-group-text material-icons">lock</span>
             <input type="password" class="form-control" placeholder="Passwort" name="@nameof(LoginModel.Password)" >
         </div>
+        <div class="form-check mb-3">
+            <input class="form-check-input" id="@nameof(LoginModel.IsPersistent)" name="@nameof(LoginModel.IsPersistent)" type="checkbox" data-val="true" value="true" />
+            <label class="form-check-label" for="@nameof(LoginModel.IsPersistent)">Angemeldet bleiben</label>
+            <input name="@nameof(LoginModel.IsPersistent)" type="hidden" value="false" />
+        </div>
         <button type="submit" class="btn btn-dark align-self-center">Einloggen</button>
         @if (this.TempCookieService.TryGetTempCookie(this.Context, "LoginErrorMessage", out var errorMessage))
         {

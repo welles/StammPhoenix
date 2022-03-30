@@ -113,7 +113,7 @@ public class LoginController : Controller
             // value set here overrides the ExpireTimeSpan option of
             // CookieAuthenticationOptions set with AddCookie.
 
-            //IsPersistent = true,
+            IsPersistent = form.IsPersistent,
             // Whether the authentication session is persisted across
             // multiple requests. When used with cookies, controls
             // whether the cookie's lifetime is absolute (matching the
