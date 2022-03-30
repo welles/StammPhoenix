@@ -19,8 +19,6 @@ namespace StammPhoenix.Persistence
 
         private DbSet<PageContact> PageContacts { get; set; }
 
-        private DbSet<Setting> Settings { get; set; }
-
         public DatabaseContext(IDatabaseConnection databaseConnection)
         {
             this.DatabaseConnection = databaseConnection;
@@ -40,8 +38,7 @@ namespace StammPhoenix.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Setting>()
-                .HasData(new Setting {Id = SettingNames.InitialSetupComplete, Value = "false"});
+            base.OnModelCreating(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -108,48 +105,6 @@ namespace StammPhoenix.Persistence
             await this.LoginUsers.AddAsync(user);
 
             await this.SaveChangesAsync();
-        }
-
-        public async Task UpdateSetting(string name, object value)
-        {
-            var valueString = value.ToString();
-
-            if (valueString == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            var setting = await this.Settings.FindAsync(name);
-
-            if (setting == null)
-            {
-                throw new InvalidOperationException($"Setting with name \"{name}\" does not exist!");
-            }
-
-            setting.Value = valueString;
-
-            this.Settings.Update(setting);
-
-            await this.SaveChangesAsync();
-        }
-
-        public async Task<T?> GetSetting<T>(string name)
-        {
-            var setting = await this.Settings.FindAsync(name);
-
-            if (setting == null)
-            {
-                return default;
-            }
-
-            var value = TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(setting.Value);
-
-            if (value == null)
-            {
-                return default;
-            }
-
-            return (T) value;
         }
 
         public async Task Migrate()
