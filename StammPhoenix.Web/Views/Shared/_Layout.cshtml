@@ -109,7 +109,7 @@
 <footer class="p-2">
     <nav class="navbar navbar-light bg-light container rounded shadow-sm d-flex align-content-between flex-nowrap">
         <span class="navbar-text">© @DateTime.Now.Year Deutsche Pfadfinderschaft Sankt Georg 13/19/12 Stamm Phoenix Feldkirchen-Westerham</span>
-        <span class="navbar-text font-monospace">v@(Assembly.GetExecutingAssembly()?.GetName()?.Version?.ToString() ?? "?.?.?.?")</span>
+        <span class="navbar-text font-monospace">@Assembly.GetExecutingAssembly().GetVersion()</span>
     </nav>
 </footer>
 
