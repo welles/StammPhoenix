@@ -107,11 +107,12 @@
 </main>
 
 <footer class="p-2">
-    <nav class="navbar navbar-light bg-light container rounded shadow-sm d-flex align-content-between flex-nowrap">
+    <nav class="navbar navbar-light bg-light container rounded shadow-sm">
         <span class="navbar-text">© @DateTime.Now.Year Deutsche Pfadfinderschaft Sankt Georg 13/19/12 Stamm Phoenix Feldkirchen-Westerham</span>
-        <span class="navbar-text font-monospace">@Assembly.GetExecutingAssembly().GetVersion()</span>
     </nav>
 </footer>
+
+<span class="version">@Assembly.GetExecutingAssembly().GetVersion() | @Assembly.GetExecutingAssembly().GetBuildDate().ToString("g")</span>
 
 <script src="@Url.Content("~/js/bundle.js")"></script>
 @await RenderSectionAsync("PageScript", false)

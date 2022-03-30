@@ -37,3 +37,13 @@ html, body {
 .fit-content {
     width: fit-content;
 }
+
+.version {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+    font-family: monospace;
+    font-size: xx-small;
+}
