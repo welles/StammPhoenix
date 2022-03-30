@@ -112,7 +112,7 @@
     </nav>
 </footer>
 
-<span class="version">@Assembly.GetExecutingAssembly().GetVersion() | @Assembly.GetExecutingAssembly().GetBuildDate().ToString("g")</span>
+<span class="version">Build @Assembly.GetExecutingAssembly().GetVersion() (@Assembly.GetExecutingAssembly().GetBuildDate().ToLocalTime().ToString("dd.MM.yyyy HH:mm:ss zzz"))</span>
 
 <script src="@Url.Content("~/js/bundle.js")"></script>
 @await RenderSectionAsync("PageScript", false)
