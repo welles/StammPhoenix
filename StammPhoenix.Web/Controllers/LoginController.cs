@@ -17,10 +17,13 @@ public class LoginController : Controller
 
     private IPasswordHasher PasswordHasher { get; }
 
-    public LoginController(IDatabaseContext databaseContext, IPasswordHasher passwordHasher)
+    private ITempCookieService TempCookieService { get; }
+
+    public LoginController(IDatabaseContext databaseContext, IPasswordHasher passwordHasher, ITempCookieService tempCookieService)
     {
         this.DatabaseContext = databaseContext;
         this.PasswordHasher = passwordHasher;
+        this.TempCookieService = tempCookieService;
     }
 
     [HttpGet]
@@ -41,14 +44,14 @@ public class LoginController : Controller
     {
         if (string.IsNullOrWhiteSpace(form.Email))
         {
-            this.HttpContext.SetTempCookie("LoginErrorMessage", "E-Mail-Adresse darf nicht leer sein.");
+            this.TempCookieService.SetTempCookie(this.HttpContext, "LoginErrorMessage", "E-Mail-Adresse darf nicht leer sein.");
 
             return this.RedirectTo("Index", "Login", redirect: form.Redirect);
         }
 
         if (string.IsNullOrWhiteSpace(form.Password))
         {
-            this.HttpContext.SetTempCookie("LoginErrorMessage", "Passwort darf nicht leer sein.");
+            this.TempCookieService.SetTempCookie(this.HttpContext, "LoginErrorMessage", "Passwort darf nicht leer sein.");
 
             return this.RedirectTo("Index", "Login", redirect: form.Redirect);
         }
@@ -57,14 +60,14 @@ public class LoginController : Controller
 
         if (user == null)
         {
-            this.HttpContext.SetTempCookie("LoginErrorMessage", "Es existiert kein Benutzer mit diesem Benutzernamen.");
+            this.TempCookieService.SetTempCookie(this.HttpContext, "LoginErrorMessage", "Es existiert kein Benutzer mit diesem Benutzernamen.");
 
             return this.RedirectTo("Index", "Login", redirect: form.Redirect);
         }
 
         if (user.IsLocked)
         {
-            this.HttpContext.SetTempCookie("LoginErrorMessage", "Dieser Benutzer ist gesperrt. Bitte kontaktieren Sie den Administrator.");
+            this.TempCookieService.SetTempCookie(this.HttpContext, "LoginErrorMessage", "Dieser Benutzer ist gesperrt. Bitte kontaktieren Sie den Administrator.");
 
             return this.RedirectTo("Index", "Login", redirect: form.Redirect);
         }
@@ -73,7 +76,7 @@ public class LoginController : Controller
 
         if (passwordCorrect == PasswordVerificationResult.Failed)
         {
-            this.HttpContext.SetTempCookie("LoginErrorMessage", "Das Passwort ist nicht korrekt.");
+            this.TempCookieService.SetTempCookie(this.HttpContext, "LoginErrorMessage", "Das Passwort ist nicht korrekt.");
 
             return this.RedirectTo("Index", "Login", redirect: form.Redirect);
         }
@@ -151,28 +154,28 @@ public class LoginController : Controller
     {
         if (string.IsNullOrWhiteSpace(form.OldPassword))
         {
-            this.HttpContext.SetTempCookie("ChangePasswordErrorMessage", "Das alte Passwort muss angegeben werden.");
+            this.TempCookieService.SetTempCookie(this.HttpContext, "ChangePasswordErrorMessage", "Das alte Passwort muss angegeben werden.");
 
             return this.RedirectTo("ChangePassword", "Login", redirect: form.Redirect);
         }
 
         if (string.IsNullOrWhiteSpace(form.NewPassword))
         {
-            this.HttpContext.SetTempCookie("ChangePasswordErrorMessage", "Das neue Passwort muss angegeben werden.");
+            this.TempCookieService.SetTempCookie(this.HttpContext, "ChangePasswordErrorMessage", "Das neue Passwort muss angegeben werden.");
 
             return this.RedirectTo("ChangePassword", "Login", redirect: form.Redirect);
         }
 
         if (string.IsNullOrWhiteSpace(form.NewPasswordRepeat) || !form.NewPasswordRepeat.Equals(form.NewPassword))
         {
-            this.HttpContext.SetTempCookie("ChangePasswordErrorMessage", "Das Werte für das neue Passwort müssen übereinstimmen.");
+            this.TempCookieService.SetTempCookie(this.HttpContext, "ChangePasswordErrorMessage", "Das Werte für das neue Passwort müssen übereinstimmen.");
 
             return this.RedirectTo("ChangePassword", "Login", redirect: form.Redirect);
         }
 
         if (form.NewPassword.Equals(form.OldPassword))
         {
-            this.HttpContext.SetTempCookie("ChangePasswordErrorMessage", "Das neue Passwort muss sich vom alten unterscheiden.");
+            this.TempCookieService.SetTempCookie(this.HttpContext, "ChangePasswordErrorMessage", "Das neue Passwort muss sich vom alten unterscheiden.");
 
             return this.RedirectTo("ChangePassword", "Login", redirect: form.Redirect);
         }
@@ -183,7 +186,7 @@ public class LoginController : Controller
 
         if (user == null)
         {
-            this.HttpContext.SetTempCookie("ChangePasswordErrorMessage", "Es existiert kein Benutzer mit diesem Benutzernamen.");
+            this.TempCookieService.SetTempCookie(this.HttpContext, "ChangePasswordErrorMessage", "Es existiert kein Benutzer mit diesem Benutzernamen.");
 
             return this.RedirectTo("ChangePassword", "Login", redirect: form.Redirect);
         }
@@ -192,7 +195,7 @@ public class LoginController : Controller
 
         if (passwordCorrect == PasswordVerificationResult.Failed)
         {
-            this.HttpContext.SetTempCookie("ChangePasswordErrorMessage", "Das alte Passwort ist nicht korrekt.");
+            this.TempCookieService.SetTempCookie(this.HttpContext, "ChangePasswordErrorMessage", "Das alte Passwort ist nicht korrekt.");
 
             return this.RedirectTo("ChangePassword", "Login", redirect: form.Redirect);
         }
@@ -205,7 +208,7 @@ public class LoginController : Controller
 
         await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-        this.HttpContext.SetTempCookie("LoginInfoMessage", "Das Passwort wurde erfolgreich geändert. Bitte mit dem neuen Passwort neu anmelden.");
+        this.TempCookieService.SetTempCookie(this.HttpContext, "LoginInfoMessage", "Das Passwort wurde erfolgreich geändert. Bitte mit dem neuen Passwort neu anmelden.");
 
         return this.RedirectTo("Index", "Login", redirect: form.Redirect);
     }

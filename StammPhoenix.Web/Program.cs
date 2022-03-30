@@ -1,5 +1,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
 using NUglify.Css;
 using NUglify.JavaScript;
 using StammPhoenix.Persistence;
@@ -12,6 +15,15 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IDatabaseConnection, DatabaseConnection>();
 builder.Services.AddTransient<IDatabaseContext, DatabaseContext>();
+
+builder.Services.AddDataProtection()
+    .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
+    {
+        EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+        ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+    })
+    .PersistKeysToFileSystem(new DirectoryInfo(Environment.GetEnvironmentVariable("ASPNETCORE_DataProtection__Path")!));
+builder.Services.AddSingleton<ITempCookieService, TempCookieService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

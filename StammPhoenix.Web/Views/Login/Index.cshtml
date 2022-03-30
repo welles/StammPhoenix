@@ -1,6 +1,8 @@
 ﻿@using StammPhoenix.Web.Models.Login
 @using StammPhoenix.Web.Core
 
+@inject ITempCookieService TempCookieService
+
 @{
     ViewBag.ContainerClass = "fit-content";
 }
@@ -21,11 +23,11 @@
             <input type="password" class="form-control" placeholder="Passwort" name="@nameof(LoginModel.Password)" >
         </div>
         <button type="submit" class="btn btn-dark align-self-center">Einloggen</button>
-        @if (this.Context.TryGetTempCookie("LoginErrorMessage", out var errorMessage))
+        @if (this.TempCookieService.TryGetTempCookie(this.Context, "LoginErrorMessage", out var errorMessage))
         {
             <div class="alert alert-danger mt-3 mb-0" role="alert">@Html.Raw(errorMessage)</div>
         }
-        @if (this.Context.TryGetTempCookie("LoginInfoMessage", out var infoMessage))
+        @if (this.TempCookieService.TryGetTempCookie(this.Context, "LoginInfoMessage", out var infoMessage))
         {
             <div class="alert alert-info mt-3 mb-0" role="alert">@Html.Raw(infoMessage)</div>
         }

@@ -1,30 +1,26 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.DataProtection;
 using Newtonsoft.Json;
 
 namespace StammPhoenix.Web.Core;
 
-[PublicAPI]
-public static class TempCookieExtensions
+public class TempCookieService : ITempCookieService
 {
     private const string CookiePrefix = "TEMP-";
 
     private static readonly Regex CookieMatchRegex = new(@"TEMP-[0-9A-Z]{8}(?:-[0-9A-Z]{4}){3}-[0-9A-Z]{12}");
 
-    private static readonly IDataProtector DataProtector;
+    private IDataProtector DataProtector { get; }
 
-    static TempCookieExtensions()
+    public TempCookieService(IDataProtectionProvider dataProtectionProvider)
     {
-        TempCookieExtensions.DataProtector = DataProtectionProvider
-            .Create(nameof(TempCookieExtensions))
-            .CreateProtector(nameof(TempCookieExtensions));
+        this.DataProtector = dataProtectionProvider.CreateProtector(nameof(TempCookieService));
     }
 
-    public static void SetTempCookie(this HttpContext context, string key, string value)
+    public void SetTempCookie(HttpContext context, string key, string value)
     {
-        var data = TempCookieExtensions.GetCookies(context);
+        var data = this.GetCookies(context);
 
         var existingValue = data.Where(x => x.Value.DataKey.Equals(key)).ToArray();
 
@@ -43,15 +39,15 @@ public static class TempCookieExtensions
                 Remove = false
             };
 
-            data.Add(TempCookieExtensions.CookiePrefix + Guid.NewGuid().ToString().ToUpper(), newCookie);
+            data.Add(TempCookieService.CookiePrefix + Guid.NewGuid().ToString().ToUpper(), newCookie);
         }
 
-        TempCookieExtensions.UpdateCookies(context, data);
+        this.UpdateCookies(context, data);
     }
 
-    public static bool TryGetTempCookie(this HttpContext context, string key, out string? value)
+    public bool TryGetTempCookie(HttpContext context, string key, out string? value)
     {
-        var data = TempCookieExtensions.GetCookies(context);
+        var data = this.GetCookies(context);
 
         KeyValuePair<string,CookieValue>? existingValue;
 
@@ -79,14 +75,14 @@ public static class TempCookieExtensions
         value = existingValue.Value.Value.DataValue;
         existingValue.Value.Value.Remove = true;
 
-        TempCookieExtensions.UpdateCookies(context, data);
+        this.UpdateCookies(context, data);
 
         return true;
     }
 
     #region Helpers
 
-    private static void UpdateCookies(HttpContext context, IDictionary<string,CookieValue> cookies)
+    private void UpdateCookies(HttpContext context, IDictionary<string,CookieValue> cookies)
     {
         foreach (var (name, value) in cookies)
         {
@@ -100,7 +96,7 @@ public static class TempCookieExtensions
 
                 var unprotectedBytes = Encoding.UTF8.GetBytes(serializedData);
 
-                var protectedBytes = TempCookieExtensions.DataProtector.Protect(unprotectedBytes);
+                var protectedBytes = this.DataProtector.Protect(unprotectedBytes);
 
                 var protectedString = Convert.ToBase64String(protectedBytes);
 
@@ -109,9 +105,9 @@ public static class TempCookieExtensions
         }
     }
 
-    private static Dictionary<string,CookieValue> GetCookies(HttpContext context)
+    private Dictionary<string,CookieValue> GetCookies(HttpContext context)
     {
-        var cookies = context.Request.Cookies.Where(x => TempCookieExtensions.CookieMatchRegex.IsMatch(x.Key)).ToArray();
+        var cookies = context.Request.Cookies.Where(x => TempCookieService.CookieMatchRegex.IsMatch(x.Key)).ToArray();
 
         if (cookies.Length == 0)
         {
@@ -124,7 +120,7 @@ public static class TempCookieExtensions
         {
             var protectedBytes = Convert.FromBase64String(cookie.Value);
 
-            var unprotectedBytes = TempCookieExtensions.DataProtector.Unprotect(protectedBytes);
+            var unprotectedBytes = this.DataProtector.Unprotect(protectedBytes);
 
             var unprotectedString = Encoding.UTF8.GetString(unprotectedBytes);
 
