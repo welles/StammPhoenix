@@ -11,10 +11,7 @@ public static class AssemblyExtensions
         var version = assembly?.GetName().Version ?? new Version(0, 0, 0, 0);
 
         var sb = new StringBuilder("v");
-        sb.Append(version.Major);
-        if (version.Minor != 0) { sb.AppendFormat(".{0}", version.Minor); }
-        if (version.Build != 0) { sb.AppendFormat(".{0}", version.Build); }
-        if (version.Revision != 0) { sb.AppendFormat(".{0}", version.Revision); }
+        sb.Append(version);
 
         return sb.ToString();
     }

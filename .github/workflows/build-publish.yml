@@ -17,11 +17,7 @@ jobs:
 
       - name: Set build number
         id: buildnumber
-        run: |
-          $Version = Get-Content .\StammPhoenix.Web\StammPhoenix.Web.csproj | Select-String -Pattern "<Version>([\d.]+)<\/Version>" | % { $($_.Matches.Groups[1]).Value }
-          $BuildVersion = $Version.Substring(0, $Version.Length - 2)
-          $BuildVersion = $BuildVersion + ".${{github.run_number}}"
-          (Get-Content .\StammPhoenix.Web\StammPhoenix.Web.csproj) -replace $Version, $BuildVersion | Set-Content .\StammPhoenix.Web\StammPhoenix.Web.csproj
+        run: sed -i 's/.9999/.${{github.run_number}}/' ./StammPhoenix.Web/StammPhoenix.Web.csproj
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -58,11 +54,7 @@ jobs:
 
       - name: Set build number
         id: buildnumber
-        run: |
-          $Version = Get-Content .\StammPhoenix.Web\StammPhoenix.Web.csproj | Select-String -Pattern "<Version>([\d.]+)<\/Version>" | % { $($_.Matches.Groups[1]).Value }
-          $BuildVersion = $Version.Substring(0, $Version.Length - 2)
-          $BuildVersion = $BuildVersion + ".${{github.run_number}}"
-          (Get-Content .\StammPhoenix.Web\StammPhoenix.Web.csproj) -replace $Version, $BuildVersion | Set-Content .\StammPhoenix.Web\StammPhoenix.Web.csproj
+        run: sed -i 's/.9999/.${{github.run_number}}/' ./StammPhoenix.Web/StammPhoenix.Web.csproj
 
       - name: Log in to the Container registry
         uses: docker/login-action@v1
