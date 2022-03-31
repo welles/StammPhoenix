@@ -47,3 +47,7 @@ html, body {
     font-family: monospace;
     font-size: xx-small;
 }
+
+.table-fixed {
+    table-layout: fixed;
+}

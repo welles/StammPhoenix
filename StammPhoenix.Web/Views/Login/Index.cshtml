@@ -7,34 +7,34 @@
     ViewBag.ContainerClass = "fit-content";
 }
 
-<div class="card-header">
-    <h5 class="card-title mb-0">Leiterbereich</h5>
-</div>
-<div class="card-body">
-    @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "d-flex flex-column"}))
-    {
-        <input type="hidden" value="@Context.Request.Query["redirect"]" name="@nameof(LoginModel.Redirect)" />
-        <div class="input-group mb-3">
-            <span class="input-group-text material-icons">account_circle</span>
-            <input type="text" class="form-control" placeholder="Benutzername" name="@nameof(LoginModel.Email)" >
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text material-icons">lock</span>
-            <input type="password" class="form-control" placeholder="Passwort" name="@nameof(LoginModel.Password)" >
-        </div>
-        <div class="form-check mb-3">
-            <input class="form-check-input" id="@nameof(LoginModel.IsPersistent)" name="@nameof(LoginModel.IsPersistent)" type="checkbox" data-val="true" value="true" />
-            <label class="form-check-label" for="@nameof(LoginModel.IsPersistent)">Angemeldet bleiben</label>
-            <input name="@nameof(LoginModel.IsPersistent)" type="hidden" value="false" />
-        </div>
-        <button type="submit" class="btn btn-dark align-self-center">Einloggen</button>
-        @if (this.TempCookieService.TryGetTempCookie(this.Context, "LoginErrorMessage", out var errorMessage))
+<div class="card fit-content container p-0 shadow-sm">
+    <h5 class="card-header">Leiterbereich</h5>
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "d-flex flex-column"}))
         {
-            <div class="alert alert-danger mt-3 mb-0" role="alert">@Html.Raw(errorMessage)</div>
+            <input type="hidden" value="@Context.Request.Query["redirect"]" name="@nameof(LoginModel.Redirect)" />
+            <div class="input-group mb-3">
+                <span class="input-group-text material-icons">account_circle</span>
+                <input type="text" class="form-control" placeholder="Benutzername" name="@nameof(LoginModel.Email)" >
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text material-icons">lock</span>
+                <input type="password" class="form-control" placeholder="Passwort" name="@nameof(LoginModel.Password)" >
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" id="@nameof(LoginModel.IsPersistent)" name="@nameof(LoginModel.IsPersistent)" type="checkbox" data-val="true" value="true" />
+                <label class="form-check-label" for="@nameof(LoginModel.IsPersistent)">Angemeldet bleiben</label>
+                <input name="@nameof(LoginModel.IsPersistent)" type="hidden" value="false" />
+            </div>
+            <button type="submit" class="btn btn-dark align-self-center">Einloggen</button>
+            @if (this.TempCookieService.TryGetTempCookie(this.Context, "LoginErrorMessage", out var errorMessage))
+            {
+                <div class="alert alert-danger mt-3 mb-0" role="alert">@Html.Raw(errorMessage)</div>
+            }
+            @if (this.TempCookieService.TryGetTempCookie(this.Context, "LoginInfoMessage", out var infoMessage))
+            {
+                <div class="alert alert-info mt-3 mb-0" role="alert">@Html.Raw(infoMessage)</div>
+            }
         }
-        @if (this.TempCookieService.TryGetTempCookie(this.Context, "LoginInfoMessage", out var infoMessage))
-        {
-            <div class="alert alert-info mt-3 mb-0" role="alert">@Html.Raw(infoMessage)</div>
-        }
-    }
+    </div>
 </div>
