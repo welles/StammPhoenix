@@ -6,7 +6,10 @@ namespace StammPhoenix.Web.Core;
 
 internal class CssMinifier : Processor
 {
-    public CssMinifier(CssSettings settings) => this.Settings = settings;
+    public CssMinifier(CssSettings settings)
+    {
+        this.Settings = settings;
+    }
 
     private CssSettings Settings { get; set; }
 

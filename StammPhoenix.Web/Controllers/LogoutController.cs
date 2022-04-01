@@ -12,7 +12,7 @@ public class LogoutController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
         return this.RedirectTo("Index", "Home");
     }

@@ -6,7 +6,10 @@ namespace StammPhoenix.Web.Core;
 
 internal class JavaScriptMinifier : Processor
 {
-    public JavaScriptMinifier(CodeSettings settings) => this.Settings = settings;
+    public JavaScriptMinifier(CodeSettings settings)
+    {
+        this.Settings = settings;
+    }
 
     private CodeSettings Settings { get; set; }
 

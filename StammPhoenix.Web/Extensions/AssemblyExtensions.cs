@@ -16,10 +16,10 @@ public static class AssemblyExtensions
         return sb.ToString();
     }
 
+    private const string BuildVersionMetadataPrefix = "+build";
+
     public static DateTime GetBuildDate(this Assembly assembly)
     {
-        const string BuildVersionMetadataPrefix = "+build";
-
         var attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
         if (attribute?.InformationalVersion != null)
         {

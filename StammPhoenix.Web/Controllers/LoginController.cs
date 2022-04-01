@@ -127,7 +127,7 @@ public class LoginController : Controller
             // redirect response value.
         };
 
-        await HttpContext.SignInAsync(
+        await this.HttpContext.SignInAsync(
             CookieAuthenticationDefaults.AuthenticationScheme,
             new ClaimsPrincipal(claimsIdentity),
             authProperties);
