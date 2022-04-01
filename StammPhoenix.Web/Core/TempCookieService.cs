@@ -49,7 +49,7 @@ public class TempCookieService : ITempCookieService
     {
         var data = this.GetCookies(context);
 
-        KeyValuePair<string,CookieValue>? existingValue;
+        KeyValuePair<string, CookieValue>? existingValue;
 
         var cookies = data.Where(x => x.Value.DataKey.Equals(key)).ToArray();
 
@@ -59,14 +59,14 @@ public class TempCookieService : ITempCookieService
                 existingValue = cookies.Single();
                 break;
             case > 1:
-            {
-                existingValue = cookies.OrderByDescending(x => x.Value.TimeStamp).First();
-                foreach (var oldCookie in cookies.Except(new[] { existingValue.Value }))
                 {
-                    oldCookie.Value.Remove = true;
+                    existingValue = cookies.OrderByDescending(x => x.Value.TimeStamp).First();
+                    foreach (var oldCookie in cookies.Except(new[] { existingValue.Value }))
+                    {
+                        oldCookie.Value.Remove = true;
+                    }
+                    break;
                 }
-                break;
-            }
             default:
                 value = null;
                 return false;
@@ -82,7 +82,7 @@ public class TempCookieService : ITempCookieService
 
     #region Helpers
 
-    private void UpdateCookies(HttpContext context, IDictionary<string,CookieValue> cookies)
+    private void UpdateCookies(HttpContext context, IDictionary<string, CookieValue> cookies)
     {
         foreach (var (name, value) in cookies)
         {
@@ -105,16 +105,16 @@ public class TempCookieService : ITempCookieService
         }
     }
 
-    private Dictionary<string,CookieValue> GetCookies(HttpContext context)
+    private Dictionary<string, CookieValue> GetCookies(HttpContext context)
     {
         var cookies = context.Request.Cookies.Where(x => TempCookieService.CookieMatchRegex.IsMatch(x.Key)).ToArray();
 
         if (cookies.Length == 0)
         {
-            return new Dictionary<string,CookieValue>();
+            return new Dictionary<string, CookieValue>();
         }
 
-        var values = new Dictionary<string,CookieValue>();
+        var values = new Dictionary<string, CookieValue>();
 
         foreach (var cookie in cookies)
         {

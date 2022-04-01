@@ -67,8 +67,8 @@ builder.Services.AddWebOptimizer(pipeline =>
 
     if (!builder.Environment.IsDevelopment())
     {
-        css.Processors.Add(new CssMinifier(new CssSettings {CommentMode = CssComment.None}));
-        javascript.Processors.Add(new JavaScriptMinifier(new CodeSettings {PreserveImportantComments = false}));
+        css.Processors.Add(new CssMinifier(new CssSettings { CommentMode = CssComment.None }));
+        javascript.Processors.Add(new JavaScriptMinifier(new CodeSettings { PreserveImportantComments = false }));
     }
 });
 
@@ -94,8 +94,8 @@ app.UseAuthorization();
 app.UseMiddleware<NeedsPasswordChangeMiddleware>();
 
 app.MapControllerRoute(
-    name : "areas",
-    pattern : "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -7,7 +7,7 @@ public static class IdentityExtensions
 {
     public static bool IsAuthenticated(this HttpContext context)
     {
-        return context.User.Identity is ClaimsIdentity {IsAuthenticated: true};
+        return context.User.Identity is ClaimsIdentity { IsAuthenticated: true };
     }
 
     public static ClaimsIdentity GetUser(this HttpContext context)
@@ -27,7 +27,7 @@ public static class IdentityExtensions
             throw new InvalidOperationException("Current Identity is not set!");
         }
 
-        return identity.Name ?? throw new InvalidOperationException("Current Identity ID is not set!");;
+        return identity.Name ?? throw new InvalidOperationException("Current Identity ID is not set!"); ;
     }
 
     public static string GetUserGivenName(this HttpContext context)

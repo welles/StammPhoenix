@@ -19,28 +19,28 @@ public class DatabaseValidator : IDatabaseValidator
         this.PasswordHasher = passwordHasher;
     }
 
-     public async Task Validate()
-     {
-         await this.DatabaseContext.Migrate();
+    public async Task Validate()
+    {
+        await this.DatabaseContext.Migrate();
 
-         var admin = await this.DatabaseContext.FindUserByEmail(DatabaseValidator.AdminEmail);
+        var admin = await this.DatabaseContext.FindUserByEmail(DatabaseValidator.AdminEmail);
 
-         if (admin == null)
-         {
-             var adminPasswordHash = this.PasswordHasher.HashPassword(Environment.GetEnvironmentVariable("ADMIN_PASSWORD")!);
+        if (admin == null)
+        {
+            var adminPasswordHash = this.PasswordHasher.HashPassword(Environment.GetEnvironmentVariable("ADMIN_PASSWORD")!);
 
-             admin = new LoginUser
-             {
-                 Id = Guid.NewGuid().ToString().ToUpper(),
-                 Email = DatabaseValidator.AdminEmail,
-                 Name = DatabaseValidator.AdminName,
-                 Role = Role.Administrator,
-                 IsLocked = false,
-                 NeedPasswordChange = false,
-                 PasswordHash = adminPasswordHash
-             };
+            admin = new LoginUser
+            {
+                Id = Guid.NewGuid().ToString().ToUpper(),
+                Email = DatabaseValidator.AdminEmail,
+                Name = DatabaseValidator.AdminName,
+                Role = Role.Administrator,
+                IsLocked = false,
+                NeedPasswordChange = false,
+                PasswordHash = adminPasswordHash
+            };
 
-             await this.DatabaseContext.CreateUser(admin);
-         }
-     }
+            await this.DatabaseContext.CreateUser(admin);
+        }
+    }
 }
