@@ -51,3 +51,7 @@ html, body {
 .table-fixed {
     table-layout: fixed;
 }
+
+.card {
+    border: unset;
+}
