@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StammPhoenix.Persistence.Models;
 
-public class Entity
+public abstract class Entity
 {
     [Key]
     [Column("ID")]
