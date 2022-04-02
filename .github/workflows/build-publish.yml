@@ -11,6 +11,9 @@ jobs:
   docker-hub:
     name: Push to Docker Hub
     runs-on: ubuntu-latest
+    concurrency:
+      group: docker-deployment
+      cancel-in-progress: false
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -42,6 +45,9 @@ jobs:
   github-packages:
     name: Push to GitHub Packages
     runs-on: ubuntu-latest
+    concurrency:
+      group: github-deployment
+      cancel-in-progress: false
     env:
       REGISTRY: ghcr.io
       IMAGE_NAME: ${{ github.repository }}
