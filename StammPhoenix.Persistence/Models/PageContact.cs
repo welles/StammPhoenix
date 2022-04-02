@@ -1,8 +1,13 @@
-﻿namespace StammPhoenix.Persistence.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace StammPhoenix.Persistence.Models;
 
 public class PageContact
 {
-    public string Id { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid Id { get; set; }
 
     public string Name { get; set; }
 
