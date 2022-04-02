@@ -27,11 +27,11 @@
                 <input name="@nameof(LoginModel.IsPersistent)" type="hidden" value="false" />
             </div>
             <button type="submit" class="btn btn-dark align-self-center">Einloggen</button>
-            @if (this.TempCookieService.TryGetTempCookie(this.Context, "LoginErrorMessage", out var errorMessage))
+            @if (this.TempCookieService.TryGetTempCookie("LoginErrorMessage", out var errorMessage))
             {
                 <div class="alert alert-danger mt-3 mb-0" role="alert">@Html.Raw(errorMessage)</div>
             }
-            @if (this.TempCookieService.TryGetTempCookie(this.Context, "LoginInfoMessage", out var infoMessage))
+            @if (this.TempCookieService.TryGetTempCookie("LoginInfoMessage", out var infoMessage))
             {
                 <div class="alert alert-info mt-3 mb-0" role="alert">@Html.Raw(infoMessage)</div>
             }

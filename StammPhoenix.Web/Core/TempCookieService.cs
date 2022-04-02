@@ -7,19 +7,24 @@ namespace StammPhoenix.Web.Core;
 
 public class TempCookieService : ITempCookieService
 {
+    private IHttpContextAccessor HttpContextAccessor { get; }
+
     private const string CookiePrefix = "TEMP-";
 
     private static readonly Regex CookieMatchRegex = new(@"TEMP-[0-9A-Z]{8}(?:-[0-9A-Z]{4}){3}-[0-9A-Z]{12}");
 
     private IDataProtector DataProtector { get; }
 
-    public TempCookieService(IDataProtectionProvider dataProtectionProvider)
+    public TempCookieService(IDataProtectionProvider dataProtectionProvider, IHttpContextAccessor httpContextAccessor)
     {
         this.DataProtector = dataProtectionProvider.CreateProtector(nameof(TempCookieService));
+        this.HttpContextAccessor = httpContextAccessor;
     }
 
-    public void SetTempCookie(HttpContext context, string key, string value)
+    public void SetTempCookie(string key, string value)
     {
+        var context = this.HttpContextAccessor.HttpContext ?? throw new InvalidOperationException("HttpContext is not accessible in this location!");
+
         var data = this.GetCookies(context);
 
         var existingValue = data.Where(x => x.Value.DataKey.Equals(key)).ToArray();
@@ -45,8 +50,10 @@ public class TempCookieService : ITempCookieService
         this.UpdateCookies(context, data);
     }
 
-    public bool TryGetTempCookie(HttpContext context, string key, out string? value)
+    public bool TryGetTempCookie(string key, out string? value)
     {
+        var context = this.HttpContextAccessor.HttpContext ?? throw new InvalidOperationException("HttpContext is not accessible in this location!");
+
         var data = this.GetCookies(context);
 
         KeyValuePair<string, CookieValue>? existingValue;

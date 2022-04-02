@@ -2,7 +2,7 @@
 
 public interface ITempCookieService
 {
-    void SetTempCookie(HttpContext context, string key, string value);
+    void SetTempCookie(string key, string value);
 
-    bool TryGetTempCookie(HttpContext context, string key, out string? value);
+    bool TryGetTempCookie(string key, out string? value);
 }
