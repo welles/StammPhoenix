@@ -25,9 +25,16 @@ public class DatabaseValidator : IDatabaseValidator
 
         var admin = await this.DatabaseContext.FindUserByEmail(DatabaseValidator.AdminEmail);
 
+        var adminPassword = Environment.GetEnvironmentVariable("ADMIN_PASSWORD");
+
+        if (string.IsNullOrWhiteSpace(adminPassword))
+        {
+            throw new ArgumentNullException(nameof(adminPassword));
+        }
+
         if (admin == null)
         {
-            var adminPasswordHash = this.PasswordHasher.HashPassword(Environment.GetEnvironmentVariable("ADMIN_PASSWORD")!);
+            var adminPasswordHash = this.PasswordHasher.HashPassword(adminPassword);
 
             admin = new LoginUser
             {
