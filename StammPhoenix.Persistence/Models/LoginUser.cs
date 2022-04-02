@@ -8,7 +8,7 @@ namespace StammPhoenix.Persistence.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
+        public Guid Id { get; internal set; }
 
         public string Name { get; set; }
 
