@@ -85,12 +85,12 @@ public class LoginController : Controller
         {
             var newHash = this.PasswordHasher.HashPassword(form.Password);
 
-            await this.DatabaseContext.ChangeUserPassword(user.Id, newHash);
+            await this.DatabaseContext.ChangeUserPassword(user.Id.ToString(), newHash);
         }
 
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.Id),
+            new Claim(ClaimTypes.Name, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.GivenName, user.Name),
             new Claim(ClaimTypes.Role, user.Role.ToString())

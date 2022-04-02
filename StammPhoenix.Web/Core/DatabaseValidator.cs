@@ -38,7 +38,6 @@ public class DatabaseValidator : IDatabaseValidator
 
             admin = new LoginUser
             {
-                Id = Guid.NewGuid().ToString().ToUpper(),
                 Email = DatabaseValidator.AdminEmail,
                 Name = DatabaseValidator.AdminName,
                 Role = Role.Administrator,
