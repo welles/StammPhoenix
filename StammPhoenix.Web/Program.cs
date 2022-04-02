@@ -29,6 +29,8 @@ builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo(Environment.GetEnvironmentVariable("ASPNETCORE_DataProtection__Path")!));
 builder.Services.AddSingleton<ITempCookieService, TempCookieService>();
 
+builder.Services.AddSingleton<IRandomBackgroundService, RandomBackgroundService>();
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {

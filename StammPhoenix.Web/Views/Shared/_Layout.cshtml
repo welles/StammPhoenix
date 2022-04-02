@@ -1,6 +1,13 @@
 ﻿@using StammPhoenix.Web.Extensions
 @using Microsoft.AspNetCore.Html
 @using System.Reflection
+@using StammPhoenix.Web.Core
+
+@inject IRandomBackgroundService RandomBackgroundService
+
+@{
+    var backgroundData = this.RandomBackgroundService.GetRandomBackground();
+}
 
 @functions
 {
@@ -21,6 +28,16 @@
     <link rel="stylesheet" href="@Url.Content("~/css/bundle.css")" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     @await RenderSectionAsync("PageStyle", false)
+    <style>
+        @@keyframes bg-scrolling {
+            100% { background-position: @(backgroundData.Width)px @(backgroundData.Height)px }
+        }
+        body {
+            background: url(@backgroundData.Path) repeat 0 0;
+            animation: bg-scrolling 60s infinite;
+            animation-timing-function: linear;
+        }
+    </style>
 </head>
 <body>
 
