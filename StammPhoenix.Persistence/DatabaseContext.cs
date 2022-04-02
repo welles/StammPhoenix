@@ -100,11 +100,13 @@ namespace StammPhoenix.Persistence
             await this.SaveChangesAsync();
         }
 
-        public async Task CreateUser(LoginUser user)
+        public async Task<Guid> CreateUser(LoginUser user)
         {
             await this.LoginUsers.AddAsync(user);
 
             await this.SaveChangesAsync();
+
+            return user.Id;
         }
 
         public async Task Migrate()

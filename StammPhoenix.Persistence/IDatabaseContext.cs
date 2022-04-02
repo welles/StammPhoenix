@@ -14,7 +14,7 @@ public interface IDatabaseContext
 
     Task ChangeUserNeedsPasswordChange(string id, bool needsPasswordChange);
 
-    Task CreateUser(LoginUser user);
+    Task<Guid> CreateUser(LoginUser user);
 
     Task Migrate();
 }
