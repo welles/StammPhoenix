@@ -9,29 +9,23 @@ namespace StammPhoenix.Persistence.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<Guid>(
-                name: "Id",
-                table: "PlannedEvents",
-                type: "uuid",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "text");
+            migrationBuilder.Sql(@"
+                ALTER TABLE ""PlannedEvents""
+                ALTER COLUMN ""Id""
+                TYPE uuid
+                USING ""Id""::uuid;");
 
-            migrationBuilder.AlterColumn<Guid>(
-                name: "Id",
-                table: "PageContacts",
-                type: "uuid",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "text");
+            migrationBuilder.Sql(@"
+                ALTER TABLE ""PageContacts""
+                ALTER COLUMN ""Id""
+                TYPE uuid
+                USING ""Id""::uuid;");
 
-            migrationBuilder.AlterColumn<Guid>(
-                name: "Id",
-                table: "LoginUsers",
-                type: "uuid",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "text");
+            migrationBuilder.Sql(@"
+                ALTER TABLE ""LoginUsers""
+                ALTER COLUMN ""Id""
+                TYPE uuid
+                USING ""Id""::uuid;");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
