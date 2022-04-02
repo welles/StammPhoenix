@@ -2,24 +2,21 @@
 
 public class BCryptPasswordHasher : IPasswordHasher
 {
-    //private const int WorkLoad = 12;
-    private const string Salt = "$2a$12$/v4WQkKf4MH8AUma.6eLnO";
+    private const int WorkLoad = 16;
 
     public string HashPassword(string password)
     {
-        Console.WriteLine($"PROVIDED PASSWORD: \"{password}\"");
-
-        return BCrypt.Net.BCrypt.HashPassword(password, BCryptPasswordHasher.Salt);
+        return BCrypt.Net.BCrypt.HashPassword(password, BCryptPasswordHasher.WorkLoad);
     }
 
     public PasswordVerificationResult VerifyHashedPassword(string hashedPassword, string providedPassword)
     {
         var isValid = BCrypt.Net.BCrypt.Verify(providedPassword, hashedPassword);
 
-        // if (isValid && BCrypt.Net.BCrypt.PasswordNeedsRehash(hashedPassword, WorkLoad))
-        // {
-        //     return PasswordVerificationResult.SuccessRehashNeeded;
-        // }
+        if (isValid && BCrypt.Net.BCrypt.PasswordNeedsRehash(hashedPassword, BCryptPasswordHasher.WorkLoad))
+        {
+            return PasswordVerificationResult.SuccessRehashNeeded;
+        }
 
         return isValid ? PasswordVerificationResult.Success : PasswordVerificationResult.Failed;
     }
