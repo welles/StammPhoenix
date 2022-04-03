@@ -90,9 +90,9 @@
                 @if (this.Context.IsAuthenticated())
                 {
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="leiterDropdown" role="button" data-bs-toggle="dropdown">@this.Context.GetUserGivenName()</a>
-                        <ul class="dropdown-menu" aria-labelledby="leiterDropdown">
-                            <li><a class="dropdown-item" href="@Url.To("Index", "Home", "Leiter")">Zum Leiterbereich</a></li>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">@this.Context.GetUserGivenName()</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="@Url.To("Index", "Home", "Leiter")">Zum Leitendenbereich</a></li>
                             <li><a class="dropdown-item disabled" href="#">Konto bearbeiten</a></li>
                             <li><a class="dropdown-item" href="@Url.To("Index", "Logout")">Ausloggen</a></li>
                         </ul>

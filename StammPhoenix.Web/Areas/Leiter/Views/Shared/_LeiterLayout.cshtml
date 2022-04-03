@@ -8,6 +8,19 @@
         <a class="navbar-brand" href="/">
             <img src="@Url.Content("~/image/lilie-leiter-32.png")" height="32" alt="Leiterbereich">
         </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLeiter">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarLeiter">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Mein Konto</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="@Url.To("ChangePassword", "Login", redirect: Url.To("Index", "Home", "Leiter"))">Passwort ändern</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </nav>
 }
 
