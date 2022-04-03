@@ -52,6 +52,6 @@ html, body {
     table-layout: fixed;
 }
 
-.card {
-    border: unset;
+.card, .navbar {
+    border: 1px solid rgba(0,0,0,.125);
 }
