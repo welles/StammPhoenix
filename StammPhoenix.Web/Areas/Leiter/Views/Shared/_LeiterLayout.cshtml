@@ -5,7 +5,7 @@
 @section AreaNavigation
 {
     <nav class="navbar navbar-expand-lg navbar-light bg-light container rounded shadow-sm mt-2">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="@Url.To("Index", "Home", "Leiter")">
             <img src="@Url.Content("~/image/lilie-leiter-32.png")" height="32" alt="Leiterbereich">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLeiter">
@@ -16,7 +16,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Mein Konto</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="@Url.To("ChangePassword", "Login", redirect: Url.To("Index", "Home", "Leiter"))">Passwort ändern</a></li>
+                        <li><a class="dropdown-item" href="@Url.To("ChangePassword", "Konto", "Leiter", Url.To("Index", "Home", "Leiter"))">Passwort ändern</a></li>
                     </ul>
                 </li>
             </ul>

@@ -1,4 +1,4 @@
-﻿namespace StammPhoenix.Web.Models.Login;
+﻿namespace StammPhoenix.Web.Areas.Leiter.Models.Konto;
 
 public class ChangePasswordModel
 {
