@@ -2,7 +2,7 @@
 
 public class BCryptPasswordHasher : IPasswordHasher
 {
-    private const int WorkLoad = 16;
+    private const int WorkLoad = 12;
 
     public string HashPassword(string password)
     {
