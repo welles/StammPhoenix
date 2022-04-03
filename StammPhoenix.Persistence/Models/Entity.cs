@@ -9,4 +9,16 @@ public abstract class Entity
     [Column("ID")]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; internal set; }
+
+    [Column("CREATED_ON")]
+    public DateTime CreatedOn { get; internal set; }
+
+    [Column("CREATED_BY")]
+    public string CreatedBy { get; internal set; }
+
+    [Column("MODIFIED_ON")]
+    public DateTime? ModifiedOn { get; internal set; }
+
+    [Column("MODIFIED_BY")]
+    public string? ModifiedBy { get; internal set; }
 }
