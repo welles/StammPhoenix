@@ -1,8 +1,7 @@
-﻿#pragma warning disable CS8618 // Disable nullable warning
-using System.ComponentModel;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using StammPhoenix.Persistence.Constants;
 using StammPhoenix.Persistence.Models;
 
 namespace StammPhoenix.Persistence
@@ -10,6 +9,8 @@ namespace StammPhoenix.Persistence
     public class DatabaseContext : DbContext, IDatabaseContext, IDesignTimeDbContextFactory<DatabaseContext>
     {
         private IDatabaseConnection DatabaseConnection { get; }
+
+        private IHttpContextAccessor HttpContextAccessor { get; }
 
         private string? ConnectionStringOverride { get; }
 
@@ -19,9 +20,35 @@ namespace StammPhoenix.Persistence
 
         private DbSet<PageContact> PageContacts { get; set; }
 
-        public DatabaseContext(IDatabaseConnection databaseConnection)
+        public DatabaseContext(IDatabaseConnection databaseConnection, IHttpContextAccessor httpContextAccessor)
         {
             this.DatabaseConnection = databaseConnection;
+            this.HttpContextAccessor = httpContextAccessor;
+
+            this.SavingChanges += this.OnSavingChanges;
+        }
+
+        private void OnSavingChanges(object? sender, SavingChangesEventArgs e)
+        {
+            var entities = this.ChangeTracker.Entries().Where(x => x.Entity is Entity && x.State is EntityState.Added or EntityState.Modified);
+
+            var username = this.HttpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value ?? "SERVER";
+
+            foreach (var entry in entities)
+            {
+                var entity = (Entity) entry.Entity;
+
+                if (entry.State == EntityState.Added)
+                {
+                    entity.CreatedOn = DateTime.UtcNow;
+                    entity.CreatedBy = username;
+                }
+                else
+                {
+                    entity.ModifiedOn = DateTime.UtcNow;
+                    entity.ModifiedBy = username;
+                }
+            }
         }
 
         public DatabaseContext(string connectionString)
