@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Dynamic;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace StammPhoenix.Web.Extensions;
@@ -6,12 +7,13 @@ namespace StammPhoenix.Web.Extensions;
 public static class UrlExtensions
 {
     public static string? To(this IUrlHelper urlHelper, [AspMvcAction] string? action,
-        [AspMvcController] string? controller, [AspMvcArea] string? area = "", string? redirect = null)
+        [AspMvcController] string? controller, [AspMvcArea] string? area = null, string? redirect = null)
     {
-        dynamic routeValuesResult = new { Area = area };
+        dynamic routeValuesResult = new ExpandoObject();
+        routeValuesResult.area = area ?? string.Empty;
         if (redirect != null)
         {
-            routeValuesResult.Redirect = redirect;
+            routeValuesResult.redirect = redirect;
         }
 
         return urlHelper.Action(action, controller, (object)routeValuesResult);
