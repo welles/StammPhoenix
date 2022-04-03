@@ -59,7 +59,9 @@ namespace StammPhoenix.Persistence
 
         public async Task<LoginUser?> FindUserById(string id)
         {
-            return await this.LoginUsers.FindAsync(id);
+            var guid = Guid.Parse(id);
+
+            return await this.LoginUsers.FindAsync(guid);
         }
 
         public async Task<LoginUser?> FindUserByEmail(string email)
@@ -74,7 +76,9 @@ namespace StammPhoenix.Persistence
                 throw new ArgumentException(nameof(passwordHash));
             }
 
-            var user = await this.LoginUsers.FindAsync(id);
+            var guid = Guid.Parse(id);
+
+            var user = await this.LoginUsers.FindAsync(guid);
 
             if (user == null)
             {
@@ -90,7 +94,9 @@ namespace StammPhoenix.Persistence
 
         public async Task ChangeUserNeedsPasswordChange(string id, bool needsPasswordChange)
         {
-            var user = await this.LoginUsers.FindAsync(id);
+            var guid = Guid.Parse(id);
+
+            var user = await this.LoginUsers.FindAsync(guid);
 
             if (user == null)
             {
