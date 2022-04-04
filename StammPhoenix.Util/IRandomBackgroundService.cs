@@ -1,4 +1,4 @@
-﻿namespace StammPhoenix.Web.Core;
+﻿namespace StammPhoenix.Util;
 
 public interface IRandomBackgroundService
 {

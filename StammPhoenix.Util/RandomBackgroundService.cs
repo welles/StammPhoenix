@@ -1,14 +1,15 @@
-﻿using SixLabors.ImageSharp;
+﻿using Microsoft.AspNetCore.Hosting;
+using SixLabors.ImageSharp;
 
-namespace StammPhoenix.Web.Core;
+namespace StammPhoenix.Util;
 
 public class RandomBackgroundService: IRandomBackgroundService
 {
     private static Random Random = new Random();
 
-    private IWebHostEnvironment Environment { get; }
+    private IHostingEnvironment Environment { get; }
 
-    public RandomBackgroundService(IWebHostEnvironment environment)
+    public RandomBackgroundService(IHostingEnvironment environment)
     {
         this.Environment = environment;
     }
