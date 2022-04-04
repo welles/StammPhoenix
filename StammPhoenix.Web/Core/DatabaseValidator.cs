@@ -1,6 +1,7 @@
 ﻿using StammPhoenix.Persistence;
 using StammPhoenix.Persistence.Constants;
 using StammPhoenix.Persistence.Models;
+using StammPhoenix.Util;
 
 namespace StammPhoenix.Web.Core;
 
@@ -13,10 +14,13 @@ public class DatabaseValidator : IDatabaseValidator
 
     private IPasswordHasher PasswordHasher { get; }
 
-    public DatabaseValidator(IDatabaseContext databaseContext, IPasswordHasher passwordHasher)
+    private IEnvironmentVariables EnvironmentVariables { get; }
+
+    public DatabaseValidator(IDatabaseContext databaseContext, IPasswordHasher passwordHasher, IEnvironmentVariables environmentVariables)
     {
         this.DatabaseContext = databaseContext;
         this.PasswordHasher = passwordHasher;
+        this.EnvironmentVariables = environmentVariables;
     }
 
     public async Task Validate()
@@ -25,16 +29,9 @@ public class DatabaseValidator : IDatabaseValidator
 
         var admin = await this.DatabaseContext.FindUserByEmail(DatabaseValidator.AdminEmail);
 
-        var adminPassword = Environment.GetEnvironmentVariable("ADMIN_PASSWORD");
-
-        if (string.IsNullOrWhiteSpace(adminPassword))
-        {
-            throw new ArgumentNullException(nameof(adminPassword));
-        }
-
         if (admin == null)
         {
-            var adminPasswordHash = this.PasswordHasher.HashPassword(adminPassword);
+            var adminPasswordHash = this.PasswordHasher.HashPassword(this.EnvironmentVariables.AdminPassword);
 
             admin = new LoginUser
             {

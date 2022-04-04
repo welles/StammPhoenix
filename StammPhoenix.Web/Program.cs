@@ -6,12 +6,17 @@ using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationM
 using NUglify.Css;
 using NUglify.JavaScript;
 using StammPhoenix.Persistence;
+using StammPhoenix.Util;
 using StammPhoenix.Web.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllersWithViews();
+
+var environmentVariableService = new EnvironmentVariables();
+builder.Services.AddSingleton<IEnvironmentVariables>(environmentVariableService);
+environmentVariableService.Validate();
 
 builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -28,7 +33,7 @@ builder.Services.AddDataProtection()
         EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
         ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
     })
-    .PersistKeysToFileSystem(new DirectoryInfo(Environment.GetEnvironmentVariable("ASPNETCORE_DataProtection__Path")!));
+    .PersistKeysToFileSystem(new DirectoryInfo(environmentVariableService.DataProtectionPath));
 builder.Services.AddSingleton<ITempCookieService, TempCookieService>();
 
 builder.Services.AddSingleton<IRandomBackgroundService, RandomBackgroundService>();

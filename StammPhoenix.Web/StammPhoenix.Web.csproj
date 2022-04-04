@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StammPhoenix.Persistence\StammPhoenix.Persistence.csproj" />
+    <ProjectReference Include="..\StammPhoenix.Util\StammPhoenix.Util.csproj" />
   </ItemGroup>
 
 </Project>
