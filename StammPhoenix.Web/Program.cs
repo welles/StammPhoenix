@@ -11,7 +11,11 @@ using StammPhoenix.Web.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+    options.LowercaseQueryStrings = false;
+});
 builder.Services.AddControllersWithViews();
 
 var environmentVariableService = new EnvironmentVariables();
