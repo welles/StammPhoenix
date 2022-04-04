@@ -21,4 +21,11 @@ public abstract class Entity
 
     [Column("MODIFIED_BY")]
     public string? ModifiedBy { get; internal set; }
+
+    /// <summary>
+    /// PostgreSQL Trick: Use internal column xmin as concurrency token
+    /// </summary>
+    [Timestamp]
+    [Column("xmin", TypeName = "xid")]
+    public uint ConcurrencyToken { get; internal set; }
 }
