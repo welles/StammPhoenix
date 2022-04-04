@@ -13,6 +13,7 @@ public class EnvironmentVariables: IEnvironmentVariables
         this.DatabasePassword = this.GetValue("DATABASE_PASSWORD")!;
         this.AdminPassword = this.GetValue("ADMIN_PASSWORD")!;
         this.DataProtectionPath = this.GetValue("ASPNETCORE_DataProtection__Path")!;
+        this.DownloadFilesPath = this.GetValue("DOWNLOAD_FILES_PATH")!;
     }
 
     public void Validate()
@@ -48,4 +49,6 @@ public class EnvironmentVariables: IEnvironmentVariables
     public string AdminPassword { get; }
 
     public string DataProtectionPath { get; }
+
+    public string DownloadFilesPath { get; }
 }

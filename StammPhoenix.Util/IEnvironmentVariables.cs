@@ -17,4 +17,6 @@ public interface IEnvironmentVariables
     public string AdminPassword { get; }
 
     public string DataProtectionPath { get; }
+
+    public string DownloadFilesPath { get; }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.StaticFiles;
 using NUglify.Css;
 using NUglify.JavaScript;
 using StammPhoenix.Persistence;
@@ -41,6 +42,9 @@ builder.Services.AddDataProtection()
 builder.Services.AddSingleton<ITempCookieService, TempCookieService>();
 
 builder.Services.AddSingleton<IRandomBackgroundService, RandomBackgroundService>();
+
+builder.Services.AddTransient<IContentTypeProvider, FileExtensionContentTypeProvider>();
+builder.Services.AddSingleton<IDownloadFilesService, DownloadFilesService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

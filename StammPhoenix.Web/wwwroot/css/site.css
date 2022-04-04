@@ -64,3 +64,11 @@ html, body {
     margin-bottom: unset;
     padding: 0.5rem;
 }
+
+.table {
+    vertical-align: middle;
+}
+
+.table:not(.table-borderless) > :not(caption) > *:last-of-type > * {
+    border-bottom-style: hidden;
+}
