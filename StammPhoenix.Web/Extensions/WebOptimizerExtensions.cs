@@ -41,4 +41,14 @@ public static class WebOptimizerExtensions
 
         return bundle;
     }
+
+    public static string GetMinified(this IHostEnvironment environment, string file)
+    {
+        if (environment.IsDevelopment())
+        {
+            return file;
+        }
+
+        return file.Replace(".css", ".min.css").Replace(".js", ".min.js");
+    }
 }

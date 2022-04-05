@@ -63,19 +63,19 @@ builder.Services.AddTransient<NeedsPasswordChangeMiddleware>();
 builder.Services.AddWebOptimizer(pipeline =>
 {
     pipeline.AddCssBundle(builder.Environment, "/css/bundle.css",
-        "/css/bootstrap.css",
+        builder.Environment.GetMinified("/css/bootstrap.css"),
         "/css/site.css");
 
     pipeline.AddJsBundle(builder.Environment, "/js/bundle.js",
-        "/js/jquery-3.6.0.js",
-        "/js/bootstrap.bundle.js",
+        builder.Environment.GetMinified("/js/jquery-3.6.0.js"),
+        builder.Environment.GetMinified("/js/bootstrap.bundle.js"),
         "/js/site.js");
 
     pipeline.AddJsBundle(builder.Environment, "/js/bundle.pdf.js",
-        "/js/pdf.min.js");
+        builder.Environment.GetMinified("/js/pdf.js"));
 
     pipeline.AddJsBundle(builder.Environment, "/js/bundle.pdf.worker.js",
-        "/js/pdf.worker.min.js");
+        builder.Environment.GetMinified("/js/pdf.worker.js"));
 
     pipeline.AddJsBundle(builder.Environment, "/js/bundle.pages.downloads.js",
         "/js/pages/downloads.js");
