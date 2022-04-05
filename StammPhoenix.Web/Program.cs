@@ -72,10 +72,10 @@ builder.Services.AddWebOptimizer(pipeline =>
         "/js/site.js");
 
     pipeline.AddJsBundle(builder.Environment, "/js/bundle.pdf.js",
-        "/js/pdf.js");
+        "/js/pdf.min.js");
 
     pipeline.AddJsBundle(builder.Environment, "/js/bundle.pdf.worker.js",
-        "/js/pdf.worker.js");
+        "/js/pdf.worker.min.js");
 
     pipeline.AddJsBundle(builder.Environment, "/js/bundle.pages.downloads.js",
         "/js/pages/downloads.js");
