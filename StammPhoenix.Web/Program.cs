@@ -4,11 +4,10 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
 using Microsoft.AspNetCore.StaticFiles;
-using NUglify.Css;
-using NUglify.JavaScript;
 using StammPhoenix.Persistence;
 using StammPhoenix.Util;
 using StammPhoenix.Web.Core;
+using StammPhoenix.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,30 +62,23 @@ builder.Services.AddTransient<NeedsPasswordChangeMiddleware>();
 
 builder.Services.AddWebOptimizer(pipeline =>
 {
-    var css = pipeline.AddBundle("/css/bundle.css",
-            "text/css; charset=UTF-8",
-            "css/bootstrap.css",
-            "css/site.css")
-        .EnforceFileExtensions(".css")
-        .AdjustRelativePaths()
-        .Concatenate()
-        .FingerprintUrls()
-        .AddResponseHeader("X-Content-Type-Options", "nosniff");
+    pipeline.AddCssBundle(builder.Environment, "/css/bundle.css",
+        "/css/bootstrap.css",
+        "/css/site.css");
 
-    var javascript = pipeline.AddBundle("/js/bundle.js",
-            "text/javascript; charset=UTF-8",
-            "js/jquery-3.6.0.js",
-            "js/bootstrap.bundle.js",
-            "js/site.js")
-        .EnforceFileExtensions(".js")
-        .Concatenate()
-        .AddResponseHeader("X-Content-Type-Options", "nosniff");
+    pipeline.AddJsBundle(builder.Environment, "/js/bundle.js",
+        "/js/jquery-3.6.0.js",
+        "/js/bootstrap.bundle.js",
+        "/js/site.js");
 
-    if (!builder.Environment.IsDevelopment())
-    {
-        css.Processors.Add(new CssMinifier(new CssSettings { CommentMode = CssComment.None }));
-        javascript.Processors.Add(new JavaScriptMinifier(new CodeSettings { PreserveImportantComments = false }));
-    }
+    pipeline.AddJsBundle(builder.Environment, "/js/bundle.pdf.js",
+        "/js/pdf.js");
+
+    pipeline.AddJsBundle(builder.Environment, "/js/bundle.pdf.worker.js",
+        "/js/pdf.worker.js");
+
+    pipeline.AddJsBundle(builder.Environment, "/js/bundle.pages.downloads.js",
+        "/js/pages/downloads.js");
 });
 
 var app = builder.Build();
