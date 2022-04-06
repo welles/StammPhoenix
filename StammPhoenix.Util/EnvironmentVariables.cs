@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿namespace StammPhoenix.Util;
 
-namespace StammPhoenix.Util;
-
-public class EnvironmentVariables: IEnvironmentVariables
+public class EnvironmentVariables : IEnvironmentVariables
 {
     private readonly List<string> MissingVariables = new List<string>();
 

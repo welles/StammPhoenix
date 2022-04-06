@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace StammPhoenix.Util;
+﻿namespace StammPhoenix.Util;
 
 public interface IDownloadFilesService
 {
