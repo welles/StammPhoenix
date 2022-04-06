@@ -1,4 +1,6 @@
-﻿namespace StammPhoenix.Util;
+﻿using System.IO;
+
+namespace StammPhoenix.Util;
 
 public struct DownloadFile
 {

@@ -11,7 +11,7 @@ public class TempCookieService : ITempCookieService
 
     private const string CookiePrefix = "TEMP-";
 
-    private static readonly Regex CookieMatchRegex = new(@"TEMP-[0-9A-Z]{8}(?:-[0-9A-Z]{4}){3}-[0-9A-Z]{12}");
+    private static readonly Regex CookieMatchRegex = new Regex(@"TEMP-[0-9A-Z]{8}(?:-[0-9A-Z]{4}){3}-[0-9A-Z]{12}");
 
     private IDataProtector DataProtector { get; }
 
