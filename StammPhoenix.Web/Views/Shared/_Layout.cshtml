@@ -24,7 +24,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>DPSG Stamm Phoenix</title>
-    <link rel="stylesheet" href="@Url.Content("~/css/bundle.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/css/bundle.base.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/css/bundle.site.css")" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     @await RenderSectionAsync("PageStyle", false)
     <style>
@@ -128,7 +129,8 @@
 
 <span class="version d-none d-xxl-block">Build @Assembly.GetExecutingAssembly().GetVersion() (@Assembly.GetExecutingAssembly().GetBuildDate().ToString("dd.MM.yyyy HH:mm:ss"))</span>
 
-<script src="@Url.Content("~/js/bundle.js")"></script>
+<script src="@Url.Content("~/js/bundle.base.js")"></script>
+<script src="@Url.Content("~/js/bundle.site.js")"></script>
 @await RenderSectionAsync("PageScript", false)
 </body>
 </html>
