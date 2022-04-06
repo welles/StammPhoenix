@@ -36,15 +36,15 @@ namespace StammPhoenix.Web.Controllers
                     return this.RedirectTo("Index", "Downloads");
                 }
 
-                if(!this.ContentTypeProvider.TryGetContentType(file, out var contentType))
+                if(!this.ContentTypeProvider.TryGetContentType(file.Value.FilePath, out var contentType))
                 {
                     contentType = "application/octet-stream";
                 }
 
-                return this.PhysicalFile(file, contentType);
+                return this.PhysicalFile(file.Value.FilePath, contentType, file.Value.NameWithExtension);
             }
 
-            var files = this.DownloadFilesService.GetDownloadFiles().ToList();
+            var files = this.DownloadFilesService.GetFiles().ToList();
 
             var viewModel = new DownloadsViewModel {Files = files};
 

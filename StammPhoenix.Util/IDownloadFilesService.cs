@@ -2,7 +2,7 @@
 
 public interface IDownloadFilesService
 {
-    IEnumerable<DownloadFile> GetDownloadFiles();
+    IEnumerable<DownloadFile> GetFiles();
 
-    string? GetFile(string key);
+    DownloadFile? GetFile(string key);
 }

@@ -72,3 +72,7 @@ html, body {
 .table:not(.table-borderless) > :not(caption) > *:last-of-type > * {
     border-bottom-style: hidden;
 }
+
+.w-max-content {
+    width: max-content;
+}

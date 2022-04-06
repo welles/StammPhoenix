@@ -20,7 +20,7 @@ public class DownloadFilesService : IDownloadFilesService
         this.DataProtector = dataProtectionProvider.CreateProtector(nameof(DownloadFilesService));
     }
 
-    public IEnumerable<DownloadFile> GetDownloadFiles()
+    public IEnumerable<DownloadFile> GetFiles()
     {
         var files = Directory.GetFiles(this.EnvironmentVariables.DownloadFilesPath);
 
@@ -30,13 +30,11 @@ public class DownloadFilesService : IDownloadFilesService
             var protectedBytes = this.DataProtector.Protect(bytes);
             var urlFriendlyString = WebEncoders.Base64UrlEncode(protectedBytes);
 
-            var name = Path.GetFileNameWithoutExtension(file);
-
-            yield return new DownloadFile {Key = urlFriendlyString, Name = name};
+            yield return new DownloadFile {DownloadKey = urlFriendlyString, FilePath = file};
         }
     }
 
-    public string? GetFile(string key)
+    public DownloadFile? GetFile(string key)
     {
         if (string.IsNullOrWhiteSpace(key))
         {
@@ -49,7 +47,11 @@ public class DownloadFilesService : IDownloadFilesService
             var bytes = this.DataProtector.Unprotect(protectedBytes);
             var file = Encoding.UTF8.GetString(bytes);
 
-            return file;
+            return new DownloadFile
+            {
+                DownloadKey = key,
+                FilePath = file
+            };
         }
         catch
         {

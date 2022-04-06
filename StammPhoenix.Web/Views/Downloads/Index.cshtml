@@ -10,15 +10,19 @@
     <script src="/js/bundle.pages.downloads.js"></script>
 }
 
-<div class="container d-grid gap-2 p-0">
+<div class="container p-0">
+    <div class="row g-2">
     @foreach (var file in Model.Files)
     {
-        <div class="card" data-type="pdf-card">
-            <h5 class="card-header">@file.Name</h5>
-            <canvas class="card-img-top border-bottom"></canvas>
-            <div class="card-body d-grid">
-                <a class="btn btn-dark" href="@Url.To("Index", "Downloads", routeValues: new {key = file.Key})"><span class="material-icons">download</span> Herunterladen</a>
+        <div class="col d-flex justify-content-center">
+            <div class="card w-max-content" data-type="pdf-card">
+                <h5 class="card-header">@file.Name</h5>
+                <canvas class="border-bottom"></canvas>
+                <div class="card-body d-grid">
+                    <a class="btn btn-dark" href="@Url.To("Index", "Downloads", routeValues: new {key = file.DownloadKey})" download><span class="material-icons">download</span> Herunterladen</a>
+                </div>
             </div>
         </div>
     }
+    </div>
 </div>
