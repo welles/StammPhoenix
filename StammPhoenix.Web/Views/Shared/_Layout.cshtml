@@ -28,16 +28,13 @@
     <link rel="stylesheet" href="@Url.Content("~/css/bundle.base.css")" />
     <link rel="stylesheet" href="@Url.Content("~/css/bundle.site.css")" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    @await RenderSectionAsync("PageStyle", false)
+    @await this.RenderSectionAsync("PageStyle", false)
     <style>
-        @@keyframes bg-scrolling {
-            100% { background-position: @(backgroundData.Width)px @(backgroundData.Height)px }
-        }
-        body {
-            background: url(@backgroundData.Path) repeat 0 0;
-            animation: bg-scrolling 60s infinite;
-            animation-timing-function: linear;
-        }
+    :root {
+        --background-url: url(@backgroundData.Path);
+        --background-width: @(backgroundData.Width)px;
+        --background-height: @(backgroundData.Height)px
+    }
     </style>
 </head>
 <body>
@@ -67,10 +64,10 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Stufen</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="@Url.To("Woelflinge", "Stufe")">Wölflinge</a></li>
-                        <li><a class="dropdown-item" href="@Url.To("Jungpfadfinder", "Stufe")">Jungpfadfinder</a></li>
-                        <li><a class="dropdown-item" href="@Url.To("Pfadfinder", "Stufe")">Pfadfinder</a></li>
-                        <li><a class="dropdown-item" href="@Url.To("Rover", "Stufe")">Rover</a></li>
+                        <li><a class="dropdown-item" href="@this.Url.To("Woelflinge", "Stufe")">Wölflinge</a></li>
+                        <li><a class="dropdown-item" href="@this.Url.To("Jungpfadfinder", "Stufe")">Jungpfadfinder</a></li>
+                        <li><a class="dropdown-item" href="@this.Url.To("Pfadfinder", "Stufe")">Pfadfinder</a></li>
+                        <li><a class="dropdown-item" href="@this.Url.To("Rover", "Stufe")">Rover</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -104,22 +101,22 @@
                 else
                 {
                     <li class="nav-item">
-                        @NavLink(Url.To("Index", "Login"), "Einloggen")
+                        @this.NavLink(this.Url.To("Index", "Login"), "Einloggen")
                     </li>
                 }
             </ul>
         </div>
 
         <a class="navbar-brand ms-auto me-0 d-none d-lg-block" href="/">
-            <img src="@Url.Content("~/image/lilie-32.png")" alt="Lilie">
+            <img src="@this.Url.Content("~/image/lilie-32.png")" alt="Lilie">
         </a>
     </nav>
 
-    @await RenderSectionAsync("AreaNavigation", false)
+    @await this.RenderSectionAsync("AreaNavigation", false)
 </header>
 
 <main role="main" class="ps-2 pe-2">
-    @RenderBody()
+    @this.RenderBody()
 </main>
 
 <footer class="p-2">
@@ -132,6 +129,6 @@
 
 <script src="@Url.Content("~/js/bundle.base.js")"></script>
 <script src="@Url.Content("~/js/bundle.site.js")"></script>
-@await RenderSectionAsync("PageScript", false)
+@await this.RenderSectionAsync("PageScript", false)
 </body>
 </html>
