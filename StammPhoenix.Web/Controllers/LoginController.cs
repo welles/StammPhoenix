@@ -30,6 +30,11 @@ public class LoginController : Controller
     [HttpGet]
     public IActionResult Index()
     {
+        if (this.HttpContext.IsAuthenticated())
+        {
+            return this.RedirectTo("Index", "Home", "Leiter");
+        }
+
         return this.View();
     }
 
