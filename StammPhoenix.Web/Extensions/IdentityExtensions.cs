@@ -20,6 +20,19 @@ public static class IdentityExtensions
         return identity;
     }
 
+    public static string GetUserEmail(this HttpContext context)
+    {
+        if (context.User.Identity is not ClaimsIdentity identity)
+        {
+            throw new InvalidOperationException("Current Identity is not set!");
+        }
+
+        var email = identity.FindFirst(ClaimTypes.Email)?.Value ?? throw new InvalidOperationException("Current Identity Email is not set!");
+
+        return email;
+    }
+
+
     public static string GetUserId(this HttpContext context)
     {
         if (context.User.Identity is not ClaimsIdentity identity)
@@ -27,7 +40,7 @@ public static class IdentityExtensions
             throw new InvalidOperationException("Current Identity is not set!");
         }
 
-        return identity.Name ?? throw new InvalidOperationException("Current Identity ID is not set!"); ;
+        return identity.Name ?? throw new InvalidOperationException("Current Identity ID is not set!");
     }
 
     public static string GetUserGivenName(this HttpContext context)

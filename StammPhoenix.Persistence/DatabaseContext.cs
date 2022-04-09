@@ -137,6 +137,15 @@ namespace StammPhoenix.Persistence
             await this.SaveChangesAsync();
         }
 
+        public async Task ChangeUserEmail(LoginUser user, string newEmail)
+        {
+            user.Email = newEmail;
+
+            this.LoginUsers.Update(user);
+
+            await this.SaveChangesAsync();
+        }
+
         public async Task<Guid> CreateUser(LoginUser user)
         {
             await this.LoginUsers.AddAsync(user);

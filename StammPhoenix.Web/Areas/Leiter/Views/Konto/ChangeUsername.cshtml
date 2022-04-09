@@ -1,0 +1,26 @@
+﻿@using StammPhoenix.Web.Areas.Leiter.Models.Konto
+
+@inject ITempCookieService TempCookieService
+
+<div class="card container fit-content p-0 shadow-sm">
+    <h5 class="card-header">Neuen Benutzernamen festlegen</h5>
+    <div class="card-body">
+        @using (Html.BeginForm("ChangeUsername", "Konto", FormMethod.Post, new { @class = "d-flex flex-column d-grid gap-2"}))
+        {
+            <input type="hidden" value="@Context.Request.Query["redirect"]" name="@nameof(ChangeUsernameModel.Redirect)" />
+            <div class="input-group">
+                <span class="input-group-text material-icons">person</span>
+                <input type="text" autocomplete="current-username" class="form-control" placeholder="Aktueller Benutzername" value="@this.Context.GetUserEmail()" name="@nameof(ChangeUsernameModel.CurrentUsername)" disabled />
+            </div>
+            <div class="input-group">
+                <span class="input-group-text material-icons">person_add</span>
+                <input type="text" autocomplete="new-username" class="form-control" placeholder="Neuer Benutzername" name="@nameof(ChangeUsernameModel.NewUsername)" />
+            </div>
+            <button type="submit" class="btn btn-dark">Speichern</button>
+            @if (this.TempCookieService.TryGetTempCookie("ChangeUsernameErrorMessage", out var errorMessage))
+            {
+                <div class="alert alert-danger" role="alert">@Html.Raw(errorMessage)</div>
+            }
+        }
+    </div>
+</div>
