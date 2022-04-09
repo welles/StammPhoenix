@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
-using StammPhoenix.Util;
+using StammPhoenix.Util.Interfaces;
 using StammPhoenix.Web.Core;
 using StammPhoenix.Web.Extensions;
 using StammPhoenix.Web.Models.Downloads;

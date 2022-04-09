@@ -1,4 +1,4 @@
-﻿using StammPhoenix.Util;
+﻿using StammPhoenix.Util.Models;
 
 namespace StammPhoenix.Web.Models.Downloads;
 

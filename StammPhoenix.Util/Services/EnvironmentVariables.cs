@@ -1,4 +1,6 @@
-﻿namespace StammPhoenix.Util;
+﻿using StammPhoenix.Util.Interfaces;
+
+namespace StammPhoenix.Util.Services;
 
 public class EnvironmentVariables : IEnvironmentVariables
 {

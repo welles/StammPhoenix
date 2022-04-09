@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.WebUtilities;
+using StammPhoenix.Util.Interfaces;
+using StammPhoenix.Util.Models;
 
-namespace StammPhoenix.Util;
+namespace StammPhoenix.Util.Services;
 
 public class DownloadFilesService : IDownloadFilesService
 {

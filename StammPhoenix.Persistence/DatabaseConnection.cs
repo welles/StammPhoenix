@@ -1,4 +1,4 @@
-﻿using StammPhoenix.Util;
+﻿using StammPhoenix.Util.Interfaces;
 
 namespace StammPhoenix.Persistence
 {

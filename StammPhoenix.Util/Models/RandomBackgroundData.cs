@@ -1,4 +1,4 @@
-﻿namespace StammPhoenix.Util;
+﻿namespace StammPhoenix.Util.Models;
 
 public struct RandomBackgroundData
 {

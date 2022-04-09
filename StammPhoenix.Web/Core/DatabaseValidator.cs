@@ -1,7 +1,7 @@
 ﻿using StammPhoenix.Persistence;
 using StammPhoenix.Persistence.Constants;
 using StammPhoenix.Persistence.Models;
-using StammPhoenix.Util;
+using StammPhoenix.Util.Interfaces;
 
 namespace StammPhoenix.Web.Core;
 
