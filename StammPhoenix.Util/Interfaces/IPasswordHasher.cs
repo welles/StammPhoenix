@@ -1,4 +1,6 @@
-namespace StammPhoenix.Web.Core;
+using StammPhoenix.Util.Models;
+
+namespace StammPhoenix.Util.Interfaces;
 
 public interface IPasswordHasher
 {

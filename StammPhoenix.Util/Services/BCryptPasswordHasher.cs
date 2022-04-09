@@ -1,4 +1,7 @@
-﻿namespace StammPhoenix.Web.Core;
+﻿using StammPhoenix.Util.Interfaces;
+using StammPhoenix.Util.Models;
+
+namespace StammPhoenix.Util.Services;
 
 public class BCryptPasswordHasher : IPasswordHasher
 {
