@@ -1,9 +1,8 @@
-﻿using StammPhoenix.Persistence;
-using StammPhoenix.Persistence.Constants;
+﻿using StammPhoenix.Persistence.Constants;
 using StammPhoenix.Persistence.Models;
 using StammPhoenix.Util.Interfaces;
 
-namespace StammPhoenix.Web.Core;
+namespace StammPhoenix.Persistence;
 
 public class DatabaseValidator : IDatabaseValidator
 {

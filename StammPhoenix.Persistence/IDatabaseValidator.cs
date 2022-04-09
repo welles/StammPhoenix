@@ -1,4 +1,4 @@
-﻿namespace StammPhoenix.Web.Core;
+﻿namespace StammPhoenix.Persistence;
 
 public interface IDatabaseValidator
 {
