@@ -6,8 +6,8 @@ namespace StammPhoenix.Persistence.Models;
 public class PageContact : Entity
 {
     [Column("NAME")]
-    public string Name { get; set; }
+    public string Name { get; internal set; }
 
     [Column("PHONE_NUMBER")]
-    public string PhoneNumber { get; set; }
+    public string PhoneNumber { get; internal set; }
 }

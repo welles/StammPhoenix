@@ -96,20 +96,11 @@ namespace StammPhoenix.Persistence
             return await this.LoginUsers.SingleOrDefaultAsync(x => x.Email.ToUpper().Equals(email.ToUpper()));
         }
 
-        public async Task ChangeUserPassword(string id, string passwordHash)
+        public async Task ChangeUserPassword(LoginUser user, string passwordHash)
         {
             if (string.IsNullOrWhiteSpace(passwordHash))
             {
                 throw new ArgumentException(nameof(passwordHash));
-            }
-
-            var guid = Guid.Parse(id);
-
-            var user = await this.LoginUsers.FindAsync(guid);
-
-            if (user == null)
-            {
-                throw new InvalidOperationException($"User with ID \"{id}\" does not exist!");
             }
 
             user.PasswordHash = passwordHash;
@@ -119,17 +110,8 @@ namespace StammPhoenix.Persistence
             await this.SaveChangesAsync();
         }
 
-        public async Task ChangeUserNeedsPasswordChange(string id, bool needsPasswordChange)
+        public async Task ChangeUserNeedsPasswordChange(LoginUser user, bool needsPasswordChange)
         {
-            var guid = Guid.Parse(id);
-
-            var user = await this.LoginUsers.FindAsync(guid);
-
-            if (user == null)
-            {
-                throw new InvalidOperationException($"User with ID \"{id}\" does not exist!");
-            }
-
             user.NeedPasswordChange = needsPasswordChange;
 
             this.LoginUsers.Update(user);

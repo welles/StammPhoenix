@@ -7,20 +7,20 @@ namespace StammPhoenix.Persistence.Models;
 public class LoginUser : Entity
 {
     [Column("NAME")]
-    public string Name { get; set; }
+    public string Name { get; internal set; }
 
     [Column("EMAIL")]
-    public string Email { get; set; }
+    public string Email { get; internal set; }
 
     [Column("PASSWORD_HASH")]
-    public string PasswordHash { get; set; }
+    public string PasswordHash { get; internal set; }
 
     [Column("IS_LOCKED")]
-    public bool IsLocked { get; set; }
+    public bool IsLocked { get; internal set; }
 
     [Column("NEED_PASSWORD_CHANGE")]
-    public bool NeedPasswordChange { get; set; }
+    public bool NeedPasswordChange { get; internal set; }
 
     [Column("ROLE")]
-    public Role Role { get; set; }
+    public Role Role { get; internal set; }
 }

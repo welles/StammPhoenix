@@ -7,14 +7,14 @@ namespace StammPhoenix.Persistence.Models;
 public class PlannedEvent : Entity
 {
     [Column("NAME")]
-    public string Name { get; set; }
+    public string Name { get; internal set; }
 
     [Column("PARTICIPATING_RANKS")]
-    public Rank ParticipatingRanks { get; set; }
+    public Rank ParticipatingRanks { get; internal set; }
 
     [Column("START_DATE")]
-    public DateOnly StartDate { get; set; }
+    public DateOnly StartDate { get; internal set; }
 
     [Column("END_DATE")]
-    public DateOnly? EndDate { get; set; }
+    public DateOnly? EndDate { get; internal set; }
 }

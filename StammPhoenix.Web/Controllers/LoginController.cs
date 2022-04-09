@@ -91,7 +91,7 @@ public class LoginController : Controller
         {
             var newHash = this.PasswordHasher.HashPassword(form.Password);
 
-            await this.DatabaseContext.ChangeUserPassword(user.Id.ToString(), newHash);
+            await this.DatabaseContext.ChangeUserPassword(user, newHash);
         }
 
         var claims = new List<Claim>

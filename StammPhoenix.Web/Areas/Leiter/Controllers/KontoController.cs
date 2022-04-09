@@ -90,9 +90,9 @@ public class KontoController : Controller
 
         var newPasswordHash = this.PasswordHasher.HashPassword(form.NewPassword!);
 
-        await this.DatabaseContext.ChangeUserPassword(userId, newPasswordHash);
+        await this.DatabaseContext.ChangeUserPassword(user, newPasswordHash);
 
-        await this.DatabaseContext.ChangeUserNeedsPasswordChange(userId, false);
+        await this.DatabaseContext.ChangeUserNeedsPasswordChange(user, false);
 
         await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
