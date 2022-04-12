@@ -3,6 +3,7 @@
 @using StammPhoenix.Util.Interfaces
 
 @inject IRandomBackgroundService RandomBackgroundService
+@inject IAuth Auth
 
 @{
     var backgroundData = this.RandomBackgroundService.GetRandomBackground();
@@ -14,7 +15,7 @@
     {
         var active = this.Context.Request.Path == new PathString(url) ? "active" : string.Empty;
 
-        return Html.Raw($" <a class=\"nav-link {active}\" href=\"{url}\">{text}</a>");
+        return this.Html.Raw($" <a class=\"nav-link {active}\" href=\"{url}\">{text}</a>");
     }
 }
 
@@ -87,10 +88,10 @@
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto me-2 ">
-                @if (this.Context.IsAuthenticated())
+                @if (this.Auth.IsAuthenticated())
                 {
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">@this.Context.GetUserGivenName()</a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">@this.Auth.GetUserGivenName()</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="@Url.To("Index", "Home", "Leiter")">Zum Leitendenbereich</a></li>
                             <li><a class="dropdown-item disabled" href="#">Konto bearbeiten</a></li>

@@ -1,8 +1,8 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using StammPhoenix.Persistence.Models;
+using StammPhoenix.Util.Interfaces;
 
 namespace StammPhoenix.Persistence
 {
@@ -12,6 +12,8 @@ namespace StammPhoenix.Persistence
 
         private IHttpContextAccessor HttpContextAccessor { get; }
 
+        private IAuth Auth { get; }
+
         private string? ConnectionStringOverride { get; }
 
         private DbSet<LoginUser> LoginUsers { get; set; }
@@ -20,10 +22,11 @@ namespace StammPhoenix.Persistence
 
         private DbSet<PageContact> PageContacts { get; set; }
 
-        public DatabaseContext(IDatabaseConnection databaseConnection, IHttpContextAccessor httpContextAccessor)
+        public DatabaseContext(IDatabaseConnection databaseConnection, IHttpContextAccessor httpContextAccessor, IAuth auth)
         {
             this.DatabaseConnection = databaseConnection;
             this.HttpContextAccessor = httpContextAccessor;
+            this.Auth = auth;
 
             this.SavingChanges += this.OnSavingChanges;
         }
@@ -32,7 +35,7 @@ namespace StammPhoenix.Persistence
         {
             var entities = this.ChangeTracker.Entries().Where(x => x.Entity is Entity && x.State is EntityState.Added or EntityState.Modified);
 
-            var username = this.HttpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value ?? "SERVER";
+            var username = this.Auth.GetUserEmail() ?? "SERVER";
 
             foreach (var entry in entities)
             {

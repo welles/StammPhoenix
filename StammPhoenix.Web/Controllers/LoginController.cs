@@ -20,17 +20,20 @@ public class LoginController : Controller
 
     private ITempCookieService TempCookieService { get; }
 
-    public LoginController(IDatabaseContext databaseContext, IPasswordHasher passwordHasher, ITempCookieService tempCookieService)
+    private IAuth Auth { get; }
+
+    public LoginController(IDatabaseContext databaseContext, IPasswordHasher passwordHasher, ITempCookieService tempCookieService, IAuth auth)
     {
         this.DatabaseContext = databaseContext;
         this.PasswordHasher = passwordHasher;
         this.TempCookieService = tempCookieService;
+        this.Auth = auth;
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-        if (this.HttpContext.IsAuthenticated())
+        if (this.Auth.IsAuthenticated())
         {
             return this.RedirectTo("Index", "Home", "Leiter");
         }
@@ -99,13 +102,9 @@ public class LoginController : Controller
             new Claim(ClaimTypes.Name, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.GivenName, user.Name),
-            new Claim(ClaimTypes.Role, user.Role.ToString())
+            new Claim(ClaimTypes.Role, user.Role.ToString()),
+            new Claim(CustomClaimTypes.UserNeedsPasswordChange, user.NeedPasswordChange.ToString())
         };
-
-        if (user.NeedPasswordChange)
-        {
-            claims.Add(new Claim(nameof(LoginUser.NeedPasswordChange), "true"));
-        }
 
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 

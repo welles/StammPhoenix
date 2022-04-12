@@ -1,6 +1,8 @@
 ﻿@using StammPhoenix.Web.Areas.Leiter.Models.Konto
+@using StammPhoenix.Util.Interfaces
 
 @inject ITempCookieService TempCookieService
+@inject IAuth Auth
 
 <div class="card container fit-content p-0 shadow-sm">
     <h5 class="card-header">Neuen Benutzernamen festlegen</h5>
@@ -10,7 +12,7 @@
             <input type="hidden" value="@Context.Request.Query["redirect"]" name="@nameof(ChangeUsernameModel.Redirect)" />
             <div class="input-group">
                 <span class="input-group-text material-icons">person</span>
-                <input type="text" autocomplete="current-username" class="form-control" placeholder="Aktueller Benutzername" value="@this.Context.GetUserEmail()" name="@nameof(ChangeUsernameModel.CurrentUsername)" disabled />
+                <input type="text" autocomplete="current-username" class="form-control" placeholder="Aktueller Benutzername" value="@this.Auth.GetUserEmail()" name="@nameof(ChangeUsernameModel.CurrentUsername)" disabled />
             </div>
             <div class="input-group">
                 <span class="input-group-text material-icons">person_add</span>

@@ -59,6 +59,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ReturnUrlParameter = "redirect";
     });
 
+builder.Services.AddTransient<IAuth, Auth>();
+
 builder.Services.AddTransient<NeedsPasswordChangeMiddleware>();
 
 builder.Services.AddWebOptimizer(pipeline =>

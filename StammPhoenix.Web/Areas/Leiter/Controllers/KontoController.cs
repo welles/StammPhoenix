@@ -21,11 +21,14 @@ public class KontoController : Controller
 
     private IPasswordHasher PasswordHasher { get; }
 
-    public KontoController(IDatabaseContext databaseContext, ITempCookieService tempCookieService, IPasswordHasher passwordHasher)
+    private IAuth Auth { get; }
+
+    public KontoController(IDatabaseContext databaseContext, ITempCookieService tempCookieService, IPasswordHasher passwordHasher, IAuth auth)
     {
         this.DatabaseContext = databaseContext;
         this.TempCookieService = tempCookieService;
         this.PasswordHasher = passwordHasher;
+        this.Auth = auth;
     }
 
     [HttpGet]
@@ -68,7 +71,14 @@ public class KontoController : Controller
             return this.RedirectTo("ChangePassword", "Konto", "Leiter", form.Redirect);
         }
 
-        var userId = this.HttpContext.GetUserId();
+        var userId = this.Auth.GetUserId();
+
+        if (userId == null)
+        {
+            this.TempCookieService.SetTempCookie("ChangePasswordErrorMessage", "Der aktuelle Nutzer konnte nicht gefunden werden.");
+
+            return this.RedirectTo("ChangePassword", "Konto", "Leiter", form.Redirect);
+        }
 
         var user = await this.DatabaseContext.FindUserById(userId);
 
@@ -120,7 +130,7 @@ public class KontoController : Controller
             return this.RedirectTo("ChangeUsername", "Konto", "Leiter", form.Redirect);
         }
 
-        var currentName = this.HttpContext.GetUserEmail();
+        var currentName = this.Auth.GetUserEmail();
 
         if (form.NewUsername.Equals(currentName))
         {
@@ -136,7 +146,14 @@ public class KontoController : Controller
             return this.RedirectTo("ChangeUsername", "Konto", "Leiter", form.Redirect);
         }
 
-        var userId = this.HttpContext.GetUserId();
+        var userId = this.Auth.GetUserId();
+
+        if (userId == null)
+        {
+            this.TempCookieService.SetTempCookie("ChangeUsernameErrorMessage", "Der aktuelle Nutzer konnte nicht gefunden werden.");
+
+            return this.RedirectTo("ChangePassword", "Konto", "Leiter", form.Redirect);
+        }
 
         var user = await this.DatabaseContext.FindUserById(userId);
 
