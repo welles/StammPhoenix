@@ -87,6 +87,11 @@ namespace StammPhoenix.Persistence
             return await this.PlannedEvents.ToArrayAsync();
         }
 
+        public async Task<PageContact[]> GetPageContacts()
+        {
+            return await this.PageContacts.ToArrayAsync();
+        }
+
         public async Task<LoginUser?> FindUserById(string id)
         {
             var guid = Guid.Parse(id);

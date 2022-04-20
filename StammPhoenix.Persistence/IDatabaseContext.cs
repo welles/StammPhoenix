@@ -6,6 +6,8 @@ public interface IDatabaseContext
 {
     Task<PlannedEvent[]> GetPlannedEvents();
 
+    Task<PageContact[]> GetPageContacts();
+
     Task<LoginUser?> FindUserById(string id);
 
     Task<LoginUser?> FindUserByEmail(string email);

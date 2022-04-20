@@ -1,21 +1,29 @@
-﻿@using StammPhoenix.Web.Models.Kontakt
+﻿@using StammPhoenix.Persistence
 
-@model KontaktViewModel
+@inject IDatabaseContext DatabaseContext
 
 <div class="card container p-0 shadow-sm">
     <h5 class="card-header">Kontakt</h5>
     <div class="card-body">
-        <p class="card-text">Sie erreichen unsere Stammesvorstände telefonisch unter:</p>
-        <table class="table table-borderless table-sm">
-            <tr>
-                <th>Bernhard Jobst</th>
-                <td>0176 / 57 63 14 10</td>
-            </tr>
-            <tr>
-                <th>Germanus Kettl</th>
-                <td>0163 / 43 81 12 8</td>
-            </tr>
-        </table>
-        <p class="card-text">und per E-Mail unter: <a href="mailto:phoenix@dpsg-feldkirchen.de">phoenix@dpsg-feldkirchen.de</a></p>
+        <div class="row">
+            <div class="col">
+                <p>
+                    Sie erreichen uns per E-Mail unter: <a href="mailto:phoenix@dpsg-feldkirchen.de">phoenix@dpsg-feldkirchen.de</a>
+                    <br />Unsere Stammesvorstände erreichen Sie unter:
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var kontakt in await this.DatabaseContext.GetPageContacts())
+            {
+                <div class="col">
+                    @kontakt.Name
+                    <br/>
+                    <span class="material-icons">phone</span> @kontakt.PhoneNumber
+                    <br />
+                    @kontakt.Address
+                </div>
+            }
+        </div>
     </div>
 </div>
