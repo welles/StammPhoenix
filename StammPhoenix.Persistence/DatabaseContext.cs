@@ -82,6 +82,11 @@ namespace StammPhoenix.Persistence
             base.OnConfiguring(optionsBuilder);
         }
 
+        public async Task<bool> VerifyConnection()
+        {
+            return await this.Database.CanConnectAsync();
+        }
+
         public async Task<PlannedEvent[]> GetPlannedEvents()
         {
             return await this.PlannedEvents.ToArrayAsync();

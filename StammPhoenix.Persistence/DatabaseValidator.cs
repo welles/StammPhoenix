@@ -8,6 +8,7 @@ public class DatabaseValidator : IDatabaseValidator
 {
     private const string AdminEmail = "admin@dpsg-feldkirchen.de";
     private const string AdminName = "Administrator";
+    private const int MaxConnectionAttempts = 10;
 
     private IDatabaseContext DatabaseContext { get; }
 
@@ -24,6 +25,13 @@ public class DatabaseValidator : IDatabaseValidator
 
     public async Task Validate()
     {
+        var tries = 0;
+        while (!await this.DatabaseContext.VerifyConnection() && tries < DatabaseValidator.MaxConnectionAttempts)
+        {
+            await Task.Delay(3000);
+            tries++;
+        }
+        
         await this.DatabaseContext.Migrate();
 
         var admin = await this.DatabaseContext.FindUserByEmail(DatabaseValidator.AdminEmail);

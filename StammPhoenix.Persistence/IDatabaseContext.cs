@@ -20,5 +20,7 @@ public interface IDatabaseContext
 
     Task<Guid> CreateUser(LoginUser user);
 
+    Task<bool> VerifyConnection();
+
     Task Migrate();
 }
