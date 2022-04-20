@@ -9,11 +9,11 @@ public class PageContact : Entity
     public string Name { get; internal set; }
 
     [Column("PHONE_NUMBER")]
-    public string PhoneNumber { get; internal set; }
+    public string? PhoneNumber { get; internal set; }
 
     [Column("ADDRESS_CITY")]
-    public string AddressCity { get; internal set; }
+    public string? AddressCity { get; internal set; }
     
     [Column("ADDRESS_STREET")]
-    public string AddressStreet { get; internal set; }
+    public string? AddressStreet { get; internal set; }
 }
