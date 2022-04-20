@@ -13,4 +13,7 @@ public class PageContact : Entity
 
     [Column("ADDRESS_CITY")]
     public string AddressCity { get; internal set; }
+    
+    [Column("ADDRESS_STREET")]
+    public string AddressStreet { get; internal set; }
 }
