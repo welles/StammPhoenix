@@ -14,7 +14,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{9C6069E3-7839-49F9-B5BC-6D31C94947D0}"
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
-		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		Dockerfile = Dockerfile
 	EndProjectSection
