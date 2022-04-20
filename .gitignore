@@ -1,13 +1,5 @@
 .idea
+.run
 .vs
-_Resharper.Caches
 bin
 obj
-
-Dockerfile.env
-
-*.csproj.user
-*.DotSettings.user
-
-*/wwwroot/css/bundle*
-*/wwwroot/js/bundle*
