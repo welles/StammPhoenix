@@ -11,6 +11,6 @@ public class PageContact : Entity
     [Column("PHONE_NUMBER")]
     public string PhoneNumber { get; internal set; }
 
-    [Column("ADDRESS")]
-    public string Address { get; internal set; }
+    [Column("ADDRESS_CITY")]
+    public string AddressCity { get; internal set; }
 }
