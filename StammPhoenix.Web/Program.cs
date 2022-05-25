@@ -77,6 +77,9 @@ builder.Services.AddWebOptimizer(pipeline =>
 
     pipeline.AddJsBundle(builder.Environment, "/js/bundle.site.js",
         "/js/site.js");
+    
+    pipeline.AddJsBundle(builder.Environment, "/bundle.serviceworker.js",
+        "/serviceworker.js");
 
     pipeline.AddJsBundle(builder.Environment, "/js/bundle.pdf.js",
         builder.Environment.GetMinified("/js/pdf.js"));

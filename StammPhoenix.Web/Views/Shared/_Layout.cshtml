@@ -1,9 +1,13 @@
 ﻿@using Microsoft.AspNetCore.Html
 @using System.Reflection
+@using Microsoft.Extensions.Options
 @using StammPhoenix.Util.Interfaces
+@using WebOptimizer
 
 @inject IRandomBackgroundService RandomBackgroundService
 @inject IAuth Auth
+@inject IAssetPipeline AssetPipeline
+@inject IOptionsMonitor<WebOptimizerOptions> WebOptimizerOptions
 
 @{
     var backgroundData = this.RandomBackgroundService.GetRandomBackground();
@@ -24,8 +28,10 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="theme-color" content="white">
     <title>DPSG Stamm Phoenix</title>
     <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/image/phoenix-apple.png">
     <link rel="stylesheet" href="@Url.Content("~/css/bundle.base.css")" />
     <link rel="stylesheet" href="@Url.Content("~/css/bundle.site.css")" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
@@ -130,6 +136,15 @@
 
 <script src="@Url.Content("~/js/bundle.base.js")"></script>
 <script src="@Url.Content("~/js/bundle.site.js")"></script>
+<script>
+    @{
+        this.AssetPipeline.TryGetAssetFromRoute("/bundle.serviceworker.js", out var asset);
+        var route = asset.Route + "?v=" + asset.GenerateCacheKey(this.Context, this.WebOptimizerOptions.CurrentValue);
+    }
+    if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('@route');
+    }
+</script>
 @await this.RenderSectionAsync("PageScript", false)
 </body>
 </html>

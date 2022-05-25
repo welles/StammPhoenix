@@ -1,8 +1,15 @@
 ﻿{
   "background_color": "white",
+  "theme_color": "white",
   "description": "Website des DPSG Stamm Phoenix Feldkirchen-Westerham.",
   "display": "fullscreen",
   "icons": [
+    {
+      "src": "image/phoenix-maskable.png",
+      "sizes": "650x650",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
     {
       "src": "image/phoenix-512.png",
       "sizes": "512x512",
@@ -41,6 +48,6 @@
   ],
   "name": "DPSG Stamm Phoenix",
   "short_name": "Phoenix",
-  "start_url": "/home/index",
-  "id": "/home/index"
+  "start_url": "/",
+  "id": "/"
 }
