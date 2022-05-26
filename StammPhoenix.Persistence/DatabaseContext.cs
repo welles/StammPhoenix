@@ -22,6 +22,8 @@ namespace StammPhoenix.Persistence
 
         private DbSet<PageContact> PageContacts { get; set; }
 
+        private DbSet<Team> Teams { get; set; }
+
         public DatabaseContext(IDatabaseConnection databaseConnection, IHttpContextAccessor httpContextAccessor, IAuth auth)
         {
             this.DatabaseConnection = databaseConnection;
@@ -72,6 +74,10 @@ namespace StammPhoenix.Persistence
 
             modelBuilder.Entity<LoginUser>()
                 .HasIndex(x => x.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<Team>()
+                .HasIndex(x => x.Rank)
                 .IsUnique();
         }
 
