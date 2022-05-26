@@ -4,11 +4,13 @@ public interface IAuth
 {
     bool IsAuthenticated();
 
-    string? GetUserId();
+    Guid? GetUserId();
 
     string? GetUserEmail();
 
     string? GetUserGivenName();
+
+    Guid? GetUserSecurityStamp();
 
     bool GetUserNeedsPasswordChange();
 }

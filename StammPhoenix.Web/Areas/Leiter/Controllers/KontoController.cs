@@ -80,7 +80,7 @@ public class KontoController : Controller
             return this.RedirectTo("ChangePassword", "Konto", "Leiter", form.Redirect);
         }
 
-        var user = await this.DatabaseContext.FindUserById(userId);
+        var user = await this.DatabaseContext.FindUserById(userId.Value);
 
         if (user == null)
         {
@@ -155,7 +155,7 @@ public class KontoController : Controller
             return this.RedirectTo("ChangePassword", "Konto", "Leiter", form.Redirect);
         }
 
-        var user = await this.DatabaseContext.FindUserById(userId);
+        var user = await this.DatabaseContext.FindUserById(userId.Value);
 
         if (user == null)
         {

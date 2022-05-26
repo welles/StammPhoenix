@@ -60,6 +60,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddTransient<IAuth, Auth>();
 
+builder.Services.AddTransient<CheckSecurityStampMiddleware>();
 builder.Services.AddTransient<NeedsPasswordChangeMiddleware>();
 
 builder.Services.AddWebOptimizer(pipeline =>
@@ -109,6 +110,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseMiddleware<CheckSecurityStampMiddleware>();
 app.UseMiddleware<NeedsPasswordChangeMiddleware>();
 
 app.MapControllerRoute(

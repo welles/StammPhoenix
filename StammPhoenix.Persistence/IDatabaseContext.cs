@@ -8,7 +8,7 @@ public interface IDatabaseContext
 
     Task<PageContact[]> GetPageContacts();
 
-    Task<LoginUser?> FindUserById(string id);
+    Task<LoginUser?> FindUserById(Guid id);
 
     Task<LoginUser?> FindUserByEmail(string email);
 
@@ -17,6 +17,10 @@ public interface IDatabaseContext
     Task ChangeUserNeedsPasswordChange(LoginUser user, bool needsPasswordChange);
 
     Task ChangeUserEmail(LoginUser user, string newEmail);
+
+    Task ChangeUserSecurityStamp(LoginUser user, Guid newSecurityStamp);
+
+    Task<bool> VerifyUserSecurityStamp(Guid userId, Guid securityStamp);
 
     Task<Guid> CreateUser(LoginUser user);
 

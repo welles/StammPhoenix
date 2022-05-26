@@ -19,9 +19,11 @@ public class Auth : IAuth
         return this.HttpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
     }
 
-    public string? GetUserId()
+    public Guid? GetUserId()
     {
-        return this.HttpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value;
+        var claim =  this.HttpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value;
+
+        return Guid.TryParse(claim, out var result) ? result : null;
     }
 
     public string? GetUserEmail()
@@ -32,6 +34,13 @@ public class Auth : IAuth
     public string? GetUserGivenName()
     {
         return this.HttpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.GivenName)?.Value;
+    }
+
+    public Guid? GetUserSecurityStamp()
+    {
+        var claim = this.HttpContextAccessor.HttpContext?.User?.FindFirst(CustomClaimTypes.SecurityStamp)?.Value;
+
+        return Guid.TryParse(claim, out var result) ? result : null;
     }
 
     public bool GetUserNeedsPasswordChange()

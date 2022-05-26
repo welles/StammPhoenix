@@ -97,11 +97,9 @@ namespace StammPhoenix.Persistence
             return await this.PageContacts.ToArrayAsync();
         }
 
-        public async Task<LoginUser?> FindUserById(string id)
+        public async Task<LoginUser?> FindUserById(Guid id)
         {
-            var guid = Guid.Parse(id);
-
-            return await this.LoginUsers.FindAsync(guid);
+            return await this.LoginUsers.FindAsync(id);
         }
 
         public async Task<LoginUser?> FindUserByEmail(string email)
@@ -139,6 +137,27 @@ namespace StammPhoenix.Persistence
             this.LoginUsers.Update(user);
 
             await this.SaveChangesAsync();
+        }
+
+        public async Task ChangeUserSecurityStamp(LoginUser user, Guid newSecurityStamp)
+        {
+            user.SecurityStamp = newSecurityStamp;
+
+            this.LoginUsers.Update(user);
+
+            await this.SaveChangesAsync();
+        }
+
+        public async Task<bool> VerifyUserSecurityStamp(Guid userId, Guid securityStamp)
+        {
+            var user = await this.LoginUsers.FindAsync(userId);
+
+            if (user == null)
+            {
+                throw new ArgumentException("Diese Nutzer existiert nicht!");
+            }
+
+            return user.SecurityStamp == null || securityStamp.Equals(user.SecurityStamp);
         }
 
         public async Task<Guid> CreateUser(LoginUser user)

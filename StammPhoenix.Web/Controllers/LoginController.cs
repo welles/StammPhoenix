@@ -97,12 +97,17 @@ public class LoginController : Controller
             await this.DatabaseContext.ChangeUserPassword(user, newHash);
         }
 
+        var securityStamp = Guid.NewGuid();
+
+        await this.DatabaseContext.ChangeUserSecurityStamp(user, securityStamp);
+
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.GivenName, user.Name),
             new Claim(ClaimTypes.Role, user.Role.ToString()),
+            new Claim(CustomClaimTypes.SecurityStamp, securityStamp.ToString()),
             new Claim(CustomClaimTypes.UserNeedsPasswordChange, user.NeedPasswordChange.ToString())
         };
 
