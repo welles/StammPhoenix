@@ -3,6 +3,7 @@
 */
 
 self.addEventListener('fetch', function(event) {
+    /*
     event.respondWith(async function() {
         try {
             const res = await fetch(event.request);
@@ -14,4 +15,5 @@ self.addEventListener('fetch', function(event) {
             return caches.match(event.request);
         }
     }());
+    */
 });
