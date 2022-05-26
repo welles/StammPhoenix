@@ -72,3 +72,7 @@ html, body {
 .w-max-content {
     width: max-content;
 }
+
+.text-align-justify {
+    text-align: justify;
+}
