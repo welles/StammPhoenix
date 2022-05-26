@@ -6,7 +6,7 @@
   "icons": [
     {
       "src": "image/phoenix-maskable.png",
-      "sizes": "650x650",
+      "sizes": "800x800",
       "type": "image/png",
       "purpose": "maskable any"
     }
