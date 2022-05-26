@@ -29,16 +29,6 @@
     background-color: var(--color-leiter);
 }
 
-@keyframes bg-scrolling {
-    100% { background-position: var(--background-width) var(--background-height) }
-}
-
-body {
-    background: var(--background-url) repeat 0 0;
-    animation: bg-scrolling 60s infinite;
-    animation-timing-function: linear;
-}
-
 html, body {
     margin: 0;
     height: 100%;

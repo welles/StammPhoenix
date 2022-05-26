@@ -41,8 +41,6 @@ builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo(environmentVariableService.DataProtectionPath));
 builder.Services.AddSingleton<ITempCookieService, TempCookieService>();
 
-builder.Services.AddSingleton<IRandomBackgroundService, RandomBackgroundService>();
-
 builder.Services.AddTransient<IContentTypeProvider, FileExtensionContentTypeProvider>();
 builder.Services.AddSingleton<IDownloadFilesService, DownloadFilesService>();
 builder.Services.AddTransient<IAssetPipelineHelper, AssetPipelineHelper>();

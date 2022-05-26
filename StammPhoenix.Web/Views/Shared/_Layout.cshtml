@@ -2,13 +2,8 @@
 @using System.Reflection
 @using StammPhoenix.Util.Interfaces
 
-@inject IRandomBackgroundService RandomBackgroundService
 @inject IAuth Auth
 @inject IAssetPipelineHelper AssetPipelineHelper
-
-@{
-    var backgroundData = this.RandomBackgroundService.GetRandomBackground();
-}
 
 @functions
 {
@@ -33,13 +28,6 @@
     <link rel="stylesheet" href="@Url.Content("~/css/bundle.site.css")" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     @await this.RenderSectionAsync("PageStyle", false)
-    <style>
-    :root {
-        --background-url: url(@backgroundData.Path);
-        --background-width: @(backgroundData.Width)px;
-        --background-height: @(backgroundData.Height)px
-    }
-    </style>
 </head>
 <body>
 
