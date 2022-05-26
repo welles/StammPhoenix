@@ -15,6 +15,9 @@ public class LoginUser : Entity
     [Column("PASSWORD_HASH")]
     public string PasswordHash { get; internal set; }
 
+    [Column("SECURITY_STAMP")]
+    public Guid? SecurityStamp { get; internal set; }
+
     [Column("IS_LOCKED")]
     public bool IsLocked { get; internal set; }
 
