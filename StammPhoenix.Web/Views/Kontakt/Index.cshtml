@@ -14,17 +14,25 @@
             </div>
         </div>
         <div class="row">
-            @foreach (var kontakt in await this.DatabaseContext.GetPageContacts())
+            @{
+                var contacts = await this.DatabaseContext.GetPageContacts();
+            }
+            @foreach (var contact in contacts)
             {
                 <div class="col">
-                    @kontakt.Name
+                    @contact.Name
                     <br/>
-                    @kontakt.PhoneNumber
+                    @contact.PhoneNumber
                     <br />
-                    @kontakt.AddressStreet
+                    @contact.AddressStreet
                     <br />
-                    @kontakt.AddressCity
+                    @contact.AddressCity
                 </div>
+
+                @if (contact != contacts.Last())
+                {
+                    <hr class="mt-2 mb-2 d-md-none">
+                }
             }
         </div>
     </div>
