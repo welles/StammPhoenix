@@ -1,23 +1,26 @@
-﻿<div class="container card shadow-sm p-0">
+﻿@using StammPhoenix.Persistence
+
+@inject IDatabaseContext DatabaseContext
+
+<div class="container card shadow-sm p-0">
 <h5 class="card-header">Datenschutzerklärung</h5>
 <div class="card-body">
     <p class="card-text">Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zweck der Verarbeitung von personenbezogenen Daten (nachfolgend kurz „Daten“) innerhalb unseres Onlineangebotes und der mit ihm verbundenen Webseiten, Funktionen und Inhalte sowie externen Onlinepräsenzen, wie z.B. unser Social Media Profile auf (nachfolgend gemeinsam bezeichnet als „Onlineangebot“). Im Hinblick auf die verwendeten Begrifflichkeiten, wie z.B. „Verarbeitung“ oder „Verantwortlicher“ verweisen wir auf die Definitionen im Art. 4 der Datenschutzgrundverordnung (DSGVO).</p>
     <h6 class="card-title">Verantwortlicher</h6>
-    <p class="text"><span>Deutsche Pfadfinderschaft Sankt Georg 13/19/12 Stamm Phoenix Feldkirchen-Westerham<br>
-        <br>
-        Vorstände:<br>
-        Bernhard Jobst<br>
-        Schwimmbadstraße 41<br>
-        83620 Feldkirchen-Westerham<br>
-        Tel. 0176 / 57 63 14 10<br>
-        <br>
-        Germanus Kettl<br>
-        Miesbacher Straße 8<br>
-        83620 Feldkirchen-Westerham<br>
-        Tel. 0163 / 43 81 12 8<br>
-        <br>
+    <p class="text"><span>Deutsche Pfadfinderschaft Sankt Georg 13/19/12 Stamm Phoenix Feldkirchen-Westerham<br><br/>
+        @foreach (var kontakt in await this.DatabaseContext.GetPageContacts())
+        {
+            @kontakt.Name
+            <br/>
+            @kontakt.PhoneNumber
+            <br />
+            @kontakt.AddressStreet
+            <br />
+            @kontakt.AddressCity
+            <br /><br />
+        }
         Kontakt:<br>
-        Telefonisch bei den Stammesvorständen oder per E-Mail an stamm-phoenix@web.de</span>
+        Telefonisch bei den Stammesvorständen oder per E-Mail an phoenix@dpsg-feldkirchen.de</span>
     </p>
     <h6 class="card-title">Arten der verarbeiteten Daten:</h6>
     <p class="text">-    Bestandsdaten (z.B., Namen, Adressen).<br>
