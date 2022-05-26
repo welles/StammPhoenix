@@ -1,4 +1,8 @@
-﻿<div class="card container p-0 mb-2 shadow-sm">
+﻿@using StammPhoenix.Persistence
+
+@inject IDatabaseContext DatabaseContext
+
+<div class="card container p-0 mb-2 shadow-sm">
     <h5 class="card-header">Veröffentlicher</h5>
     <div class="card-body">
         <p class="card-text">Deutsche Pfadfinderschaft Sankt Georg 13/19/12 Stamm Phoenix Feldkirchen-Westerham</p>
@@ -6,26 +10,30 @@
 </div>
 
 <div class="card container p-0 mb-2 shadow-sm">
-    <h5 class="card-header">Vorstände</h5>
+    <h5 class="card-header">Vorstand</h5>
     <div class="card-body">
-        <table class="table table-borderless table-fixed table-sm mb-0">
-            <tr>
-                <td>Bernhard Jobst</td>
-                <td>Germanus Kettl</td>
-            </tr>
-            <tr>
-                <td>Schwimmbadstraße 41</td>
-                <td>Miesbacher Straße 8</td>
-            </tr>
-            <tr>
-                <td>83620 Feldkirchen-Westerham</td>
-                <td>83620 Feldkirchen-Westerham</td>
-            </tr>
-            <tr>
-                <td>Tel. 0176 / 57 63 14 10</td>
-                <td>Tel. 0163 / 43 81 12 8</td>
-            </tr>
-        </table>
+         <div class="row">
+            @{
+                var contacts = await this.DatabaseContext.GetPageContacts();
+            }
+            @foreach (var contact in contacts)
+            {
+                <div class="col">
+                    @contact.Name
+                    <br/>
+                    @contact.PhoneNumber
+                    <br />
+                    @contact.AddressStreet
+                    <br />
+                    @contact.AddressCity
+                </div>
+
+                @if (contact != contacts.Last())
+                {
+                    <hr class="mt-2 mb-2 d-md-none">
+                }
+            }
+        </div>
     </div>
 </div>
 
