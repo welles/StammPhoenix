@@ -1,13 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Html
 @using System.Reflection
-@using Microsoft.Extensions.Options
 @using StammPhoenix.Util.Interfaces
-@using WebOptimizer
 
 @inject IRandomBackgroundService RandomBackgroundService
 @inject IAuth Auth
-@inject IAssetPipeline AssetPipeline
-@inject IOptionsMonitor<WebOptimizerOptions> WebOptimizerOptions
+@inject IAssetPipelineHelper AssetPipelineHelper
 
 @{
     var backgroundData = this.RandomBackgroundService.GetRandomBackground();
@@ -137,12 +134,9 @@
 <script src="@Url.Content("~/js/bundle.base.js")"></script>
 <script src="@Url.Content("~/js/bundle.site.js")"></script>
 <script>
-    @{
-        this.AssetPipeline.TryGetAssetFromRoute("/bundle.serviceworker.js", out var asset);
-        var route = asset.Route + "?v=" + asset.GenerateCacheKey(this.Context, this.WebOptimizerOptions.CurrentValue);
-    }
+
     if('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('@route');
+        navigator.serviceWorker.register('@this.AssetPipelineHelper.GetRouteWithVersion("/bundle.serviceworker.js")');
     }
 </script>
 @await this.RenderSectionAsync("PageScript", false)

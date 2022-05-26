@@ -45,6 +45,7 @@ builder.Services.AddSingleton<IRandomBackgroundService, RandomBackgroundService>
 
 builder.Services.AddTransient<IContentTypeProvider, FileExtensionContentTypeProvider>();
 builder.Services.AddSingleton<IDownloadFilesService, DownloadFilesService>();
+builder.Services.AddTransient<IAssetPipelineHelper, AssetPipelineHelper>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
