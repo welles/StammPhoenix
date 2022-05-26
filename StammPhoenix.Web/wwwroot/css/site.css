@@ -66,7 +66,7 @@ html, body {
     border: 1px solid rgba(0,0,0,.125);
 }
 
-.btn > span.material-icons, .alert > span.material-icons {
+.btn > span, .alert > span {
     vertical-align: middle;
 }
 
@@ -77,10 +77,6 @@ html, body {
 
 .table {
     vertical-align: middle;
-}
-
-.table:not(.table-borderless) > :not(caption) > *:last-of-type > * {
-    border-bottom-style: hidden;
 }
 
 .w-max-content {
