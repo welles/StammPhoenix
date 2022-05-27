@@ -1,4 +1,10 @@
-﻿<div class="container p-0 d-flex justify-content-center mb-2">
+﻿@using StammPhoenix.Persistence.Constants
+@using StammPhoenix.Persistence
+@using StammPhoenix.Persistence.Extensions
+
+@inject IDatabaseContext DatabaseContext
+
+<div class="container p-0 d-flex justify-content-center mb-2">
     <img src="@Url.Content("~/image/leitendenrunde.png")" class="rounded shadow-sm img-fluid" alt="Die Leitendenrunde">
 </div>
 
@@ -6,82 +12,45 @@
     <span class="material-icons">info</span> <span>Bitte kontaktieren Sie uns <a href="mailto:phoenix@dpsg-feldkirchen.de">per E-Mail</a>, wenn Sie Interesse an einer Schnuppergruppenstunde für Ihr Kind haben.</span>
 </div>
 
-<div class="card container p-0 mb-2 shadow-sm">
-    <h5 class="card-header bg-woelflinge text-dark">Wölflinge</h5>
-    <div class="card-body">
-        <table class="table table-fixed table-borderless table-sm mb-0">
-            <tr>
-                <th>Alter:</th>
-                <td>7 - 10 Jahre</td>
-            </tr>
-            <tr>
-                <th>Leiter:</th>
-                <td>Donnerstag, 17:30 - 19:00 Uhr</td>
-            </tr>
-            <tr>
-                <th>Gruppenstunde:</th>
-                <td>Jonathan Krause, Laura Orendi und Bernhard Jobst</td>
-            </tr>
-        </table>
-    </div>
-</div>
+@{
+    var ranks = new[] { Rank.Woelflinge, Rank.Jungpfadfinder, Rank.Pfadfinder, Rank.Rover };
+    var teams = await this.DatabaseContext.GetTeams();
+}
 
-<div class="card container p-0 mb-2 shadow-sm">
-    <h5 class="card-header bg-jungpfadfinder text-light">Jungpfadfinder</h5>
-    <div class="card-body">
-        <table class="table table-fixed table-borderless table-sm mb-0">
-            <tr>
-                <th>Alter:</th>
-                <td>10 - 13 Jahre</td>
-            </tr>
-            <tr>
-                <th>Leiter:</th>
-                <td>Freitag, 17:00 - 18:30 Uhr</td>
-            </tr>
-            <tr>
-                <th>Gruppenstunde:</th>
-                <td>Louise Kettl, Simon Schmid und Nico Welles</td>
-            </tr>
-        </table>
-    </div>
-</div>
+@foreach (var rank in ranks)
+{
+    var team = teams.SingleOrDefault(x => x.Rank == rank);
+    var isLast = rank == ranks.Last();
 
-<div class="card container p-0 mb-2 shadow-sm">
-    <h5 class="card-header bg-pfadfinder text-light">Pfadfinder</h5>
-    <div class="card-body">
-        <table class="table table-fixed table-borderless table-sm mb-0">
-            <tr>
-                <th>Alter:</th>
-                <td>13 - 16 Jahre</td>
-            </tr>
-            <tr>
-                <th>Leiter:</th>
-                <td>Donnerstag, 19:00 - 20:30 Uhr</td>
-            </tr>
-            <tr>
-                <th>Gruppenstunde:</th>
-                <td>Sabine Treff und Florian Feraud</td>
-            </tr>
-        </table>
+    <div class="card container p-0 @(!isLast ? "mb-2" : string.Empty) shadow-sm">
+        <h5 class="card-header bg-@rank.ToString().ToLower() text-light">@rank.ToDisplayName(true)</h5>
+        <div class="card-body">
+            @if (team != null)
+            {
+                <div class="row">
+                    <div class="col-md-3 fw-bold">Alter:</div>
+                    <div class="col-md">@team.AgeGroup</div>
+                </div>
+                <hr class="mt-2 mb-2 d-md-none">
+                <div class="row">
+                    <div class="col-md-3 fw-bold">Gruppenstunde:</div>
+                    <div class="col-md">@team.MeetingTime</div>
+                </div>
+                <hr class="mt-2 mb-2 d-md-none">
+                <div class="row">
+                    <div class="col-md-3 fw-bold">Üblicher Treffpunkt:</div>
+                    <div class="col-md">@team.MeetingPlace</div>
+                </div>
+                <hr class="mt-2 mb-2 d-md-none">
+                <div class="row">
+                    <div class="col-md-3 fw-bold">Leitende:</div>
+                    <div class="col-md">@team.Members</div>
+                </div>
+            }
+            else
+            {
+                <span class="material-icons">info</span> <span>Es gibt leider gerade keine Informationen zu Gruppenstunden dieser Stufe. Bitte versuchen Sie es später erneut.</span>
+            }
+        </div>
     </div>
-</div>
-
-<div class="card container p-0 shadow-sm">
-    <h5 class="card-header bg-rover text-light">Rover</h5>
-    <div class="card-body">
-        <table class="table table-fixed table-borderless table-sm mb-0">
-            <tr>
-                <th>Alter:</th>
-                <td>16 - 20 Jahre</td>
-            </tr>
-            <tr>
-                <th>Leiter:</th>
-                <td>Mittwoch, 19:00 - 20:30 Uhr</td>
-            </tr>
-            <tr>
-                <th>Gruppenstunde:</th>
-                <td>Martin Schaberl</td>
-            </tr>
-        </table>
-    </div>
-</div>
+}
