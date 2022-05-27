@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using StammPhoenix.Persistence.Constants;
 using StammPhoenix.Persistence.Models;
 using StammPhoenix.Util.Interfaces;
 
@@ -88,6 +89,11 @@ namespace StammPhoenix.Persistence
             base.OnConfiguring(optionsBuilder);
         }
 
+        public async Task<Team?> FindTeamForRank(Rank rank)
+        {
+            return await this.Teams.FindAsync(rank);
+        }
+
         public async Task<bool> VerifyConnection()
         {
             return await this.Database.CanConnectAsync();
@@ -101,6 +107,11 @@ namespace StammPhoenix.Persistence
         public async Task<PageContact[]> GetPageContacts()
         {
             return await this.PageContacts.ToArrayAsync();
+        }
+
+        public async Task<Team[]> GetTeams()
+        {
+            return await this.Teams.ToArrayAsync();
         }
 
         public async Task<LoginUser?> FindUserById(Guid id)

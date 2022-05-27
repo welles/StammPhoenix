@@ -1,4 +1,5 @@
-﻿using StammPhoenix.Persistence.Models;
+﻿using StammPhoenix.Persistence.Constants;
+using StammPhoenix.Persistence.Models;
 
 namespace StammPhoenix.Persistence;
 
@@ -7,6 +8,8 @@ public interface IDatabaseContext
     Task<PlannedEvent[]> GetPlannedEvents();
 
     Task<PageContact[]> GetPageContacts();
+
+    Task<Team[]> GetTeams();
 
     Task<LoginUser?> FindUserById(Guid id);
 
@@ -23,6 +26,8 @@ public interface IDatabaseContext
     Task<bool> VerifyUserSecurityStamp(Guid userId, Guid securityStamp);
 
     Task<Guid> CreateUser(LoginUser user);
+
+    Task<Team?> FindTeamForRank(Rank rank);
 
     Task<bool> VerifyConnection();
 
