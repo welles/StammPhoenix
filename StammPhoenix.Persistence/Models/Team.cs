@@ -12,6 +12,9 @@ public class Team : Entity
     [Column("MEMBERS")]
     public string? Members { get; internal set; }
 
+    [Column("AGE_GROUP")]
+    public string? AgeGroup { get; internal set; }
+
     [Column("MEETING_TIME")]
     public string? MeetingTime { get; internal set; }
 
