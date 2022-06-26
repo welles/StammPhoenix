@@ -13,6 +13,7 @@ public static class WebOptimizerExtensions
                 sourceFiles)
             .EnforceFileExtensions(".js")
             .Concatenate()
+            .AddResponseHeader("Cache-Control", "max-age=31536000")
             .AddResponseHeader("X-Content-Type-Options", "nosniff");
 
         if (!environment.IsDevelopment())
@@ -32,6 +33,7 @@ public static class WebOptimizerExtensions
             .AdjustRelativePaths()
             .Concatenate()
             .FingerprintUrls()
+            .AddResponseHeader("Cache-Control", "max-age=31536000")
             .AddResponseHeader("X-Content-Type-Options", "nosniff");
 
         if (!environment.IsDevelopment())
