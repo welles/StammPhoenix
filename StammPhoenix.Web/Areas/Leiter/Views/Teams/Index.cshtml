@@ -1,0 +1,31 @@
+﻿@using StammPhoenix.Persistence
+@using StammPhoenix.Persistence.Extensions
+
+@inject IDatabaseContext DatabaseContext
+
+<div class="card container p-0 shadow-sm">
+    <h5 class="card-header">Teams verwalten</h5>
+    <div class="card-body table-responsive">
+        <table class="table">
+            <thead>
+            <th>Stufe</th>
+            <th>Altersstufe</th>
+            <th>Mitglieder</th>
+            <th>Zeitpunkt</th>
+            <th>Treffpunkt</th>
+            </thead>
+            <tbody>
+                @foreach (var team in await this.DatabaseContext.GetTeams())
+                {
+                    <tr>
+                        <td>@team.Rank.ToDisplayName(true)</td>
+                        <td>@team.AgeGroup</td>
+                        <td>@team.Members</td>
+                        <td>@team.MeetingTime</td>
+                        <td>@team.MeetingPlace</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
