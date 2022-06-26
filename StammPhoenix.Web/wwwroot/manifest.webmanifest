@@ -17,6 +17,22 @@
       "purpose": "any"
     }
   ],
+  "shortcuts": [
+    {
+      "name": "Leitendenbereich",
+      "short_name": "Leitendenbereich",
+      "description": "Direkt zum Leitendenbereich",
+      "url": "/leiter",
+      "icons": [
+        {
+          "src": "image/lilie-regenbogen-512.png",
+          "sizes": "512x512",
+          "type": "image/png",
+          "purpose": "any"
+        }
+      ]
+    }
+  ],
   "name": "DPSG Stamm Phoenix",
   "short_name": "Phoenix",
   "start_url": "/",
