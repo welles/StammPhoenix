@@ -1,5 +1,17 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Html
+
+@{
     Layout = "_Layout";
+}
+
+@functions
+{
+    IHtmlContent NavLink(string? url, string? text)
+    {
+        var active = this.Context.Request.Path == new PathString(url) ? "active" : string.Empty;
+
+        return this.Html.Raw($" <a class=\"nav-link {active}\" href=\"{url}\">{text}</a>");
+    }
 }
 
 @section AreaNavigation
@@ -13,6 +25,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarLeiter">
             <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    @NavLink(Url.To("Index", "Home", "Leiter"), "Leitendenbereich")
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Mein Konto</a>
                     <ul class="dropdown-menu">
