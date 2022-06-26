@@ -1,13 +1,7 @@
-﻿<div class="card container p-0 shadow-sm">
+﻿<div class="card container p-0 mb-2 shadow-sm">
     <h5 class="card-header">Mein Konto</h5>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-auto">
-                <a class="btn btn-dark btn-flex" href="@Url.To("ChangePassword", "Konto", "Leiter", Url.To("Index", "Home", "Leiter"))" ><span class="material-icons">lock</span> Passwort ändern</a>
-            </div>
-            <div class="col-auto">
-                <a class="btn btn-dark btn-flex" href="@Url.To("ChangeUsername", "Konto", "Leiter", Url.To("Index", "Home", "Leiter"))" ><span class="material-icons">person</span> Benutzernamen ändern</a>
-            </div>
-        </div>
+    <div class="list-group list-group-flush">
+        <a href="@Url.To("ChangePassword", "Konto", "Leiter", Url.To("Index", "Home", "Leiter"))" class="list-group-item list-group-item-action"><span class="material-icons">lock</span> <span>Passwort ändern</span></a>
+        <a href="@Url.To("ChangeUsername", "Konto", "Leiter", Url.To("Index", "Home", "Leiter"))" class="list-group-item list-group-item-action"><span class="material-icons">person</span> <span>Benutzernamen ändern</span></a>
     </div>
 </div>
