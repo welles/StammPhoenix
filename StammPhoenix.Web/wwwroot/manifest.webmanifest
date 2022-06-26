@@ -6,9 +6,15 @@
   "icons": [
     {
       "src": "image/phoenix-maskable.png",
-      "sizes": "800x800",
+      "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable any"
+      "purpose": "maskable"
+    },
+    {
+      "src": "image/phoenix-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
   "name": "DPSG Stamm Phoenix",
