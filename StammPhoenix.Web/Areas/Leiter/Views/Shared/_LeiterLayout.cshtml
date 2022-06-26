@@ -35,19 +35,21 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Mein Konto</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="@Url.To("ChangePassword", "Konto", "Leiter", Url.To("Index", "Home", "Leiter"))">Passwort ändern</a></li>
-                        <li><a class="dropdown-item" href="@Url.To("ChangeUsername", "Konto", "Leiter", Url.To("Index", "Home", "Leiter"))">Benutzernamen ändern</a></li>
+                        <li><a class="dropdown-item" href="@Url.To("ChangePassword", "Konto", "Leiter")"><span class="material-icons">lock</span> <span>Passwort ändern</span></a></li>
+                        <li><a class="dropdown-item" href="@Url.To("ChangeUsername", "Konto", "Leiter")"><span class="material-icons">person</span> <span>Benutzernamen ändern</span></a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    @NavLink(Url.To("Index", "Teams", "Leiter"), "Teams")
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Website</a>
+                    <ul class="dropdown-menu">
+                         @if (this.Auth.HasRole(nameof(Role.Administrator)))
+                         {
+                             <li><a class="dropdown-item" href="@Url.To("Index", "Benutzer", "Leiter")"><span class="material-icons">recent_actors</span> <span>Benutzeraccounts verwalten</span></a></li>
+                             <li><a class="dropdown-item" href="@Url.To("Index", "Vorstand", "Leiter")"><span class="material-icons">supervisor_account</span> <span>Vorstandskontaktdaten verwalten</span></a></li>
+                         }
+                        <li><a class="dropdown-item" href="@Url.To("Index", "Teams", "Leiter")"><span class="material-icons">groups</span> <span>Stufeninformationen verwalten</span></a></li>
+                    </ul>
                 </li>
-                @if (this.Auth.HasRole(nameof(Role.Administrator)))
-                {
-                    <li class="nav-item">
-                        @NavLink(Url.To("Index", "Users", "Leiter"), "Benutzeraccounts")
-                    </li>
-                }
             </ul>
         </div>
     </nav>

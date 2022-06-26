@@ -6,7 +6,7 @@ namespace StammPhoenix.Web.Areas.Leiter.Controllers;
 
 [Authorize(Roles = nameof(Role.Administrator))]
 [Area("Leiter")]
-public class UsersController : Controller
+public class BenutzerController : Controller
 {
     [HttpGet]
     [Authorize(Roles = nameof(Role.Administrator))]

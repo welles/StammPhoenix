@@ -12,18 +12,13 @@
 </div>
 
 <div class="card container p-0 shadow-sm">
-    <h5 class="card-header">Teams</h5>
+    <h5 class="card-header">Website-Einstellungen</h5>
     <div class="list-group list-group-flush">
-        <a href="@Url.To("Index", "Teams", "Leiter", Url.To("Index", "Home", "Leiter"))" class="list-group-item list-group-item-action"><span class="material-icons">groups</span> <span>Teams verwalten</span></a>
+        @if (this.Auth.HasRole(nameof(Role.Administrator)))
+        {
+            <a href="@Url.To("Index", "Benutzer", "Leiter")" class="list-group-item list-group-item-action"><span class="material-icons">recent_actors</span> <span>Benutzeraccounts verwalten</span></a>
+            <a href="@Url.To("Index", "Vorstand", "Leiter")" class="list-group-item list-group-item-action"><span class="material-icons">supervisor_account</span> <span>Vorstandskontaktdaten verwalten</span></a>
+        }
+        <a href="@Url.To("Index", "Teams", "Leiter")" class="list-group-item list-group-item-action"><span class="material-icons">groups</span> <span>Stufeninformationen verwalten</span></a>
     </div>
 </div>
-
-@if (this.Auth.HasRole(nameof(Role.Administrator)))
-{
-    <div class="card container p-0 mt-2 shadow-sm">
-        <h5 class="card-header">Benutzeraccounts</h5>
-        <div class="list-group list-group-flush">
-            <a href="@Url.To("Index", "Users", "Leiter")" class="list-group-item list-group-item-action"><span class="material-icons">recent_actors</span> <span>Benutzeraccounts verwalten</span></a>
-        </div>
-    </div>
-}
