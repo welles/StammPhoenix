@@ -1,4 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Html
+@using StammPhoenix.Util.Interfaces
+@using StammPhoenix.Persistence.Constants
+
+@inject IAuth Auth
 
 @{
     Layout = "_Layout";
@@ -38,6 +42,12 @@
                 <li class="nav-item">
                     @NavLink(Url.To("Index", "Teams", "Leiter"), "Teams")
                 </li>
+                @if (this.Auth.HasRole(nameof(Role.Administrator)))
+                {
+                    <li class="nav-item">
+                        @NavLink(Url.To("Index", "Users", "Leiter"), "Benutzeraccounts")
+                    </li>
+                }
             </ul>
         </div>
     </nav>

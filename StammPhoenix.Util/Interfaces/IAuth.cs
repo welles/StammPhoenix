@@ -13,4 +13,6 @@ public interface IAuth
     Guid? GetUserSecurityStamp();
 
     bool GetUserNeedsPasswordChange();
+
+    bool HasRole(string role);
 }

@@ -49,4 +49,11 @@ public class Auth : IAuth
 
         return bool.TryParse(claim, out var result) && result;
     }
+
+    public bool HasRole(string role)
+    {
+        var claim = this.HttpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Role)?.Value;
+
+        return claim != null && claim.Equals(role);
+    }
 }
