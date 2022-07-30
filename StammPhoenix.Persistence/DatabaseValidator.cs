@@ -6,7 +6,7 @@ namespace StammPhoenix.Persistence;
 
 public class DatabaseValidator : IDatabaseValidator
 {
-    private const string AdminEmail = "admin@dpsg-feldkirchen.de";
+    private const string AdminEmail = "admin@stamm-phoenix.de";
     private const string AdminName = "Administrator";
     private const int MaxConnectionAttempts = 10;
 
