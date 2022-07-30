@@ -66,7 +66,8 @@ builder.Services.AddTransient<NeedsPasswordChangeMiddleware>();
 builder.Services.AddWebOptimizer(pipeline =>
 {
     pipeline.AddCssBundle(builder.Environment, "/css/bundle.base.css",
-        builder.Environment.GetMinified("/css/bootstrap.css"));
+        builder.Environment.GetMinified("/css/bootstrap.css"),
+        builder.Environment.GetMinified("/css/material-icons.css"));
 
     pipeline.AddCssBundle(builder.Environment, "/css/bundle.site.css",
         "/css/site.css");
