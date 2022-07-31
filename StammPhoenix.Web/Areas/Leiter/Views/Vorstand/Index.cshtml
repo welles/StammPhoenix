@@ -1,1 +1,46 @@
-﻿
+﻿@using StammPhoenix.Web.Areas.Leiter.Models.Vorstand
+
+@model VorstandViewModel
+
+<div class="card container p-0 shadow-sm">
+    <h5 class="card-header">Vorstandskontaktdaten</h5>
+    @if (Model.VorstandModels.Any())
+    {
+        <ul class="list-group list-group-flush">
+            @foreach (var vorstand in Model.VorstandModels)
+            {
+                <li class="list-group-item d-grid gap-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="@nameof(VorstandModel.Name)" placeholder="Voller Name" value="@vorstand.Name" readonly>
+                        <label for="@nameof(VorstandModel.Name)">Voller Name</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="@nameof(VorstandModel.PhoneNumber)" placeholder="Telefonnummer" value="@vorstand.PhoneNumber" readonly>
+                        <label for="@nameof(VorstandModel.PhoneNumber)">Telefonnummer</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="@nameof(VorstandModel.AddressStreet)" placeholder="Straße & Hausnummer" value="@vorstand.AddressStreet" readonly>
+                        <label for="@nameof(VorstandModel.AddressStreet)">Straße & Hausnummer</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="@nameof(VorstandModel.AddressCity)" placeholder="PLZ & Ort" value="@vorstand.AddressCity" readonly>
+                        <label for="@nameof(VorstandModel.AddressCity)">PLZ & Ort</label>
+                    </div>
+                    <a href="@Url.To("Edit", "Vorstand", "Leiter", routeValues: new { id = vorstand.Id })" class="btn btn-dark">Bearbeiten</a>
+                    <a href="@Url.To("Delete", "Vorstand", "Leiter", routeValues: new { id = vorstand.Id })" class="btn btn-danger">Löschen</a>
+                </li>
+            }
+        </ul>
+    }
+    <div class="card-footer d-grid gap-2">
+        <a href="@Url.To("Create", "Vorstand", "Leiter")" class="btn btn-success btn-block" >Hinzufügen</a>
+        @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger" role="alert">@Html.Raw(Model.ErrorMessage)</div>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.InfoMessage))
+        {
+            <div class="alert alert-info" role="alert">@Html.Raw(Model.InfoMessage)</div>
+        }
+    </div>
+</div>

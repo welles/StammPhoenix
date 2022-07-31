@@ -109,6 +109,45 @@ namespace StammPhoenix.Persistence
             return await this.PageContacts.ToArrayAsync();
         }
 
+        public async Task<PageContact?> FindPageContactById(Guid guid)
+        {
+            return await this.PageContacts.FindAsync(guid);
+        }
+
+        public async Task UpdatePageContact(PageContact contact, string name, string phoneNumber, string addressStreet, string addressCity)
+        {
+            contact.Name = name;
+            contact.PhoneNumber = phoneNumber;
+            contact.AddressStreet = addressStreet;
+            contact.AddressCity = addressCity;
+
+            this.PageContacts.Update(contact);
+
+            await this.SaveChangesAsync();
+        }
+
+        public async Task CreatePageContact(string name, string phoneNumber, string addressStreet, string addressCity)
+        {
+            var pageContact = new PageContact
+            {
+                Name = name,
+                PhoneNumber = phoneNumber,
+                AddressStreet = addressStreet,
+                AddressCity = addressCity
+            };
+
+            await this.PageContacts.AddAsync(pageContact);
+
+            await this.SaveChangesAsync();
+        }
+
+        public async Task RemovePageContact(PageContact contact)
+        {
+            this.PageContacts.Remove(contact);
+
+            await this.SaveChangesAsync();
+        }
+
         public async Task<Team[]> GetTeams()
         {
             return await this.Teams.ToArrayAsync();

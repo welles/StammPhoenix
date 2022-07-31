@@ -1,0 +1,35 @@
+﻿@using StammPhoenix.Web.Areas.Leiter.Models.Vorstand
+
+@model EditVorstandViewModel
+
+<div class="card fit-content container p-0 shadow-sm">
+    <h5 class="card-header">Vorstandskontaktdaten bearbeiten</h5>
+    <div class="card-body">
+        @using (Html.BeginForm("Edit", "Vorstand", FormMethod.Post, new { @class = "d-flex flex-column d-grid gap-2"}))
+        {
+            <input type="hidden" value="@Model.Id" name="@nameof(EditVorstandFormModel.Id)" />
+            <div class="form-floating">
+                <input type="text" class="form-control" id="@nameof(EditVorstandFormModel.Name)" name="@nameof(EditVorstandFormModel.Name)" placeholder="Voller Name" value="@Model.Name">
+                <label for="@nameof(EditVorstandFormModel.Name)">Voller Name</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="@nameof(EditVorstandFormModel.PhoneNumber)" name="@nameof(EditVorstandFormModel.PhoneNumber)" placeholder="Telefonnummer" value="@Model.PhoneNumber">
+                <label for="@nameof(EditVorstandFormModel.PhoneNumber)">Telefonnummer</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="@nameof(EditVorstandFormModel.AddressStreet)" name="@nameof(EditVorstandFormModel.AddressStreet)" placeholder="Straße & Hausnummer" value="@Model.AddressStreet">
+                <label for="@nameof(EditVorstandFormModel.AddressStreet)">Straße & Hausnummer</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="@nameof(EditVorstandFormModel.AddressCity)" name="@nameof(EditVorstandFormModel.AddressCity)" placeholder="PLZ & Ort" value="@Model.AddressCity">
+                <label for="@nameof(EditVorstandFormModel.AddressCity)">PLZ & Ort</label>
+            </div>
+            <button type="submit" class="btn btn-success">Speichern</button>
+            <a href="@Url.To("Index", "Vorstand", "Leiter")" class="btn btn-dark">Abbrechen</a>
+            @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+            {
+                <div class="alert alert-danger" role="alert">@Html.Raw(Model.ErrorMessage)</div>
+            }
+        }
+    </div>
+</div>

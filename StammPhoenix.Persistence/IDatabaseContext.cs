@@ -9,6 +9,14 @@ public interface IDatabaseContext
 
     Task<PageContact[]> GetPageContacts();
 
+    Task<PageContact?> FindPageContactById(Guid guid);
+
+    Task UpdatePageContact(PageContact contact, string name, string phoneNumber, string addressStreet, string addressCity);
+
+    Task CreatePageContact(string name, string phoneNumber, string addressStreet, string addressCity);
+
+    Task RemovePageContact(PageContact contact);
+
     Task<Team[]> GetTeams();
 
     Task<LoginUser?> FindUserById(Guid id);

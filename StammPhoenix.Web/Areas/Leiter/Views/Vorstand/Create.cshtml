@@ -1,0 +1,34 @@
+﻿@using StammPhoenix.Web.Areas.Leiter.Models.Vorstand
+
+@model CreateVorstandViewModel
+
+<div class="card fit-content container p-0 shadow-sm">
+    <h5 class="card-header">Vorstandskontaktdaten hinzufügen</h5>
+    <div class="card-body">
+        @using (Html.BeginForm("Create", "Vorstand", FormMethod.Post, new { @class = "d-flex flex-column d-grid gap-2"}))
+        {
+            <div class="form-floating">
+                <input type="text" class="form-control" id="@nameof(CreateVorstandFormModel.Name)" name="@nameof(CreateVorstandFormModel.Name)" placeholder="Voller Name" value="@Model.Name">
+                <label for="@nameof(CreateVorstandFormModel.Name)">Voller Name</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="@nameof(CreateVorstandFormModel.PhoneNumber)" name="@nameof(CreateVorstandFormModel.PhoneNumber)" placeholder="Telefonnummer" value="@Model.PhoneNumber">
+                <label for="@nameof(CreateVorstandFormModel.PhoneNumber)">Telefonnummer</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="@nameof(CreateVorstandFormModel.AddressStreet)" name="@nameof(CreateVorstandFormModel.AddressStreet)" placeholder="Straße & Hausnummer" value="@Model.AddressStreet">
+                <label for="@nameof(CreateVorstandFormModel.AddressStreet)">Straße & Hausnummer</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="@nameof(CreateVorstandFormModel.AddressCity)" name="@nameof(CreateVorstandFormModel.AddressCity)" placeholder="PLZ & Ort" value="@Model.AddressCity">
+                <label for="@nameof(CreateVorstandFormModel.AddressCity)">PLZ & Ort</label>
+            </div>
+            <button type="submit" class="btn btn-success">Speichern</button>
+            <a href="@Url.To("Index", "Vorstand", "Leiter")" class="btn btn-dark">Abbrechen</a>
+            @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+            {
+                <div class="alert alert-danger" role="alert">@Html.Raw(Model.ErrorMessage)</div>
+            }
+        }
+    </div>
+</div>
