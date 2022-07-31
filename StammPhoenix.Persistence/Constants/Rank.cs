@@ -10,6 +10,7 @@
         Leiter = 1 << 4,
         Extern = 1 << 5,
         Ehemalige = 1 << 6,
-        Verein = 1 << 7
+        Verein = 1 << 7,
+        Vorstand = 1 << 8
     }
 }
