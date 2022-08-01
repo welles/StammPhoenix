@@ -91,7 +91,7 @@ namespace StammPhoenix.Persistence
 
         public async Task<Team?> FindTeamForRank(Rank rank)
         {
-            return await this.Teams.FindAsync(rank);
+            return await this.Teams.SingleOrDefaultAsync(team => team.Rank == rank);
         }
 
         public async Task<bool> VerifyConnection()
