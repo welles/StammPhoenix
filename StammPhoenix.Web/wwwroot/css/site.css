@@ -60,6 +60,11 @@ html, body {
     vertical-align: middle;
 }
 
+div.input-group > span.material-icons {
+    display: flex;
+    vertical-align: middle;
+}
+
 .alert {
     margin-bottom: unset;
     padding: 0.5rem;

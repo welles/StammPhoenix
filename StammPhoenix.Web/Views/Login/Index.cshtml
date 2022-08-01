@@ -18,11 +18,17 @@
             <input type="hidden" value="@Context.Request.Query["redirect"]" name="@nameof(LoginModel.Redirect)" />
             <div class="input-group">
                 <span class="input-group-text material-icons">account_circle</span>
-                <input type="text" autocomplete="username" class="form-control" placeholder="Benutzername" name="@nameof(LoginModel.Email)" >
+                <div class="form-floating">
+                    <input type="text" class="form-control" autocomplete="username" id="@nameof(LoginModel.Email)" name="@nameof(LoginModel.Email)" placeholder="Benutzername">
+                    <label for="@nameof(LoginModel.Email)">Benutzername</label>
+                </div>
             </div>
             <div class="input-group">
                 <span class="input-group-text material-icons">lock</span>
-                <input type="password" autocomplete="current-password" class="form-control" placeholder="Passwort" name="@nameof(LoginModel.Password)" >
+                <div class="form-floating">
+                    <input type="password" class="form-control" autocomplete="current-password" id="@nameof(LoginModel.Password)" name="@nameof(LoginModel.Password)" placeholder="Passwort">
+                    <label for="@nameof(LoginModel.Password)">Passwort</label>
+                </div>
             </div>
             <div class="form-check">
                 <input class="form-check-input" id="@nameof(LoginModel.IsPersistent)" name="@nameof(LoginModel.IsPersistent)" type="checkbox" data-val="true" value="true" />
