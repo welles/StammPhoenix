@@ -76,3 +76,11 @@ html, body {
 .text-align-justify {
     text-align: justify;
 }
+
+a {
+    color: var(--bs-dark-rgb);
+}
+
+a:hover {
+    color: var(--bs-gray);
+}
