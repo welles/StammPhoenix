@@ -1,4 +1,3 @@
-using AspNetCore.SEOHelper;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
@@ -106,9 +105,6 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseWebOptimizer();
 app.UseStaticFiles();
-
-SitemapBuilder.BuildSitemap(builder.Environment.WebRootPath);
-app.UseXMLSitemap(builder.Environment.WebRootPath);
 
 app.UseRouting();
 
