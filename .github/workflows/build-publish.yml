@@ -34,7 +34,7 @@ jobs:
         with:
           images: nicowelles/stammphoenix
           tags: |
-            type=raw,value=latest,enable=${{ endsWith(GitHub.ref, ‘main’) }}
+            type=edge,branch=main,value=latest
             type=ref,event=tag
             type=ref,event=tag,value=stable
           flavor: |
@@ -81,7 +81,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=latest,enable=${{ endsWith(GitHub.ref, ‘main’) }}
+            type=edge,branch=main,value=latest
             type=ref,event=tag
             type=ref,event=tag,value=stable
           flavor: |
