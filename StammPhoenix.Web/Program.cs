@@ -97,9 +97,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/home/error");
     app.UseHsts();
-    app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
+    app.UseStatusCodePagesWithRedirects("/home/error/{0}");
 }
 
 app.UseHttpsRedirection();
