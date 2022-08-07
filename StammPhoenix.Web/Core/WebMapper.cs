@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using StammPhoenix.Persistence.Models;
 using StammPhoenix.Web.Areas.Leiter.Models.Vorstand;
+using StammPhoenix.Web.Models.Kontakt;
 using StammPhoenix.Web.Models.Login;
 
 namespace StammPhoenix.Web.Core;
@@ -14,6 +15,7 @@ public class WebMapper : Mapper
         cfg.CreateMap<EditVorstandFormModel, EditVorstandViewModel>();
         cfg.CreateMap<CreateVorstandFormModel, CreateVorstandViewModel>();
         cfg.CreateMap<LoginFormModel, LoginViewModel>();
+        cfg.CreateMap<PageContact, KontaktModel>();
     });
 
     public WebMapper() : base(WebMapper.Configuration) { }
