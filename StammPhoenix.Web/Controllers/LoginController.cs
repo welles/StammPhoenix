@@ -1,9 +1,9 @@
 ﻿using System.Security.Claims;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using StammPhoenix.Persistence;
-using StammPhoenix.Persistence.Models;
 using StammPhoenix.Util.Interfaces;
 using StammPhoenix.Util.Models;
 using StammPhoenix.Web.Core;
@@ -22,12 +22,15 @@ public class LoginController : Controller
 
     private IAuth Auth { get; }
 
-    public LoginController(IDatabaseContext databaseContext, IPasswordHasher passwordHasher, ITempCookieService tempCookieService, IAuth auth)
+    private IMapper Mapper { get; }
+
+    public LoginController(IDatabaseContext databaseContext, IPasswordHasher passwordHasher, ITempCookieService tempCookieService, IAuth auth, IMapper mapper)
     {
         this.DatabaseContext = databaseContext;
         this.PasswordHasher = passwordHasher;
         this.TempCookieService = tempCookieService;
         this.Auth = auth;
+        this.Mapper = mapper;
     }
 
     [HttpGet]
@@ -38,7 +41,19 @@ public class LoginController : Controller
             return this.RedirectTo("Index", "Home", "Leiter");
         }
 
-        return this.View();
+        var viewModel = new LoginViewModel();
+
+        if (this.TempCookieService.TryGetTempCookie("LoginErrorMessage", out var errorMessage))
+        {
+            viewModel.ErrorMessage = errorMessage;
+        }
+
+        if (this.TempCookieService.TryGetTempCookie("LoginInfoMessage", out var infoMessage))
+        {
+            viewModel.InfoMessage = infoMessage;
+        }
+
+        return this.View(viewModel);
     }
 
     [HttpGet]
@@ -49,45 +64,50 @@ public class LoginController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Index(LoginModel form)
+    public async Task<IActionResult> Index(LoginFormModel form)
     {
         if (string.IsNullOrWhiteSpace(form.Email))
         {
-            this.TempCookieService.SetTempCookie("LoginErrorMessage", "E-Mail-Adresse darf nicht leer sein.");
+            var viewModel = this.Mapper.Map<LoginViewModel>(form);
+            viewModel.ErrorMessage = "E-Mail-Adresse darf nicht leer sein.";
 
-            return this.RedirectTo("Index", "Login", redirect: form.Redirect);
+            return this.View(viewModel);
         }
 
         if (string.IsNullOrWhiteSpace(form.Password))
         {
-            this.TempCookieService.SetTempCookie("LoginErrorMessage", "Passwort darf nicht leer sein.");
+            var viewModel = this.Mapper.Map<LoginViewModel>(form);
+            viewModel.ErrorMessage = "Passwort darf nicht leer sein.";
 
-            return this.RedirectTo("Index", "Login", redirect: form.Redirect);
+            return this.View(viewModel);
         }
 
         var user = await this.DatabaseContext.FindUserByEmail(form.Email);
 
         if (user == null)
         {
-            this.TempCookieService.SetTempCookie("LoginErrorMessage", "Es existiert kein Benutzer mit diesem Benutzernamen.");
+            var viewModel = this.Mapper.Map<LoginViewModel>(form);
+            viewModel.ErrorMessage = "Es existiert kein Benutzer mit diesem Benutzernamen.";
 
-            return this.RedirectTo("Index", "Login", redirect: form.Redirect);
+            return this.View(viewModel);
         }
 
         if (user.IsLocked)
         {
-            this.TempCookieService.SetTempCookie("LoginErrorMessage", "Dieser Benutzer ist gesperrt. Bitte kontaktieren Sie den Administrator.");
+            var viewModel = this.Mapper.Map<LoginViewModel>(form);
+            viewModel.ErrorMessage = "Dieser Benutzer ist gesperrt. Bitte kontaktieren Sie den Administrator.";
 
-            return this.RedirectTo("Index", "Login", redirect: form.Redirect);
+            return this.View(viewModel);
         }
 
         var passwordCorrect = this.PasswordHasher.VerifyHashedPassword(user.PasswordHash, form.Password);
 
         if (passwordCorrect == PasswordVerificationResult.Failed)
         {
-            this.TempCookieService.SetTempCookie("LoginErrorMessage", "Das Passwort ist nicht korrekt.");
+            var viewModel = this.Mapper.Map<LoginViewModel>(form);
+            viewModel.ErrorMessage = "Das Passwort ist nicht korrekt.";
 
-            return this.RedirectTo("Index", "Login", redirect: form.Redirect);
+            return this.View(viewModel);
         }
 
         if (passwordCorrect == PasswordVerificationResult.SuccessRehashNeeded)

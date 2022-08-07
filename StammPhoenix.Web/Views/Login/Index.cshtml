@@ -1,48 +1,44 @@
 ﻿@using StammPhoenix.Web.Models.Login
 
+@model LoginViewModel
+
 @{
     ViewBag.Title = "Login";
 }
 
-@inject ITempCookieService TempCookieService
-
-@{
-    ViewBag.ContainerClass = "fit-content";
-}
-
-<div class="card fit-content container p-0 shadow-sm">
+<div class="card container p-0 shadow-sm">
     <h5 class="card-header">Leitendenbereich</h5>
     <div class="card-body">
         @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "d-flex flex-column d-grid gap-2"}))
         {
-            <input type="hidden" value="@Context.Request.Query["redirect"]" name="@nameof(LoginModel.Redirect)" />
+            <input type="hidden" value="@Context.Request.Query["redirect"]" name="@nameof(LoginFormModel.Redirect)" />
             <div class="input-group">
                 <span class="input-group-text material-icons">account_circle</span>
                 <div class="form-floating">
-                    <input type="text" class="form-control" autocomplete="username" id="@nameof(LoginModel.Email)" name="@nameof(LoginModel.Email)" placeholder="Benutzername">
-                    <label for="@nameof(LoginModel.Email)">Benutzername</label>
+                    <input type="text" class="form-control" autocomplete="username" id="@nameof(LoginFormModel.Email)" name="@nameof(LoginFormModel.Email)" value="@Model.Email" placeholder="Benutzername">
+                    <label for="@nameof(LoginFormModel.Email)">Benutzername</label>
                 </div>
             </div>
             <div class="input-group">
                 <span class="input-group-text material-icons">lock</span>
                 <div class="form-floating">
-                    <input type="password" class="form-control" autocomplete="current-password" id="@nameof(LoginModel.Password)" name="@nameof(LoginModel.Password)" placeholder="Passwort">
-                    <label for="@nameof(LoginModel.Password)">Passwort</label>
+                    <input type="password" class="form-control" autocomplete="current-password" id="@nameof(LoginFormModel.Password)" name="@nameof(LoginFormModel.Password)" placeholder="Passwort">
+                    <label for="@nameof(LoginFormModel.Password)">Passwort</label>
                 </div>
             </div>
             <div class="form-check">
-                <input class="form-check-input" id="@nameof(LoginModel.IsPersistent)" name="@nameof(LoginModel.IsPersistent)" type="checkbox" data-val="true" value="true" />
-                <label class="form-check-label" for="@nameof(LoginModel.IsPersistent)">Angemeldet bleiben</label>
-                <input name="@nameof(LoginModel.IsPersistent)" type="hidden" value="false" />
+                <input class="form-check-input" id="@nameof(LoginFormModel.IsPersistent)" name="@nameof(LoginFormModel.IsPersistent)" type="checkbox" data-val="true" value="true"/>
+                <label class="form-check-label" for="@nameof(LoginFormModel.IsPersistent)">Angemeldet bleiben</label>
+                <input name="@nameof(LoginFormModel.IsPersistent)" type="hidden" value="false"/>
             </div>
             <button type="submit" class="btn btn-dark">Einloggen</button>
-            @if (this.TempCookieService.TryGetTempCookie("LoginErrorMessage", out var errorMessage))
+            @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
             {
-                <div class="alert alert-danger" role="alert">@Html.Raw(errorMessage)</div>
+                <div class="alert alert-danger" role="alert">@Html.Raw(Model.ErrorMessage)</div>
             }
-            @if (this.TempCookieService.TryGetTempCookie("LoginInfoMessage", out var infoMessage))
+            @if (!string.IsNullOrWhiteSpace(Model.InfoMessage))
             {
-                <div class="alert alert-info" role="alert">@Html.Raw(infoMessage)</div>
+                <div class="alert alert-info" role="alert">@Html.Raw(Model.InfoMessage)</div>
             }
         }
     </div>

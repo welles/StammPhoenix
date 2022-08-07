@@ -1,6 +1,6 @@
 ﻿namespace StammPhoenix.Web.Models.Login;
 
-public class LoginModel
+public class LoginFormModel
 {
     public string? Email { get; set; }
 
