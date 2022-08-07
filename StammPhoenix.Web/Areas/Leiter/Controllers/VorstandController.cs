@@ -134,7 +134,7 @@ public class VorstandController : Controller
 
     [HttpGet]
     [Authorize(Roles = nameof(Role.Administrator))]
-    public async Task<IActionResult> Create()
+    public IActionResult Create()
     {
         var viewModel = new CreateVorstandViewModel();
 
