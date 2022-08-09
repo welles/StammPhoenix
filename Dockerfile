@@ -3,11 +3,13 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS restore
 WORKDIR /src
 COPY . .
 WORKDIR /src/StammPhoenix.Web
 RUN dotnet restore StammPhoenix.Web.csproj
+
+FROM restore AS build
 RUN dotnet build StammPhoenix.Web.csproj -c Release -o /app/build
 
 FROM build AS publish
